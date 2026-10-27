@@ -41,9 +41,9 @@ GitHub Pages 从 `main` 分支的 `/docs` 目录发布。站内链接使用相�
 
 ## 访问地址
 
-- 统一入口：https://lijiat.github.io/ai-knowledge-hub/
-- 公众号 AI 库：https://lijiat.github.io/ai-knowledge-hub/gzh/
+- 统一入口：https://lijiat.github.io/intel-site/
+- 公众号 AI 库：https://lijiat.github.io/intel-site/gzh/
 
-- GitHub Radar：https://lijiat.github.io/ai-knowledge-hub/radar/
+- GitHub Radar：https://lijiat.github.io/intel-site/radar/
 
-- 论文库：https://lijiat.github.io/ai-knowledge-hub/papers/
+- 论文库：https://lijiat.github.io/intel-site/papers/
