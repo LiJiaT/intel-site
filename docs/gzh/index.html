@@ -23,14 +23,10 @@ a{color:var(--link)}
 .stats{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0 .3rem}
 .stat{border:1px solid var(--border);border-radius:8px;padding:.35rem .8rem;background:var(--panel);font-size:.8rem;color:var(--muted)}
 .stat b{color:var(--text);font-family:var(--mono);margin-left:.25rem}
-.bar{position:sticky;top:0;z-index:9;background:var(--bg);border-bottom:1px solid var(--border);padding:.5rem 0;margin:.6rem 0 .9rem;display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.bar{position:sticky;top:0;z-index:9;background:var(--bg);border-bottom:1px solid var(--border);padding:.5rem 0;margin:.6rem 0 .9rem;display:flex;flex-wrap:wrap;gap:.45rem .7rem;align-items:center}
 .bar .spacer{flex:1}
-.chip{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);padding:.14rem .5rem;border-radius:999px;font-size:.8rem;font-family:inherit;transition:.12s;white-space:nowrap;line-height:1.4}
-.chip:hover{color:var(--text);border-color:var(--pill-border)}
-.chip.is-active{background:var(--pill-bg);border-color:var(--pill-border);color:var(--accent)}
-.chip-group{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;padding:.1rem .5rem;border-right:1px solid var(--border)}
-.chip-group:last-of-type{border-right:none}
-.chip-group .lbl{font-size:.72rem;color:var(--muted);margin-right:.1rem}
+.bar label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.bar select{max-width:11rem}
 select,input[type=search],button.btn{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:7px;padding:.22rem .45rem;font-size:.8rem;font-family:inherit}
 input[type=search]{width:12rem}
 button.btn{cursor:pointer}
@@ -96,36 +92,45 @@ button.btn:hover{border-color:var(--pill-border);color:var(--accent)}
       <span class="stat">high 价值<b>363</b></span>
       <span class="stat">TVS ≥ 80<b>46</b></span>
       <span class="stat">窗口截断移出<b>392</b></span>
-      <span class="stat">生成于<b>2026-11-12 14:20</b></span>
+      <span class="stat">生成于<b>2026-11-12 15:47</b></span>
     </div>
   </div>
   <div class="bar">
-    <input type="search" id="q" placeholder="搜索标题 / 摘要关键词">
-    <div class="chip-group"><span class="lbl">分类域</span><button class="chip" data-d="上下文">上下文</button><button class="chip" data-d="提示">提示</button><button class="chip" data-d="Agent">Agent</button><button class="chip" data-d="多智能体">多智能体</button><button class="chip" data-d="评测">评测</button><button class="chip" data-d="工程提效">工程提效</button><button class="chip" data-d="前沿动态">前沿动态</button></div>
-    <div class="chip-group"><span class="lbl">公众号</span><button class="chip" data-s="AliExpress技术">AliExpress技术</button><button class="chip" data-s="Datawhale">Datawhale</button><button class="chip" data-s="PaperAgent">PaperAgent</button><button class="chip" data-s="数字生命卡兹克">数字生命卡兹克</button><button class="chip" data-s="张托肯用AI">张托肯用AI</button><button class="chip" data-s="字节跳动技术团队">字节跳动技术团队</button><button class="chip" data-s="ObjectPrompt">ObjectPrompt</button><button class="chip" data-s="傅盛">傅盛</button><button class="chip" data-s="花叔">花叔</button><button class="chip" data-s="腾讯技术工程">腾讯技术工程</button><button class="chip" data-s="芯片人-晒AI笔记">芯片人-晒AI笔记</button><button class="chip" data-s="EDA运维">EDA运维</button><button class="chip" data-s="芯片验证日记">芯片验证日记</button></div>
-    <div class="chip-group"><span class="lbl">统一主题</span><button class="chip" data-ut="arch_impl">架构与实现</button><button class="chip" data-ut="design_verification">设计验证</button><button class="chip" data-ut="dft_safety">DFT 与功能安全</button><button class="chip" data-ut="sim_accel">仿真与加速</button><button class="chip" data-ut="agent_context">Agent 与上下文工程</button><button class="chip" data-ut="eval_reliability">评测与可靠使用</button><button class="chip" data-ut="eng_productivity">工程提效与知识管理</button><button class="chip" data-ut="frontier">前沿动态与平台</button></div>
-    <div class="chip-group"><span class="lbl">类型</span><button class="chip" data-uy="tool">工具</button><button class="chip" data-uy="framework_library">框架/库</button><button class="chip" data-uy="dataset_benchmark">数据集/基准</button><button class="chip" data-uy="tutorial_list">教程/清单</button><button class="chip" data-uy="paper">论文</button><button class="chip" data-uy="paper_with_code">论文带码</button><button class="chip" data-uy="practice_report">复盘/评测报告</button><button class="chip" data-uy="opinion_news">观点/动态</button></div>
+    <label for="q">搜索</label>
+    <input type="search" id="q" placeholder="标题 / 摘要关键词">
+    <label for="domain">分类域</label>
+    <select id="domain"><option value="">全部</option><option value="上下文">上下文</option><option value="提示">提示</option><option value="Agent">Agent</option><option value="多智能体">多智能体</option><option value="评测">评测</option><option value="工程提效">工程提效</option><option value="前沿动态">前沿动态</option></select>
+    <label for="src">公众号</label>
+    <select id="src"><option value="">全部</option><option value="AliExpress技术">AliExpress技术</option><option value="Datawhale">Datawhale</option><option value="PaperAgent">PaperAgent</option><option value="数字生命卡兹克">数字生命卡兹克</option><option value="张托肯用AI">张托肯用AI</option><option value="字节跳动技术团队">字节跳动技术团队</option><option value="ObjectPrompt">ObjectPrompt</option><option value="傅盛">傅盛</option><option value="花叔">花叔</option><option value="腾讯技术工程">腾讯技术工程</option><option value="芯片人-晒AI笔记">芯片人-晒AI笔记</option><option value="EDA运维">EDA运维</option><option value="芯片验证日记">芯片验证日记</option></select>
+    <label for="utopic">统一主题</label>
+    <select id="utopic"><option value="">全部</option><option value="arch_impl">架构与实现</option><option value="design_verification">设计验证</option><option value="dft_safety">DFT 与功能安全</option><option value="sim_accel">仿真与加速</option><option value="agent_context">Agent 与上下文工程</option><option value="eval_reliability">评测与可靠使用</option><option value="eng_productivity">工程提效与知识管理</option><option value="frontier">前沿动态与平台</option></select>
+    <label for="utype">类型</label>
+    <select id="utype"><option value="">全部</option><option value="tool">工具</option><option value="framework_library">框架/库</option><option value="dataset_benchmark">数据集/基准</option><option value="tutorial_list">教程/清单</option><option value="paper">论文</option><option value="paper_with_code">论文带码</option><option value="practice_report">复盘/评测报告</option><option value="opinion_news">观点/动态</option></select>
+    <label for="value">价值档</label>
     <select id="value">
-      <option value="">全部价值档</option>
-      <option>high</option><option>medium</option><option>low</option>
+      <option value="">全部</option>
+      <option value="high">high</option><option value="medium">medium</option><option value="low">low</option>
     </select>
+    <label for="tvsmin">TVS</label>
     <select id="tvsmin">
-      <option value="">TVS ≥ 任意</option>
-      <option value="90">TVS ≥ 90</option>
-      <option value="80">TVS ≥ 80</option>
-      <option value="70">TVS ≥ 70</option>
-      <option value="60">TVS ≥ 60</option>
+      <option value="">任意</option>
+      <option value="90">≥ 90</option>
+      <option value="80">≥ 80</option>
+      <option value="70">≥ 70</option>
+      <option value="60">≥ 60</option>
     </select>
+    <label for="sort">排序</label>
     <select id="sort">
       <option value="tvs">按评分</option>
       <option value="date">按时间</option>
       <option value="value">按价值档</option>
       <option value="account">按公众号</option>
     </select>
+    <label for="size">每页</label>
     <select id="size">
-      <option value="50">每页 50</option>
-      <option value="20">每页 20</option>
-      <option value="100">每页 100</option>
+      <option value="50">50</option>
+      <option value="20">20</option>
+      <option value="100">100</option>
       <option value="999999">全部</option>
     </select>
     <span class="spacer"></span>
@@ -164,7 +169,7 @@ if (typeof MiniSearch !== 'undefined') {
   _ms.addAll(ITEMS);
 }
 const VORDER = {high: 0, medium: 1, low: 2};
-let activeDomain = null, activeSrc = null, activeUType = null, activeUTopics = new Set(), page = 0;
+let activeDomain = "", activeSrc = "", activeUType = "", activeUTopic = "", page = 0;
 const el = id => document.getElementById(id);
 function filtered() {
   const kw = el('q').value.trim().toLowerCase();
@@ -181,7 +186,7 @@ function filtered() {
     (!vv || it.value === vv) &&
     (!tmin || it.tvs >= +tmin) &&
     (!activeUType || (it.unified && it.unified.type === activeUType)) &&
-    (!activeUTopics.size || (it.unified && (it.unified.topics || []).some(t => activeUTopics.has(t)))));
+    (!activeUTopic || (it.unified && (it.unified.topics || []).includes(activeUTopic))));
   if (sort === 'date') rows = rows.slice().sort((a, b) => b.ts - a.ts);
   else if (sort === 'value') rows = rows.slice().sort((a, b) => VORDER[a.value] - VORDER[b.value] || b.tvs - a.tvs);
   else if (sort === 'account') rows = rows.slice().sort((a, b) => a.account.localeCompare(b.account) || b.tvs - a.tvs);
@@ -241,37 +246,11 @@ function render() {
   el('next').disabled = page >= pages - 1;
   window.scrollTo(0, 0);
 }
-function bindGroup(sel, setter) {
-  document.querySelectorAll(sel).forEach(c => c.addEventListener('click', () => {
-    const v = c.dataset.v;
-    setter(v === setter() ? null : v);
-    document.querySelectorAll(sel).forEach(x => x.classList.toggle('is-active', x.dataset.v === setter()));
-    page = 0; render();
-  }));
-}
-document.querySelectorAll('.chip[data-d]').forEach(c => c.addEventListener('click', () => {
-  activeDomain = activeDomain === c.dataset.d ? null : c.dataset.d;
-  document.querySelectorAll('.chip[data-d]').forEach(x => x.classList.toggle('is-active', x.dataset.d === activeDomain));
-  page = 0; render();
-}));
-document.querySelectorAll('.chip[data-s]').forEach(c => c.addEventListener('click', () => {
-  activeSrc = activeSrc === c.dataset.s ? null : c.dataset.s;
-  document.querySelectorAll('.chip[data-s]').forEach(x => x.classList.toggle('is-active', x.dataset.s === activeSrc));
-  page = 0; render();
-}));
-// 统一主题：多选
-document.querySelectorAll('.chip[data-ut]').forEach(c => c.addEventListener('click', () => {
-  const v = c.dataset.ut;
-  if (activeUTopics.has(v)) activeUTopics.delete(v); else activeUTopics.add(v);
-  c.classList.toggle('is-active');
-  page = 0; render();
-}));
-// 类型：单选
-document.querySelectorAll('.chip[data-uy]').forEach(c => c.addEventListener('click', () => {
-  activeUType = activeUType === c.dataset.uy ? null : c.dataset.uy;
-  document.querySelectorAll('.chip[data-uy]').forEach(x => x.classList.toggle('is-active', x.dataset.uy === activeUType));
-  page = 0; render();
-}));
+// papers-library style: one change handler per select
+el('domain').addEventListener('change', () => { activeDomain = el('domain').value; page = 0; render(); });
+el('src').addEventListener('change', () => { activeSrc = el('src').value; page = 0; render(); });
+el('utopic').addEventListener('change', () => { activeUTopic = el('utopic').value; page = 0; render(); });
+el('utype').addEventListener('change', () => { activeUType = el('utype').value; page = 0; render(); });
 el('q').addEventListener('input', () => { page = 0; render(); });
 el('value').addEventListener('change', () => { page = 0; render(); });
 el('tvsmin').addEventListener('change', () => { page = 0; render(); });
@@ -280,10 +259,9 @@ el('size').addEventListener('change', () => { page = 0; render(); });
 el('prev').addEventListener('click', () => { if (page > 0) { page--; render(); } });
 el('next').addEventListener('click', () => { page++; render(); });
 el('reset').addEventListener('click', () => {
-  el('q').value = ''; el('value').value = ''; el('tvsmin').value = '';
-  el('sort').value = 'tvs'; el('size').value = '50';
-  activeDomain = activeSrc = activeUType = null; activeUTopics.clear(); page = 0;
-  document.querySelectorAll('.chip').forEach(x => x.classList.remove('is-active'));
+  el('q').value = ''; el('domain').value = ''; el('src').value = ''; el('utopic').value = ''; el('utype').value = '';
+  el('value').value = ''; el('tvsmin').value = ''; el('sort').value = 'tvs'; el('size').value = '50';
+  activeDomain = activeSrc = activeUType = activeUTopic = ''; page = 0;
   render();
 });
 el('list').addEventListener('click', e => {
