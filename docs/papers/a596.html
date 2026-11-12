@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Chain-of-Thought Hub: A Continuous Effort to Measure Large Language Models&#x27; Reasoning Performance</h1>
 <p class="lead">Chain-of-Thought Hub：持续衡量大型语言模型（LLM）推理性能的开放评测工作</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">思维链与推理</span><span class="chip">提示技术</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a596.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a596.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对 LLM 能力多维、闲聊场景难以区分强弱模型的问题，提出复杂推理是区分强弱 LLM 的关键指标，并构建了持续更新的开源评测套件 Chain-of-Thought Hub。方法上精选 GSM8k、MATH 等 6 个基准、100+ 子任务（含中文双语推理），对 GPT、Claude、PaLM、LLaMA、FlanT5 等 19 个主流模型统一采用 few-shot CoT 提示评测，并以最终答案准确率作为推理能力的代理指标。关键结论：模型规模与推理能力近似呈 log-linear 相关；截至 2023 年 5 月仅 Claude-v1.3 与 PaLM-2 接近 GPT-4，开源模型明显落后；LLaMA-65B 表现接近 code-davinci-002，若做好 SFT/RLHF 有望比肩 GPT-3.5-Turbo。对团队而言，其基准遴选标准与 CoT 评测协议可直接借鉴到内部模型选型与回归评测中。</p>
 <h2>问题</h2><p>LLM 能力多维、评测困难：在闲聊场景下，大量 LLaMA 系微调模型（Alpaca、Vicuna 等）与 GPT-3.5-Turbo 表面表现相似，社区缺乏能明确区分强弱模型的关键指标。论文认为复杂多步推理（语言与逻辑操作的组合）是强弱 LLM 的关键分水岭，因此需要一个持续更新、开源、贴近真实使用且能区分模型强弱的推理评测套件，以追踪 LLM 进展并指导开源模型研发方向。</p>
 <h2>方法</h2><p>构建持续开源的推理评测套件：按&#x27;贴近真实使用&#x27;与&#x27;能明显区分强弱模型&#x27;两条标准精选基准，包括 GSM8k（数学推理）、MATH（竞赛级数学，LaTeX 书写）等 6 个基准、100+ 子任务，含中文双语推理；统一采用 few-shot CoT 提示（而非多数评测使用的 answer-only 或 zero-shot）评测 19 个主流模型（GPT、Claude、PaLM、LLaMA、FlanT5 系列）；以最终答案准确率作为推理能力代理指标，论文论证中间步骤正确性与最终准确率强相关；数字来源采用&#x27;论文已报告则引用、否则自测&#x27;的策略，评测脚本在 GitHub 开源。</p>

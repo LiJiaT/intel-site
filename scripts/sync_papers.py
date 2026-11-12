@@ -11,7 +11,7 @@ import tempfile
 import urllib.parse
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO = "LiJiaT/ai-knowledge-hub"
+REPO = "LiJiaT/intel-site"
 
 class References(HTMLParser):
     def __init__(self):

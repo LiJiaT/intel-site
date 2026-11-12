@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Chain of Draft: Thinking Faster by Writing Less</h1>
 <p class="lead">Chain of Draft：写得更少，思考更快</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a247.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a247.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>CoT 提示虽能提升复杂推理准确率，但冗长的逐步推理带来高 token 消耗、成本与延迟，难以用于实时和大规模场景。论文提出 Chain of Draft (CoD) 提示策略：模仿人类写简短草稿的习惯，要求模型每步推理只输出不超过约 5 个词的极简中间结果，并通过作者手写的 few-shot 示例引导这种风格。在 GSM8k、BIG-bench 日期/体育理解与 coin flip 任务上，CoD 在 GPT-4o 与 Claude 3.5 Sonnet 上达到与 CoT 相当或更高的准确率，输出 token 最多减少 92.4%，延迟最多降低 76.2%。主要局限是强依赖 few-shot 示例，zero-shot 下效果大幅下降，且在 3B 以下小模型上与 CoT 差距明显。对团队而言，这是可直接套用的提示层优化，适合延迟与成本敏感的生产链路。</p>
 <h2>问题</h2><p>CoT 等逐步推理提示虽然显著提升 LLM 在复杂推理任务上的表现，但会产生冗长的中间推理步骤，导致输出 token 数量大增，推高推理成本与响应延迟，使其难以应用于对成本和延迟敏感的实时或大规模生产场景。</p>
 <h2>方法</h2><p>提出 Chain of Draft (CoD) 提示策略：模仿人类只记关键草稿的认知方式，要求模型在每一步推理中只输出极简、信息密集的中间结果（指导性约束为每步不超过 5 个词，论文明确未以任何方式强制执行），并在 few-shot 示例中由作者手写 CoD 风格草稿作示范。与 CCoT/TALE 的全局 token 预算方案不同，CoD 采用逐步预算，不限制推理步数，也无需额外的预算估计 LLM 调用，可直接作用于 GPT-4o、Claude 3.5 Sonnet 等黑盒模型。</p>

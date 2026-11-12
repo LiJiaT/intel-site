@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>When do Generative Query and Document Expansions Fail? A Comprehensive Study Across Methods, Retrievers, and Datasets</h1>
 <p class="lead">生成式查询与文档扩展何时失效？跨方法、检索器与数据集的全面研究</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">思维链与推理</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a551.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a551.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文系统研究用 LLM 做查询扩展（HyDE、Chain of Thought、Q-LM PRF）与文档扩展（Doc2Query、D-LM PRF）在信息检索中何时有效、何时失效。作者在 11 种扩展技术、12 个覆盖多种分布偏移的数据集、24 个检索模型上做大规模实验，发现检索器基础性能与扩展收益呈强负相关：扩展提升弱模型（如 DPR）却普遍损害强模型（如 MonoT5-3B），且该规律与模型架构无关；唯一例外是长查询格式偏移场景，此时扩展对几乎所有模型都有帮助。错误分析显示失败根因是扩展引入的无关词项稀释了原文相关性信号、制造假阳性。论文据此给出工程配方：仅对弱检索器、或目标数据与训练语料格式差异显著时使用扩展，否则应避免以保持相关性信号清晰。</p>
 <h2>问题</h2><p>LM-based 查询/文档扩展是否普遍提升检索效果，还是只在特定检索模型、数据域或查询类型下有效？实践者应依据什么判断何时使用扩展、何时避免。</p>
 <h2>方法</h2><p>大规模系统性实证研究：用 gpt-3.5-turbo 生成扩展，在 BM25 top-100 重排设置下，交叉评估 11 种扩展技术（查询扩展 HyDE、Chain of Thought、Q-LM PRF；文档扩展 Doc2Query、D-LM PRF 及其组合）× 12 个覆盖 in-domain、domain shift、relevance shift、format shift 的数据集 × 24 个检索模型（DPR、ColBERTv2、SPLADE v2、MonoBERT、MonoT5、E5、MiniLM、GTE、Llama 等），以相对无扩展基线的 nDCG@10 增量衡量效果，并辅以 30 例定性错误分析与相关文档排名变化可视化。</p>

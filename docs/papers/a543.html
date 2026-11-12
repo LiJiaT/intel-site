@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Summarization is (Almost) Dead</h1>
 <p class="lead">Summarization（文本摘要）已（几乎）终结</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">其他</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a543.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a543.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文通过构建五个任务（单新闻、多新闻、对话、代码、跨语言摘要）各 50 条、取自 LLM 训练截止日期之后的全新评测集以避免数据污染，用人工两两对比方式系统评估 GPT-3/GPT-3.5/GPT-4 的 zero-shot 摘要能力，对照 BART、T5、Pegasus、CodeT5 等微调模型与人工撰写参考摘要。结果显示：人类评审在全部任务上均显著偏好 LLM 摘要，其事实一致性更好、extrinsic hallucination 更少，甚至优于被视为 oracle 的人工参考摘要；微调模型则存在长度僵化、多主题覆盖不足的问题。作者据此提出挑衅性判断——约 70% 的传统摘要研究已不再必要，并给出领域转型方向：更高质量的评测数据集、面向应用的摘要方法（定制化/实时/交互式）、以及超越 ROUGE 的新评测范式（LLM 评测与 extrinsic evaluation）。</p>
 <h2>问题</h2><p>评估 LLM 的 zero-shot 摘要生成能力是否已全面超越微调模型与人工参考摘要，并回答在 LLM 时代，以&#x27;提出新摘要模型并在标准数据集上刷指标&#x27;为主的传统文本摘要研究是否仍有必要。</p>
 <h2>方法</h2><p>构建 5 个任务（single-news、multi-news、dialogue、source code、cross-lingual）各 50 条样本的新评测集，数据均取自模型训练截止日期（2021 年 9 月）之后以确保 zero-shot 评估无污染；每任务对比 GPT-3(text-davinci-003)/GPT-3.5/GPT-4 与 1-2 个微调小模型（BART、T5、Pegasus、MT5、MBART、CodeT5）及人工参考摘要；每任务 2 名标注者对全部系统做两两比较，计算 WinRate 与 Cohen&#x27;s kappa；另做句子级幻觉标注，按 intrinsic/extrinsic 两类分析事实一致性差异的成因。</p>

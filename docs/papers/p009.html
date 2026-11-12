@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Maintaining Sanity: Algorithm-based Comprehensive Fault Tolerance for CNNs</h1>
 <p class="lead">Maintaining Sanity：面向 CNN 的基于算法的综合容错技术</p>
 <div style="margin-top:10px"><span class="lvl lvl-low">low</span><span class="chip">DAC 2024</span><span class="chip">故障注入</span><span class="chip">安全架构</span><span class="chip">AI/ML加速器</span><span class="chip">无明显对应</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p009.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p009.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对 CNN 在自动驾驶等安全关键场景部署时易受软错误（soft error）影响、而现有保护方案要么开销过大（如 TMR）要么故障覆盖率不足的问题，提出 Maintaining Sanity。该方法在 Sanity-Check 的 ABFT 空间校验和基础上引入 hamming code 思想，为卷积层与全连接层的权重、偏置和输出添加 total/partial sanity 神经元，实现模型参数故障的检测、定位与前向恢复；同时仅复制网络原始输入并结合 checkpoint/rollback，覆盖包括激活、pooling 在内的层输入故障。在 AlexNet、LeNet5、ResNet18、VGG16 上的故障注入实验显示，其可纠正超过 99.6% 的关键故障，运行时开销约为网络级 TMR 的 72%（约 135% vs 187%），参数额外开销小于 10% 且随网络增大而降低。该工作属于算法级容错研究，与团队存储/互连 IP 的设计与验证技术栈无直接交集。</p>
 <h2>问题</h2><p>CNN 在自动驾驶、疾病诊断等安全关键应用中部署时，宇宙射线、热中子或 alpha 粒子等引起的软错误（瞬态故障）可能改变分类结果；现有保护方案存在三大局限：完全覆盖的方案（如 DMR/TMR）空间与运行时开销过大，高效方案故障覆盖不足，或需要额外组件、训练或限制（如 range-restriction 在激进量化下失效）。</p>
 <h2>方法</h2><p>扩展最先进的 ABFT 方案 Sanity-Check：(1) 模型参数冗余——借鉴 hamming code，为卷积/全连接层添加 total sanity 神经元与 ⌈log2(n+1)⌉ 个 partial sanity 神经元，通过 total/partial sanity checksum 实现权重、偏置、输出故障的检测、定位与纠正（前向恢复）；(2) 层输入冗余——仅复制网络原始输入，利用上一层冗余输出作为下一层冗余输入，配合 checkpoint/rollback（检查点置于故障检测之前以消除单点故障）实现层输入故障的后向恢复。无需 batch 输入、无需额外训练、适用于量化网络。</p>

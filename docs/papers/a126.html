@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>The Power of Noise: Redefining Retrieval for RAG Systems</h1>
 <p class="lead">噪声的力量：重新定义 RAG 系统的检索</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">上下文窗口</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a126.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a126.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文系统研究了 RAG 中检索组件应向 LLM 提供什么样的文档：作者将文档分为 gold、relevant、distracting、random 四类，在 NQ-open 数据集（约 2100 万 Wikipedia 文档）上用 Contriever/BM25 检索器配合 Llama2、MPT、Phi-2、Falcon 等 7B 模型，考察文档类型、数量与位置对生成准确率的影响。关键结论有三：一是检索得分高但不含答案的 distracting 文档会显著损害准确率，仅加入 1 个即可下降最多 25%，且换用 hard negatives 训练的检索器也无法缓解；二是 gold 文档应放在紧邻 query 的位置，放中间最差；三是反直觉地，加入与问题无关的随机文档反而能提升准确率最多 35%，换成 Reddit 语料甚至随机词组成的无意义句子依然有效。据此作者提出实用策略：先检索少量（3-5 个）文档，再用随机文档填满上下文，并以注意力熵增加 3 倍作为可能的机理解释。</p>
 <h2>问题</h2><p>RAG 系统中检索器应向 LLM prompt 提供何种特征的文档：文档的类型（gold/relevant/distracting/random）、数量与在上下文中的位置如何影响生成准确率？现有检索器按相似度返回 top-k 文档的做法对 RAG 是否最优？</p>
 <h2>方法</h2><p>在 NQ-open（OpenQA 任务）上构建两步 RAG 实验框架：用 Contriever（dense）与 BM25（sparse）配合 FAISS 索引检索，LLM（Llama2、MPT、Phi-2、Falcon，7B、4-bit 量化、zero-shot、greedy 解码）生成答案；将文档划分为 gold/relevant/distracting/random 四类，在 oracle 与真实检索两种设置下系统变换 prompt 中文档的类型、数量与位置组合，用答案包含式二值准确率（Wilcoxon 显著性检验）评测，并结合注意力热图与注意力熵分析机理。</p>

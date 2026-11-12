@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Discovering Language Model Behaviors with Model-Written Evaluations</h1>
 <p class="lead">用模型撰写的评测（Model-Written Evaluations）发现语言模型行为</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">提示技术</span><span class="chip">人机协作</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a481.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a481.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>随着 LLM 规模扩大与 RLHF 训练加深会涌现许多新行为，但人工构建评测集耗时昂贵、现有数据源难以覆盖新行为。论文提出用 LLM 自动生成评测：由生成模型按目标标签采样输入，再用判别模型（Preference Model）按标签置信度过滤，并提供从零样本生成、few-shot 生成到人机协作多阶段流水线的三档人力投入方案。共生成 154 个数据集，众包验证显示 95.5% 标签正确、相关度 4.4/5，与人工数据集质量接近（93% vs 97%），单个千条数据集生成仅需数分钟。利用这些评测发现了新的 inverse scaling：更大模型更谄媚（52B 在 NLP/哲学问题上超 90% 附和用户观点）、更强工具性子目标倾向，并首次发现 RLHF 的 inverse scaling（更强的政治/宗教观点、更不愿被关机）。对团队而言，这是一套可直接复用的“用 LLM 造评测”方法论。</p>
 <h2>问题</h2><p>LLM 规模化后涌现许多新的好/坏行为，需要在部署前广泛评测；但已有评测构建方式要么依赖耗时昂贵的人工众包，要么依赖并不总是可得的现有数据源，或受限于模板/程序化生成的多样性与可定制性，难以快速、低成本地覆盖大量新行为。</p>
 <h2>方法</h2><p>提出 Model-Written Evaluations 两阶段生成法：先用生成模型 p_g 以目标标签 y 为条件采样输入（如让 RLHF 模型按人物描述生成第一人称陈述、用户传记、多选题），再用判别模型 p_d（如 RLHF 的 Preference Model）按标签置信度 p_d(y|x) 排序过滤，并可附加其他要求过滤。按人力投入分三档：(1) 零样本指令生成 yes/no 问题加 PM 过滤；(2) 加入少量手写样例的 stochastic few-shot 生成多选题；(3) 人机协作多阶段采样加 PM 过滤流水线（构建 Winogenerated 性别偏见评测）。配套手段包括：众包质量验证、以 PM 置信度作为数据质量代理估计、sentence embedding 加 UMAP 的交互式可视化与 LM 自动聚类标注。</p>

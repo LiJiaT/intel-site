@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Chain-of-Symbol Prompting Elicits Planning in Large Langauge Models</h1>
 <p class="lead">Chain-of-Symbol 提示用于大语言模型的空间推理</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a425.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a425.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文发现当前 LLM 在理解自然语言描述的虚拟空间环境并做规划的任务上表现不佳，进而追问：自然语言是否是 LLM 表示复杂空间环境的最佳方式，还是符号表示更高效有效？作者提出 COS（Chain-of-Symbol Prompting），在 few-shot 示范的中间思考步骤中用紧凑符号（如用&quot;/&quot;表示&quot;在…之上&quot;、用三元组描述对象属性）替代冗长自然语言描述，无需对模型做额外训练。在自建的 Brick World、NLVR-based Manipulation、Natural Language Navigation 三个空间规划任务及 SPARTUN 空间问答数据集上，COS 全面超过 CoT：GPT-3.5-Turbo 在 Brick World 上准确率最高提升 60.8%（31.8%→92.6%），示范中间步骤 token 最多减少 65.8%（407→139）。分析还显示 COS 结果更稳定、对符号选择鲁棒，且在 Llama-2 上要到 70B 规模才明显超过 CoT，提示抽象符号理解是随规模涌现的能力。对团队而言，这是&quot;中间推理的表示形式同时影响质量与 token 成本&quot;的直接实证，可借鉴到提示设计与上下文压缩实践中。</p>
 <h2>问题</h2><p>当前 LLM 在需要理解以自然语言描述的虚拟空间环境并相应行动/推理的复杂规划任务上能力不足；论文探究自然语言是否为 LLM 表示复杂空间环境的最佳方式，还是符号表示等替代方案更高效、更有效。</p>
 <h2>方法</h2><p>提出 COS（Chain-of-Symbol Prompting）：输入的场景与问题保持自然语言不变，将 CoT 示范中的自然语言中间思考步骤替换为考虑空间关系的紧凑符号表示（如用&quot;/&quot;表示&quot;from the top of&quot;、用&quot;(large, round, black)&quot;三元组表示对象及其属性），并给出可泛化的三步示范构造流程；以 few-shot 方式提示 LLM，无需对模型做额外训练。</p>

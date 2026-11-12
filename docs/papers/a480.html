@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Large Language Models are Better Reasoners with Self-Verification</h1>
 <p class="lead">大语言模型通过 Self-Verification 成为更强的推理器</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a480.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a480.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>CoT 提示虽能引导 LLM 进行多步推理，但对单步错误高度敏感、误差会逐步累积，而以往训练独立 verifier 的方案需要人工标注与额外微调，可解释性差且难以迁移。论文提出无需训练的 Self-Verification 方法：先由 LLM 用 CoT 加采样解码生成多个候选答案，再把&#x27;问题+候选答案&#x27;改写为陈述句结论并补充为新条件，通过 True-False Item Verification（TFV）或 Condition Mask Verification（CMV，遮蔽原条件并反向预测）计算预测值与原值的一致性验证分数，选出分数最高的候选答案。在 8 个算术/常识/逻辑推理数据集上，方法在 6 个上取得新 SOTA（如 GSM8K 60.8→65.1），并可与 self-consistency、PAL 等前向增强手段叠加；验证能力随模型规模增大而增强，小模型收益有限。对团队而言，这是一种零训练成本、分数可解释的候选答案重排与可靠性增强模式，可借鉴到代码生成、知识问答等场景的输出校验环节。</p>
 <h2>问题</h2><p>CoT 多步推理对单步错误高度敏感、误差易累积，且缺乏纠错机制；已有方案需训练额外 verifier，依赖大量人工标注与微调额外模型，分数不可解释且难以扩展迁移到其他任务与领域。论文要解决如何在不训练、不标注的前提下让 LLM 自行验证并筛选更可靠的答案。</p>
 <h2>方法</h2><p>两阶段方法：1) Forward Reasoning——用 CoT few-shot 提示配合采样解码生成 K=5 个候选答案；2) Backward Verification——用指令提示把&#x27;问题+候选答案&#x27;改写为陈述句结论并作为新条件，再以两种方式构造验证问题：TFV（直接追问各条件是否相互满足 True/False，适用面广）与 CMV（用正则筛出数字等条件依次遮蔽为 &#x27;X&#x27; 并要求 LLM 反向预测，算术任务上更有效），每个候选重复采样 P=10 次，按预测值与被遮蔽原值的一致性统计验证分数，选分数最高者作为最终答案。全程仅靠 few-shot 提示，无微调或梯度更新；分数来自逐步一致性比对而非神经网络直接输出，因而可解释。</p>

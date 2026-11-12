@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Can NLP Models Correctly Reason Over Contexts that Break the Common Assumptions?</h1>
 <p class="lead">NLP 模型能否正确推理那些打破常见假设的上下文？</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">提示技术</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a677.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a677.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究 LLM 在&#x27;上下文打破常识性假设&#x27;场景下的推理可靠性：模型从预训练语料习得的常见模式（如&#x27;人们爱喝热汤&#x27;）可能与真实输入冲突。作者系统构建了一个评测集，每个实例包含一条常识假设、一个遵循该假设的上下文、一个打破假设的上下文及对应 Yes/No 二分类问题，覆盖偏好、行为、物体、事件等类别，由6名研究生编写并经交叉验证与多数投票校验。在 Flan T5、GPT-3 (text-davinci-003)、UnifiedQA 上的实验表明：模型在遵循假设的上下文上表现尚可（Flan T5-xxl 平均 89.19%），但在打破假设时显著掉到 70.67%（差距约20个绝对点），远低于人类基线 96%，且跨变体全对率仅 33.99%。对工程实践最有启示的发现是：在提示中显式给出常识假设，在上下文遵循假设时略有帮助，但在上下文打破假设时反而进一步降低性能。</p>
 <h2>问题</h2><p>预训练使 NLP 模型从语料中习得大量事实与常识并形成固定模式，但真实场景常出现打破这些&#x27;常识假设&#x27;的上下文（如&#x27;John 只在汤是冷的时候才喝番茄汤&#x27;）。论文要回答：state-of-the-art 模型能否真正理解给定上下文、必要时覆盖预训练先验来正确推理？作者指出此前工作集中于实体级参数/上下文知识冲突与对抗样本，对&#x27;打破常识假设&#x27;的推理能力评估不足，现有数据集缺乏足够此类样本。</p>
 <h2>方法</h2><p>系统构建&#x27;打破常识假设&#x27;评测数据：先整理偏好/行为/物体/事件（另加 Others）等类别的常识假设清单，为每条假设分别撰写遵循版与打破版对照上下文，并构造 Yes/No 二分类问题及同一 (context, question) 的多种变体以度量一致性；数据由6名计算机系研究生编写、交叉验证并剔除低一致样本，再用3名标注者多数投票验证假设的&#x27;常识性&#x27;。随后在 Flan T5（多规模）、GPT-3 (text-davinci-003)、UnifiedQA 上评测准确率与一致性，设置人类基线（每类别随机抽40对、3人多数投票），并做显式注入假设、失败实例分析与变体全对率等实验。</p>

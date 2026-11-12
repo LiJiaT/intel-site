@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Can Large Language Models Self-Correct in Medical Question Answering? An Exploratory Study</h1>
 <p class="lead">大语言模型（LLM）能否在医学问答中自我纠错？一项探索性研究</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a317.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a317.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文实证检验纯提示驱动的自我反思（self-reflection）能否提升 LLM 在安全攸关医学问答中的可靠性。方法上以 CoT 提示为基线，叠加迭代自我反思循环：模型先给出推理与答案，再扮演批评者审查自身推理，发现错误则修订，最多 K=10 步，并逐步追踪答案演化；在 MedQA、HeadQA、PubMedQA 三个基准上用 GPT-4o 与 GPT-4o-mini 做零样本黑盒实验。关键结论：自反思不能稳定提升准确率——仅在 MedQA 上有约 1 个百分点的小幅提升，在 HeadQA 与 PubMedQA 上持平或下降，增加反思步数也不保证更好表现，多数样本在 0-1 步内即终止反思。作者强调推理透明不等于推理正确，反思可能强化确认偏误式的后验合理化，应视为诊断分析工具而非独立的可靠性机制，需配合外部 grounding 或验证信号使用。</p>
 <h2>问题</h2><p>自我反思式（self-corrective）提示被广泛宣称能通过让 LLM 批评并修订自身推理来提升可靠性，但其在安全攸关的医学问答中的有效性尚不清楚。本文要实证回答：当模型被明确要求审查并修订自己的 CoT 推理时，预测如何演化——自我反思究竟带来错误纠正、错误持续，还是引入新错误，以及这些结果如何随数据集与模型规模变化。</p>
 <h2>方法</h2><p>以标准 CoT 提示为基线，扩展出迭代自我反思框架：模型先生成逐步临床推理与答案（与基线完全一致以保证公平比较），随后在每一步扮演自身推理的批评者，判断推理与答案在医学上是否准确、逻辑上是否成立；若无错误则终止，否则生成修订后的推理与新答案，循环最多 K=10 步。逐步记录预测答案，对未在最大步数内报告满意的样本额外计算多数投票聚合（仅用于分析）。全部实验为零样本、通过 OpenAI API 访问的黑盒模型（GPT-4o 与 GPT-4o-mini），无参数更新或微调，在 MedQA、HeadQA、PubMedQA 官方测试集上评估，并分析反思深度分布与平均反思步数。</p>

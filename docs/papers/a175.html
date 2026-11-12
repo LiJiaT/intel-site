@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>A Machine with Short-Term, Episodic, and Semantic Memory Systems</h1>
 <p class="lead">具备短期记忆、情景记忆与语义记忆系统的机器</p>
 <div style="margin-top:10px"><span class="lvl lvl-medium">medium</span><span class="chip">arXiv</span><span class="chip">记忆管理</span><span class="chip">Agent框架</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a175.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a175.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对机器记忆系统难以回答个人化问题（如&#x27;某人的物品现在在哪&#x27;）的缺陷，受认知科学显性记忆理论启发，构建了同时具备短期、episodic 与 semantic 三种记忆系统的 Agent，每种记忆均以知识图谱四元组存储。作者发布了兼容 OpenAI Gym 的仿真环境 &#x27;the Room&#x27;，Agent 在部分可观测条件下观察人物放置物品并回答位置问题，用 deep Q-learning 学习短期记忆满时的三选一策略（遗忘/存入情景/存入语义），检索则用基于时间戳与记忆强度的规则算法。关键结论：双长期记忆的 RL Agent 超过仅情景、仅语义与随机基线；用 ConceptNet 预填充语义记忆的 Agent 收敛更快且得分更高（116 vs 109，每回合满分 128）；低容量时优先存语义知识更优。对团队而言，其记忆分层与遗忘/固化策略对 LLM Agent 记忆系统设计有概念借鉴价值，但方法本身依赖 RL 训练而非 LLM。</p>
 <h2>问题</h2><p>现有机器学习 Agent 的记忆系统难以回答个人化（episodic）问题，例如&#x27;某人的物品现在在哪里&#x27;；且记忆容量有限，不可能把每条观察都存为长期记忆。论文要验证的假设是：相比单一记忆系统，同时建模短期、情景与语义三种人类样记忆系统，能让 Agent 在部分可观测环境中更好地回答关于世界状态的问题，并学会在容量受限时决定哪些观察该遗忘、哪些固化为长期记忆。</p>
 <h2>方法</h2><p>将三种记忆系统均建模为有容量上限的知识图谱：观察以四元组 (h, r, t, timestamp) 存入短期记忆，满时由 deep Q-learning（LSTM Q-network，输入为三个记忆系统的 KGE 序列表示）学习三选一动作——彻底遗忘、移入情景记忆、移入语义记忆（语义记忆以 strength 替代 timestamp，且 head 去个体化）；情景记忆满时遗忘最旧条目，语义记忆满时遗忘最弱条目；检索采用规则算法（多条情景记忆取时间最新，情景缺失时查语义记忆并取强度最高者）。环境为离散事件仿真 &#x27;the Room&#x27;（兼容 OpenAI Gym，N_humans=64、N_objects=16、N_object_locations=28、p_commonsense=0.5），部分实验用 ConceptNet 预填充语义记忆作为&#x27;预训练&#x27;变体。</p>

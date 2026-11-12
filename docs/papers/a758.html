@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Conversing with Copilot: Exploring Prompt Engineering for Solving CS1 Problems Using Natural Language</h1>
 <p class="lead">与 Copilot 对话：探索用自然语言提示工程解决 CS1 编程问题</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">代码生成Agent</span><span class="chip">评测基准</span><span class="chip">人机协作</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a758.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a758.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文系统评估了 GitHub Copilot（底层为 OpenAI Codex）在 166 道 CodeCheck 公开 Python 入门编程题上的表现，并首次探索用自然语言提示工程修复代码生成错误的做法。方法是将题目描述原样输入 Copilot，对失败题目人工改写提示（如追加伪代码式分步算法提示）后重新生成并判题，再对仍失败的题目做独立失败归因。结果显示：47.6% 的题目首次尝试即通过全部测试；剩余 87 题中 60.9% 仅靠修改自然语言描述即可解出；失败可归为 Conceptual、Poor Prompts、Verbose Prompts、Ambiguous 四类，类伪代码的改写最有效，而过长提示会因 Codex 解析能力下降而失败。对团队而言，这是提示工程在代码生成场景的早期实证基准，其失败分类法与“解包概念 vs 控制提示长度”的权衡，对设计代码生成/审查工具的提示策略与评测归因流程有直接参考价值。</p>
 <h2>问题</h2><p>此前工作只表明 Codex/Copilot 能在首次尝试中解出约一半典型 CS1 编程题，但对模型容易失败的问题类型，以及生成出错时用户如何通过修改自然语言题目描述（提示工程）来修复错误，几乎无人研究。论文要量化 Copilot 在公开题库上的初始成功率、提示工程对剩余失败题目的修复效果，并归纳失败的共性原因。</p>
 <h2>方法</h2><p>在 166 道 CodeCheck 公开 Python 编程题上评测 Copilot：先将题目描述（注释+函数签名）原样粘贴到启用 Copilot 扩展的 VS Code 中；对未通过全部测试用例的题目，由作者人工改写自然语言提示（典型做法是追加伪代码式的分步算法提示、显式说明计算步骤与边界条件），再次生成并判题；最后由未参与提示改写的作者对仍失败的 34 题基于原始提示、改写提示与人工解答独立归因，划分为 Conceptual、Poor Prompts、Verbose Prompts、Ambiguous 四类。</p>

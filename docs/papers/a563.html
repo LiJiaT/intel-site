@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Prompting a Large Language Model to Generate Diverse Motivational Messages: A Comparison with Human-Written Messages</h1>
 <p class="lead">提示大语言模型（LLM）生成多样化激励消息：与人类撰写消息的对比</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">人机协作</span><span class="chip">成本与效率</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a563.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a563.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文探讨能否把为众包工人设计的任务指令（具体、含示例短语）直接用作 LLM 提示，以提升生成内容的整体多样性。作者沿用 Directed Diversity 众包流程，用 250 个语义多样的短语提示 GPT-4 撰写激励运动的消息，并与 Simple-GPT、Diverse-Naïve-GPT 两个基线提示及人类众包写手对比。结果显示 Phrase-GPT 的多样性（消息两两欧氏距离均值 5.66）高于两个基线（4.13 与 4.29），但仍低于人类写手（6.90）；效率上 GPT-4 每条约 6 秒，远快于人类的 73 秒。论文还发现 GPT-4 倾向机械套用短语而非判断其相关性，建议把众包流程进一步原子化（如先让 LLM 判断短语相关性），并提示需防范幻觉与有害刻板印象。对团队而言，其价值在于验证了用结构化示例组织提示可系统性提升输出多样性这一可迁移的提示模式。</p>
 <h2>问题</h2><p>探索为众包任务编写的指令（语言具体、包含示例、任务原子化）能否直接用作 LLM 提示，从而提升 LLM 生成内容的集体多样性；并以撰写激励运动的消息这一复杂创造性任务为载体，对比人类众包写手与 GPT-4 在同一流程下的产出差异。</p>
 <h2>方法</h2><p>沿用 Directed Diversity 众包流程：准备 250 个语义多样的 3-5 词短语作为写作灵感素材，设置四个条件对比：(1) Human-Written：众包工人参照短语撰写 250 条消息；(2) Phrase-GPT：用相同短语与指令经 ChatGPT web-UI 提示 GPT-4 生成 250 条消息；(3) Simple-GPT：仅要求写 250 条消息；(4) Diverse-Naïve-GPT：要求写 250 条彼此多样的消息。以每个条件内所有消息两两欧氏距离的均值作为多样性度量。</p>

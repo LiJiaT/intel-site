@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Tree of Thoughts: Deliberate Problem Solving with Large Language Models</h1>
 <p class="lead">Tree of Thoughts（思维之树）：利用 LLM 进行审慎式问题求解</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">Agent框架</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a087.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a087.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在推理阶段只能做 token 级、从左到右的自回归决策，缺乏局部探索、全局前瞻与回溯，在需要规划或搜索的任务上表现不佳。论文提出 Tree of Thoughts（ToT）推理框架，将 CoT 泛化为树搜索：把中间推理分解为可评估的 thought 步骤，每步生成多个候选，由 LM 自评估状态价值或投票，再用 BFS/DFS 进行带剪枝与回溯的系统搜索，全程无需额外训练。在 Game of 24 上，GPT-4 + CoT 仅解出 4%，ToT 达到 74%；Mini Crosswords 词级正确率从不足 16% 提升到 60%。代价是 token 消耗可达 CoT 的 5-100 倍，且对 GPT-4 已擅长的任务收益有限。对团队而言，这是提示工程与 Agent 规划/反思设计的经典方法，也是难任务上做可靠性提升与成本权衡的重要参考。</p>
 <h2>问题</h2><p>现有 LLM 推理机制是 token 级、从左到右的，存在两个关键缺陷：局部上无法在思维过程中探索不同的延续分支；全局上缺乏规划、前瞻与回溯等启发式引导的搜索机制，导致在需要探索、策略性前瞻或初始决策至关重要的任务上表现不足。</p>
 <h2>方法</h2><p>提出 Tree of Thoughts（ToT）框架，将问题求解建模为对&#x27;思维树&#x27;的搜索，节点状态 s=[x, z1..i] 由输入与已有 thought 序列组成，涉及四个设计维度：1) 思维分解——按问题性质把中间步骤设计为几个词、一行等式或一段写作计划等粒度；2) 思维生成——从状态独立采样 k 个候选或顺序 propose；3) 状态评估——用 LM 对状态打分或对候选投票，作为搜索启发式（以往启发式需人工编程或训练模型，此处由 LM 审慎推理充当）；4) 搜索算法——BFS 每步保留最优 b 个候选，或 DFS 沿最有希望的分支深入、状态被判定不可行时回溯剪枝。框架模块化，基础 LM、分解、生成、评估与搜索算法可独立替换；IO、CoT、CoT-SC、self-refinement 均为其特例。</p>

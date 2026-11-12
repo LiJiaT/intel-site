@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>SatLM: Satisfiability-Aided Language Models Using Declarative Prompting</h1>
 <p class="lead">SATLM：使用声明式提示的可满足性辅助语言模型（Satisfiability-Aided Language Models Using Declarative Prompting）</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">工具调用</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a429.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a429.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文针对 CoT 与 program-aided LM（如 PROGLM）在需要规划与搜索的约束求解类任务上易出规划错误的问题，提出 SATLM：LLM 只负责把自然语言解析为声明式规范（一组接近 z3py 语法的逻辑公式），规划与执行全部卸载给 Z3 等 SAT/SMT 求解器，从而保证执行正确性。在 8 个数据集、4 类任务上，SATLM 一致超过 COT 与 PROGLM：GSM-SYS 上比 PROGLM 高 23%，并在 LSAT（30.9%→37.4%）与 BOARDGAMEQA（73.9%→80.7%）刷新 SoTA。消融显示声明式提示本身即比命令式 CoT 更易被 LLM 解析，且求解器返回的 UNSAT/AMBIG 信号可支持高选择性准确率的弃答。对团队而言，这是&#x27;LLM 解析 + 外部工具求解/验证&#x27;的工具调用范式与声明式提示模式的代表性范例。</p>
 <h2>问题</h2><p>CoT 与 program-aided LM 采用命令式（imperative）求解范式，把推理过程写成按执行顺序链接的步骤，适合前向推理，但在需要复杂规划与搜索的约束求解类推理任务上会犯规划错误（推理链错误）与执行错误（计算错误）；论文希望让 LLM 扬长避短——只做自然语言到形式规范的理解，把规划与执行交给可靠的符号求解器。</p>
 <h2>方法</h2><p>基于 parse-plan-execute 三步框架：用 few-shot 声明式提示让 LLM 将 NL 问题解析为声明式任务规范（NL 以注释形式与 Python 风格逻辑公式交错，兼容 z3py，经基于 regex 的后处理转为真实 z3py 代码）；将所有任务统一表述为一阶逻辑 SAT 问题，调用 Z3 等 SMT 求解器求满足赋值得到答案；求解器保证执行正确并可产出有效性证明，且能返回 ERROR/UNSAT/AMBIG 三类反馈信号用于选择性弃答。</p>

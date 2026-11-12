@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Batch Prompting: Efficient Inference with Large Language Model APIs</h1>
 <p class="lead">Batch Prompting：利用 LLM API 实现高效推理</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">成本与效率</span><span class="chip">思维链与推理</span><span class="chip">上下文窗口</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a476.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a476.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对大规模调用 LLM API 时 token 与时间成本高昂的问题（1 万样本用 gpt-3.5-turbo 约需 40 美元与 8 小时，gpt-4 超过 600 美元），提出 batch prompting：把多个样本连同位置标识符 [index] 打包进同一次请求，让模型一次推理输出 b 个答案，将调用次数从 N 降为 N/b。理论上，few-shot in-context learning 场景下大部分 token 被共享示例消耗，因此成本随批大小 b 近似反线性下降。在覆盖常识问答、算术推理与 NLI/NLU 的 10 个数据集上，Codex 最多取得 5 倍 token 与时间节省且准确率相当或更好；GPT-3.5 与 GPT-4 上结论同样成立，chat 模型甚至常有性能提升。分析表明性能随 b 增大而下降（b=6 时五个数据集中四个显著下降），b=3 或 4 是较好平衡点，任务复杂或输入上下文长时退化更明显。方法可与 CoT、end-to-end、program-based 等推理方式即插即用地组合。</p>
 <h2>问题</h2><p>对大量样本逐一调用 LLM API 推理时成本高昂：few-shot 示例 token 在每次调用中被重复消耗，token 计费与调用次数线性相关；同时 API 调用开销与每分钟请求速率限制进一步推高时间成本，阻碍大规模 LLM 应用（如数据集评测、海量客户请求处理）。</p>
 <h2>方法</h2><p>batch prompting：单次推理同时处理 b 个样本。将 K 个 few-shot 示例按每批 b 个分组，批内先按顺序排列所有输入上下文、再按相同顺序排列对应输出作为示范，测试样本同样按批分组附在提示末尾；用位置标识符 &#x27;[index]&#x27; 帮助模型对齐输入输出顺序并便于解析答案。无需修改 API 或模型。理论分析：few-shot 场景下提示 token 远多于生成 token，token 效率随 b 近似反线性提升；时间上调用次数从 N 降为 N/b，在 API 开销与限流占主导时足以抵消生成更长序列带来的额外解码时间。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>TELeR: A General Taxonomy of LLM Prompts for Benchmarking Complex Tasks</h1>
 <p class="lead">TELeR：面向复杂任务基准测试的 LLM 提示通用分类法</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a420.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a420.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在病态定义（ill-defined）复杂任务上的表现对提示的类型、风格与细节程度极为敏感，若基准研究只报告指标而不说明提示细节，跨研究、跨模型的比较便失去意义。论文提出 TELeR 通用提示分类法：将提示视为 Directive 与 Data 的组合，按 Turn（轮次）、Expression（question/instruction 风格）、Level of Details（细节程度，Limitations 中提及共七级）、Role（是否设定 system 角色）四个维度统一分类。作者以元评审（meta-review）生成与多叙事编织（narrative braiding）两个示例任务演示了如何按该分类构造不同级别的提示。核心主张是：未来基准研究应采用 TELeR 报告所用提示的类别，从而实现跨研究的 apple-to-apple 比较，更快形成对 LLM 复杂任务能力的状态共识。需注意这是立场型工作，正文未包含定量实验。</p>
 <h2>问题</h2><p>LLM 在复杂任务（ill-defined、目标抽象、依赖主观解释、难以定量评估）上的性能随提示类型/风格与细节程度剧烈变化；基准研究若只报告准确率而不说明提示的细粒度差异，跨研究比较就无意义。论文旨在建立一个通用的提示分类标准，使不同研究能以统一口径报告所用提示类别，实现公平比较。</p>
 <h2>方法</h2><p>提出 TELeR 分类法：将每个提示表示为 Directive（指令）与 Data（数据）的组合，在 Data 固定的前提下按四个维度分类——Turn（单轮/多轮）、Expression（question 风格/instruction 风格）、Level of Details（细节程度，论文 Limitations 提及共七级）、Role（是否定义 system 角色）。论文用两个复杂任务示例演示：从多篇专家评审生成 meta-review、将多条备选叙事编织为单一叙事，分别给出单轮 question 风格与 instruction 风格、不同细节级别的示例提示。</p>

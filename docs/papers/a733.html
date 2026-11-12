@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>MathPrompter: Mathematical Reasoning using Large Language Models</h1>
 <p class="lead">MathPrompter：利用大语言模型（LLM）进行数学推理</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">工具调用</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a733.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a733.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在算术推理这类有唯一正确答案的任务上常给出错误结果，且不提供置信度，造成信任赤字、阻碍实际采用。MathPrompter 提出一种 Zero-shot-CoT 提示技术：先将题目中的数值替换为变量生成代数模板，再用不同提示（推导代数表达式、编写 Python 函数）让 LLM 生成同一问题的多条解析解，然后用 Python 的 eval() 在多组随机变量赋值上执行这些表达式并检查是否达成共识，重复约 N~5 次后取最频繁的答案，再代入原始数值得到最终结果。在 MultiArith 数据集上，该方法用 175B 参数的 GPT-3 将准确率从 Zero-shot-CoT 的 78.7% 提升到 92.5%，性能可与 540B 参数模型及 SOTA Few-shot-CoT 方法相当。对团队而言，其“多路径生成 + 程序化执行验证 + 共识统计”是提升 LLM 输出可靠性的可直接复用提示模式。</p>
 <h2>问题</h2><p>LLM 在算术推理任务上表现有限、常给出错误答案；已有 CoT 提示方法对中间推理步骤的正确性没有任何校验，且模型不提供预测置信度，形成信任赤字，阻碍 LLM 的落地采用。</p>
 <h2>方法</h2><p>MathPrompter 分四步：(I) 生成代数模板：将题目数值替换为变量得到 Qt 及 key-value 映射；(II) Math-prompts：用不同提示（如 &#x27;Write a mathematical equation&#x27;、&#x27;Write a Python function&#x27;）让 LLM 生成多条关于变量的解析解；(III) 计算验证：用 Python 的 eval() 对多组随机变量赋值执行这些表达式，比较输出是否一致；(IV) 统计显著性：重复 (II)(III) 约 N~5 次，取最频繁的答案作为共识结果，无共识则重试，最后将原始数值代入得到最终答案。整个过程基于 Zero-shot-CoT，无需 few-shot 示例。</p>

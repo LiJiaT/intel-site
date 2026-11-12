@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Larger language models do in-context learning differently</h1>
 <p class="lead">更大的语言模型以不同方式进行 in-context learning</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a444.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a444.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究 LLM 的 in-context learning（ICL）究竟依赖预训练形成的语义先验，还是真正从 prompt 中 exemplar 学习 input-label 映射。作者在 GPT-3、InstructGPT、Codex、PaLM、Flan-PaLM 五个模型家族与七个 NLP 分类任务上，设计了翻转标签（flipped-label）与语义无关标签（SUL-ICL）两类对照实验。关键结论：覆盖语义先验、在无语义线索下学习标签映射都是随模型规模涌现的能力——小模型主要依赖语义先验，大模型（如 PaLM-540B、text-davinci-002、code-davinci-002）能真正从示例学习映射，甚至完成高维线性分类；instruction tuning 同时增强两种能力，但更强化语义先验，使模型更不愿跟随翻转标签。对团队的直接启示是：few-shot 示例的真实作用随模型规模与是否 instruction-tuned 而不同，标签命名、示例数量与模板格式的取舍应据此差异化设计。</p>
 <h2>问题</h2><p>厘清 LLM 做 in-context learning 的性能来源：是主要利用预训练获得的语义先验（semantic priors），还是真正从 prompt 中给出的 input-label 映射中学习；并考察模型规模与 instruction tuning 如何影响这两种机制的权衡。</p>
 <h2>方法</h2><p>设计两类对照实验：flipped-label ICL（按比例翻转 in-context exemplar 的标签，检验模型能否覆盖语义先验）与 SUL-ICL（用 foo/bar 等与任务语义无关的标签替换自然语言标签，迫使模型只能从示例学习映射）；在 GPT-3、InstructGPT、Codex、PaLM、Flan-PaLM 五个家族、七个 NLP 分类任务上系统比较不同规模模型，并扩展到 N 维线性分类、输入词重映射、多种标签类型与 prompt 模板、OOD 数据集等消融实验。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Dense Contexts Are Hard Contexts: Lexical Density Limits Effective Context in LLMs</h1>
 <p class="lead">稠密上下文即困难上下文：词汇密度限制 LLM 的有效上下文容量</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">上下文窗口</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a789.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a789.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文指出，除输入长度与信息位置外，词汇密度（lexical density，即上下文引入新信息的速率）是导致 LLM 长上下文性能退化的第三个被长期忽视的因素。作者用 MATTR 量化密度，构建三个长度均约 12k token、针位置受控但密度递增的 find-the-needle 基准（MK-NIAH、新提出的 Scene-Rules 与 WordChecker），在 8 个 9B-685B 开源模型上评测。关键结论：稀疏基准上接近满分的模型在高密度基准上 4k-6k token 后即崩溃，12k 处相对 2k 基线平均变化为 +1%/-27%/-31%；通过基准内重复干扰项做稀疏化干预，在固定任务、长度与位置下可恢复性能（Scene-Rules 最高 +24%），且密度会激活并放大位置衰减，不同模型家族呈现 Conflation、Abstention、Loop inversion 三类失败模式。对团队而言，Agent 配置、工具输出等高密度上下文会显著缩小有效窗口，压缩策略也可能因提高密度而损害可靠性。</p>
 <h2>问题</h2><p>已知输入长度与相关信息位置是 LLM 长上下文退化的两大主因，但现有评测隐含假设同等长度与布局的上下文难度等同。论文要验证第三个因素——词汇密度（上下文引入不同信息的速率）——是否在固定长度与针位置的前提下，系统性缩小 LLM 的有效上下文窗口，并排除任务类型混淆。</p>
 <h2>方法</h2><p>用 Moving-Average Type-Token Ratio（MATTR，窗口 W=100）作为词汇密度的度量；设计三个长度（≈12k token）、候选结构与针放置策略一致但密度递增的精确检索基准：MK-NIAH（MATTR=0.58）、新提出的 Scene-Rules（0.75，语义匹配）与 WordChecker（1.0，lemma 级字符串匹配）；在 8 个开源模型（9B-685B，含 reasoning/non-reasoning、dense/MoE）上扫描针位置（8 桶×3 采样）与密度，每模型每基准 12,000 次推理；并通过基准内重复干扰项的稀疏化干预（固定任务、长度、位置，仅改变唯一干扰项数 k）隔离密度的因果作用；辅以预测位置对比与按结果分解的错误分析（Conflation/Abstention/Loop inversion）。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>RULER: What&#x27;s the Real Context Size of Your Long-Context Language Models?</h1>
 <p class="lead">RULER：你的长上下文语言模型的真实上下文规模是多少？</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">上下文窗口</span><span class="chip">评测基准</span><span class="chip">RAG与检索</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a217.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a217.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文指出被广泛采用的 needle-in-a-haystack（NIAH）测试只能反映浅层的长上下文检索能力，无法衡量模型真实可用的上下文长度。作者构建了全合成基准 RULER，包含检索（多种 NIAH 变体）、多跳追踪（variable tracking）、聚合（CWE/FWE 词频统计）和问答四大类共 13 个任务，可灵活配置序列长度（4K–128K）与任务复杂度，并据此评测了 17 个长上下文 LLM。关键结论是：尽管各模型在 vanilla NIAH 上近乎满分，但随着上下文变长几乎所有模型都大幅退化，宣称 32K 以上上下文的模型中只有一半能在 32K 保持合格表现；对 Yi-34B 的深入分析揭示了无法忽略干扰项、答案不完整、照抄上下文、长上下文 QA 幻觉等失败模式。对团队而言，这是评估候选模型&#x27;有效上下文长度&#x27;、决定上下文预算与 RAG 策略的实用开源工具。</p>
 <h2>问题</h2><p>现有长上下文评测（尤其是 NIAH 测试）只考察简单检索，无法反映模型在长输入下检索之外的行为（多跳追踪、聚合、问答），且各工作评测方式不一致，导致模型&#x27;宣称的上下文长度&#x27;与&#x27;实际有效上下文长度&#x27;存在巨大差距，缺乏统一、可配置、可自动评分的长上下文评测基准。</p>
 <h2>方法</h2><p>构建全合成基准 RULER：四大任务类别——检索（NIAH 变体：更换 needle 类型、多 needle 干扰、多值/多查询召回）、多跳追踪（variable tracking 模拟共指链解析）、聚合（CWE/FWE 词频统计，作为摘要类任务的代理）、问答（将含答案的黄金段落插入同数据集采样的干扰段落中）；任务由输入配置自动生成，可通过目标输出 token 数与上下文信噪比控制复杂度；以 Llama2-7B 在 4K 的表现（85.6%）为阈值定义&#x27;有效上下文长度&#x27;，并用两种线性加权平均分（wAvg. inc/dec，模拟长短序列的真实使用分布）做细粒度排名；另通过任务相关性聚类从 18 个配置中筛选出 13 个代表性任务。评测使用 vLLM、BFloat16、greedy decoding，每任务每长度 500 个样本。</p>

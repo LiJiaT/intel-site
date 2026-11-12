@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity</h1>
 <p class="lead">奇妙的有序提示及其寻找之道：克服 Few-Shot 提示的顺序敏感性</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">自动提示优化</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a513.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a513.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究 In-context Learning 中少样本示例排列顺序对性能的巨大影响：同一组样本仅改变顺序，GPT 系列模型的表现即可从接近监督训练水平跌至接近随机猜测。作者系统分析发现，该顺序敏感性跨模型规模普遍存在、增加样本数也无法消除，且好的排列不可跨模型迁移。为此提出无需额外标注的自动选择方法：利用模型的生成能力，以每个候选排列为上下文采样构造人工 probing set，再基于预测标签分布的全局熵与逐样本熵对候选提示排序，选出 top-4 排列。在 11 个文本分类任务上，GlobalE 平均带来 13% 相对提升且方差显著更低，对低方差任务无负面影响。对团队而言，这是提示工程中示例组织与自动优选的经典方法，可直接纳入少样本提示的构建与验收流程。</p>
 <h2>问题</h2><p>In-context Learning 中，提示内训练样本的排列顺序会极大影响模型性能——同一组样本换一种顺序，表现可从接近 SOTA 跌到随机猜测水平，而此前没有工作系统研究过这一顺序敏感性。论文要解决的问题是：在不依赖额外标注开发集（符合 true few-shot 设定）的前提下，自动找出高性能的样本排列。</p>
 <h2>方法</h2><p>首先做系统性分析：在 GPT-2（0.1B–1.5B）与 GPT-3（2.7B、175B）上枚举 4-shot 样本的全部 24 种排列，发现高性能排列不可跨模型迁移、增加样本数不能消除方差、坏提示普遍表现为预测标签分布高度不均衡、校准也无法消除方差。方法上分三步： 对随机抽取的训练样本用模板线性化，枚举所有排列作为候选提示； 以每个候选排列为上下文，从语言模型本身采样生成无标注的人工开发集； 用 GlobalE（probing set 上预测标签分布的全局熵）与 LocalE（逐样本预测熵的均值）对候选排列打分排序，选 top-4 作为最终提示，全程不需要真实标注数据。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Graph of Thoughts: Solving Elaborate Problems with Large Language Models</h1>
 <p class="lead">Graph of Thoughts：用 LLM 求解复杂问题</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a398.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a398.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对 CoT、CoT-SC、ToT 等提示范式将 LLM 推理约束在链/树结构、无法自由组合中间思路的问题，提出 Graph of Thoughts（GoT）框架：把每条 LLM 思路建模为有向图中的顶点、依赖关系为边，从而支持聚合（多思路合并）、精炼（自环迭代改进）、生成等图上思路变换，并可删除无前景思路以节省上下文空间。系统采用 Prompter/Parser/Scoring/Controller 模块化架构，以静态 Graph of Operations（GoO）规定执行计划、Graph Reasoning State（GRS）维护动态推理状态，可扩展接入 GPT-3.5、GPT-4、Llama-2 等模型。在排序、集合交集、关键词计数、文档合并四类任务上，GoT 质量全面超过 IO/CoT/CoT-SC/ToT：排序质量较 ToT 提升 62% 且成本降低超 31%，较 CoT 提升约 70%；论文还提出 volume of a thought 新指标，证明 GoT 在固定成本下同时实现低延迟与高 volume。其&#x27;分解-求解-聚合&#x27;的提示编排模式与 GoO/GRS 架构划分对团队设计复杂任务的提示流程有直接借鉴价值。</p>
 <h2>问题</h2><p>现有提示范式（IO、CoT、CoT-SC、ToT）把 LLM 推理过程限制在单链、多链或树的固定结构上，无法表达&#x27;回溯后将不同推理链中的思路合并成新解&#x27;等更复杂的推理模式，限制了提示方案在可分解复杂任务上的质量与成本表现。</p>
 <h2>方法</h2><p>将 LLM 推理过程建模为任意有向图：思路为顶点、依赖为边，支持三类图变换——聚合（多个思路/推理链合并为一个新思路）、精炼（自环迭代改进）、生成（由单思路派生新思路），并允许显式删除顶点/边以节省上下文空间；配合评分函数 E 与排序函数 R 选择思路。系统架构包含 Prompter、Parser、Scoring、Controller 四个模块，Controller 内含静态执行计划 Graph of Operations（GoO）与动态推理状态 Graph Reasoning State（GRS），提供可扩展 API 并支持接入不同 LLM。</p>

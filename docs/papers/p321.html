@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Thermal Resistance Network Derivative (TREND) Model for Efficient Thermal Simulation and Design of ICs and Packages</h1>
 <p class="lead">用于 IC 与封装高效热仿真与设计的热阻网络导数（TREND）模型</p>
 <div style="margin-top:10px"><span class="lvl lvl-low">low</span><span class="chip">DAC 2024</span><span class="chip">EDA工具</span><span class="chip">其他</span><span class="chip">无明显对应</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p321.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p321.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>3-D IC 与封装热设计中，评估模型参数对 hotspot 温度的影响需要大量数值仿真，传统全域求解计算资源与时间成本高。论文提出热阻网络导数（TREND）模型：将结构分解为感兴趣区域 ROI 与固定区域 ROF，对 ROF 用 FVM 离散，通过绝热边界与逐点均匀热流激励、基于叠加原理提取截断面面元间的等效传递热阻矩阵，作为 Robin 等效边界条件施加于 ROI，使线性系统自由度从 N_F+N_I 降为 N_I；模型由 ROF 自身材料、几何与边界唯一决定，与激励无关，因而可复用、可并行构建并保护内部细节。在含 microchannel heat sink 的 3-D IC 案例共 2106 个工况中，预建模型后相比 ANSYS FLUENT 加速 2695x、比标准 FVM 快 382x，2-D 案例最大误差小于 10^-5 ℃，将热设计周期从数周（441 h 40 m 30 s）缩短到 9 m 50 s。</p>
 <h2>问题</h2><p>3-D IC 与封装热设计中，常用做法是对大量模型参数组合反复做热仿真以评估其对 hotspot 温度的影响，但传统数值仿真（如商业软件 FLUENT）计算资源消耗大、时间成本高（论文案例中 2106 个工况需数周），而热设计真正关心的通常只是含热源的小区域温度，全域求解造成浪费。已有加速手段存在局限：绝热换热系数类方法仅适用于等温热源块，BCI 紧凑热模型（CTM）不可避免带来精度损失。</p>
 <h2>方法</h2><p>提出区域分解策略与 TREND 模型：将整体结构划分为感兴趣区域（ROI）与固定区域（ROF，如冷却系统）；对 ROF 用有限体积法（FVM）空间离散，先在截断面施加绝热边界求得温度 T_ad，再逐个对面元施加均匀热流密度激励获得温度响应，基于叠加原理定义面元间等效传递热阻 R_ij，构成 M×M 热阻矩阵，并以受控电压源类比表示互热效应，形成 TREND 等效边界模型；将该模型作为 Robin 边界条件施加于 ROI 截断面，使求解自由度从 N_F+N_I 降为 N_I。借助稀疏直接求解器（PARDISO-LU）复用 LU 分解加速，多个 ROF 的 TREND 模型可并行建立；模型由 ROF 的材料、边界与几何唯一决定、与激励无关，因而可复用并保护 ROF 内部细节，支持模块化热设计。</p>

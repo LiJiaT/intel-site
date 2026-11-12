@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>In Defense of RAG in the Era of Long-Context Language Models</h1>
 <p class="lead">在长上下文 LLM 时代为 RAG 辩护</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">上下文窗口</span><span class="chip">RAG与检索</span><span class="chip">成本与效率</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a103.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a103.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文回应&#x27;长上下文 LLM 出现后 RAG 是否已过时&#x27;的争论：作者指出超长上下文会使模型对相关信息的注意力被稀释，反而降低答案质量。方法上提出 OP-RAG，在检索 top-k chunks 后不按相似度降序、而是按其在原文中的出现顺序排列后送入 LLM，并系统刻画了&#x27;检索块数增加、质量先升后降&#x27;的倒 U 型曲线。在 ∞Bench 的 EN.QA/EN.MC 上，Llama3.1-70B 仅用 16K-48K 检索 token 即达到 44.43-47.25 F1，显著超过其用满 128K 上下文的 34.26 F1，也优于 GPT-4O、Gemini-1.5-Pro 及 SELF-ROUTE 路由方案。核心结论：高效检索加聚焦上下文优于暴力长上下文，RAG 在长上下文时代依然必要且更具性价比。</p>
 <h2>问题</h2><p>长上下文 LLM（128K 甚至 1M 窗口）普及后，已有研究（Li et al., 2024）结论称长上下文直接输入一致优于 RAG，RAG 似乎不再必要。论文要重新检验这一结论，解决超长上下文中相关信息被稀释、无关信息干扰导致答案质量下降的问题，证明设计良好的 RAG 能以更少 token 取得更高答案质量。</p>
 <h2>方法</h2><p>提出 order-preserve RAG（OP-RAG）：将长文档均匀切分为 128 token 的非重叠 chunks，用 BGE-large-en-v1.5 计算 query 与 chunk embedding 的 cosine 相似度并取 top-k；与传统 vanilla RAG 按相似度降序排列不同，OP-RAG 保留 chunks 在原文中的先后顺序再拼接进上下文。同时通过消融实验刻画检索块数与答案质量的倒 U 型关系，为不同模型寻找质量-成本最优的上下文长度。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Are We Ready For An Agent-Native Memory System?</h1>
 <p class="lead">我们准备好迎接 Agent 原生记忆系统了吗？</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">记忆管理</span><span class="chip">RAG与检索</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">可靠性与安全</span><span class="chip">上下文窗口</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a325.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a325.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文从数据管理视角系统回答“我们是否已准备好 Agent 原生记忆系统”。针对现有评测只用端到端任务指标（F1、BLEU）、把记忆系统当黑盒的局限，作者提出将记忆分解为表示与存储、抽取、检索与路由、维护四个模块的分析框架与分类法，在 5 类基准工作负载、11 个数据集上统一评测 12 个代表性记忆系统与 2 个基线，并做单模块受控消融。关键结论：没有单一架构全场景占优，效果取决于记忆结构与工作负载瓶颈的匹配；局部化维护比全局重组更省成本，高结构化系统延迟高出数量级但精度收益不成比例；写时保留原始内容比增加抽象或层级更重要，保守合并是最佳默认维护策略。对团队记忆系统选型与自建评测体系有直接参考价值。</p>
 <h2>问题</h2><p>现有 Agent 记忆评测主要依赖端到端任务成功指标（如 F1、BLEU），把记忆系统当作单体黑盒，导致运维成本、模块间架构权衡、动态知识更新下的鲁棒性等系统级问题未被充分探索；记忆系统架构高度碎片化，缺乏从数据管理视角出发的统一测试床、跨系统公平比较与细粒度归因分析。</p>
 <h2>方法</h2><p>提出四模块分析框架 M_sys = ⟨R, S, Q, U⟩：记忆表示与存储、记忆抽取、记忆检索与路由、记忆维护，并为每个模块建立结构化分类法（如维护侧的时间戳多版本、容量驱逐、LLM 语义合并、参数化优化等）。在统一测试床（含统一时间开销记录）上，对 12 个代表性记忆系统与 Long Context、Embedding RAG 两个基线，围绕任务有效性、检索保真度、更新鲁棒性、长程稳定性、运维成本五个研究问题做端到端评测（覆盖 LoCoMo、LongMemEval、DB-Bench、LongBench 等 11 个数据集），并通过每次只修改一个模块的受控变体进行细粒度消融，量化各模块对表示保真度、路由精度与更新正确性的独立影响。</p>

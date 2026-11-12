@@ -9,8 +9,8 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-REPOSITORY = "LiJiaT/ai-knowledge-hub"
-SITE_URL = "https://lijiat.github.io/ai-knowledge-hub/"
+REPOSITORY = "LiJiaT/intel-site"
+SITE_URL = "https://lijiat.github.io/intel-site/"
 
 
 def main():

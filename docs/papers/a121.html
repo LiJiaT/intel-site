@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs</h1>
 <p class="lead">微调还是检索？对比 LLM 中的知识注入方法</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a121.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a121.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对&#x27;如何向预训练 LLM 注入知识&#x27;这一工程选型问题，系统比较了无监督微调（continual pre-training）与 RAG 两条路线。作者从 Wikipedia 抓取语料构建辅助知识库，在 MMLU 五个知识密集型子任务和自建的 910 道时事选择题（模型训练截止后的新知识）上，用 Llama2-7B、Mistral-7B、Orca2-7B 配合 bge-large-en + FAISS 的 RAG 管线，在 LM-Evaluation-Harness 下做网格化对比。关键结论：RAG 在已有知识和全新知识两类场景下都稳定优于无监督微调；微调在全新知识上甚至显著降低 Llama2 的准确率，而用 GPT-4 生成多条同义改写做数据增强后，微调准确率随改写数量单调上升。论文还发现 RAG 的 topK 超参不稳定、FT+RAG 组合并不总是更好。对团队而言，这为知识库问答等场景中&#x27;选 RAG 还是微调&#x27;提供了直接的实证依据。</p>
 <h2>问题</h2><p>给定一个文本语料形式的辅助知识库，应该用无监督微调还是 RAG 把其中的知识注入预训练 LLM？即：哪种知识注入方式能更有效地提升模型在知识密集型问答任务上的表现，尤其是对训练截止后的全新事实知识。</p>
 <h2>方法</h2><p>构建统一的知识注入评测框架：从 Wikipedia 抓取各主题文章并清洗分块作为知识库；选取 MMLU 中五个重事实、轻推理的子任务（anatomy、astronomy、college biology、college chemistry、prehistory），并用 GPT-4 从 2023 年 8-11 月美国时事 Wikipedia 语料自动生成 910 道全新知识选择题（含人工校验）。对比四种配置：base 模型、RAG（bge-large-en 嵌入 + FAISS 向量库，topK 检索后拼接进 query）、无监督微调（continual pre-training，chunk 大小 256，低学习率 1e-6~5e-5，4×A100）以及 FT+RAG 组合；用 LM-Evaluation-Harness 以 log-likelihood 准确率评测，并做 0-shot/5-shot 与 K∈{0,...,5} 的消融。另用 GPT-4 生成同义改写做数据增强，研究重复表述对微调学习新知识的影响。</p>

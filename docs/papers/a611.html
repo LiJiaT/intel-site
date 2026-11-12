@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>An automatically discovered chain-of-thought prompt generalizes to novel models and datasets</h1>
 <p class="lead">自动发现的思维链（CoT）提示可泛化至新模型与新数据集</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">自动提示优化</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a611.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a611.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文研究零样本 CoT 提示策略能否跨模型代际与数据集稳定泛化。作者在 6 个指令微调 LLM（GPT-4、GPT-3.5-turbo、davinci-002/003、Flan-T5-xxl、Cohere command-xlarge）与 6 个常识/科学/医学选择题问答数据集上，比较 10 种零样本推理策略（1 个基线、2 个已有、7 个新设计），共开展 11,880 次实验，以 Krippendorff&#x27;s alpha 结合功效分析与 bootstrap 进行评测。关键结论：CoT 策略的收益跨模型与数据集保持稳健，推理策略总体优于直接提示；GPT-4 从最先进的推理策略中获益最大，且使用 Zhou 等人通过自动发现得到的提示取得最佳表现；self-critique 提示反而得分较低。对团队而言，该工作为提示词跨模型复用、自动提示优化产出的泛化验证，以及小样本评测方法设计提供了直接可借鉴的实证范式。</p>
 <h2>问题</h2><p>已有零样本 CoT 推理提示策略多为早期模型代际设计，存在不确定性：这些策略能否泛化到新模型代际和不同数据集？它们与新设计的推理策略相比表现如何？论文旨在实证检验并找出简单、通用的 CoT 提示方案。</p>
 <h2>方法</h2><p>小规模实证研究：基于 ThoughtSource 框架选取 6 个常识/科学/医学领域的选择题问答数据集子样本；组装 10 种零样本推理策略（1 个基线、2 个已有、7 个新设计，其中含 self-critique 策略：先给出初始答案、再自我批评、再提出修订答案）；通过 LangChain 接入 6 个指令微调模型（davinci-002、davinci-003、GPT-3.5-turbo、GPT-4、Flan-T5-xxl、Cohere command-xlarge-nightly）；以 Krippendorff&#x27;s alpha 为评测指标（可校正不同选项数对应的随机基准概率），用功效分析确定样本量（198 题、6 个子数据集各 33 题），并用 bootstrap（r=1000）计算均值与置信区间。</p>

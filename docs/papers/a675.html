@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Evaluation of medium-large Language Models at zero-shot closed book generative question answering</h1>
 <p class="lead">中等规模语言模型在零样本闭卷生成式问答上的评估</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a675.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a675.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文指出开放式生成式问答难以用 ROUGE/BLEU 等自动指标可靠评估，且&#x27;大模型&#x27;边界模糊，因此定义了 6B–100B 参数的中等规模语言模型（MLM），自建 110 题测试集（含 trick questions、数学应用题、符号推理、基础物理等），以人工评估方式系统测评数十个开源 MLM 的零样本 closed-book 问答能力，并招募 87 人建立人类基线。结果显示 MLM 平均正确率仅 35.3%，但最佳模型 Airoboros 33B 达 71.8%，超过 ChatGPT 的 60.9% 与人类基线 70.1%；组合不同模型的最佳答案可覆盖 82.7%（摘要）至 91.8%（正文）的问题。核心结论是微调数据质量比参数规模更关键，30B 级模型普遍欠训练，4bit GPTQ 量化几乎无损。对团队的价值主要在于其对开放式生成输出的人工评估方法论，以及模型选型与量化部署的实证结论。</p>
 <h2>问题</h2><p>开放式长答案问答（long-form QA）的模型回答难以用 ROUGE/BLEU 等自动指标评估：正确答案可用不同措辞表达，甚至出现人类认为更优的答案；同时 LLM 中&#x27;large&#x27;缺乏清晰定义。论文要回答：参数量在 6B–100B 之间的中等规模语言模型（MLM）在零样本、无外部检索的 closed-book 生成式问答上究竟能做到多好，与 ChatGPT 等真正 LLM 及人类相比差距如何。</p>
 <h2>方法</h2><p>自建 110 题评测集（含常识、trick questions、数学应用题、抽象与符号推理、基础物理等类别，并通过改变高度/材质/措辞等变体检验模型是否真正理解而非模式复述）；从 HuggingFace 选取数十个 6B–66B 开源模型（OPT、LLaMA、Alpaca、Vicuna、WizardLM、Flan-T5、Falcon、MPT 等），以 ChatGPT 与 GLM 130B 作 LLM 参照；在本地 A100 80GB 上以 FP16、temperature 0.1 运行，明确不使用 prompt engineering 与 CoT；因自动指标失效而采用人工评估，先按模型评、再按题跨模型交叉核对以控制主观性；另以 87 名人类被试建立人类基线。</p>

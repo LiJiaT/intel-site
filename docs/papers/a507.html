@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Show Your Work: Scratchpads for Intermediate Computation with Language Models</h1>
 <p class="lead">Show Your Work：用 Scratchpad 实现语言模型的中间计算</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">记忆管理</span><span class="chip">上下文窗口</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a507.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a507.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>大型预训练语言模型在可一次完成的任务上表现出色，但在多位数加法、程序执行等需要多步精确计算的任务上表现很差。论文认为部分原因是模型被迫在单次前向传播中直接输出答案，无法按问题难度分配计算量。为此提出 scratchpad 方法：不改动模型架构，只把算法中间步骤编码为文本，让模型先逐步写出中间状态（如竖式加法进位、Python 逐行执行时的 JSON 变量状态），再给出最终答案，用标准监督训练或 few-shot 提示即可。实验显示 scratchpad 在加法、多项式求值与 Python 执行上大幅超越直接预测：加法任务存在临界模型规模且可外推到 9-10 位数；MBPP 执行任务结合模型自采样程序加解释器执行的数据增强后，解题数提升三倍以上，最优模型 26.6% 任务执行正确、约 42% 的 trace 完全正确。该工作是思维链类中间推理技术的先驱，对团队设计推理型提示与 Agent 中间状态管理有直接参考价值。</p>
 <h2>问题</h2><p>大型预训练语言模型擅长可一遍完成的任务（生成文本、合成程序），但在需要无界多步计算的任务上失败，例如超过三位数的 few-shot 加法、预测 Python 代码执行结果。作者认为这至少部分源于 Transformer 的应用方式：模型被要求在单次前向传播中完成任务，在层数与计算量固定的条件下，无法在产出答案前根据问题难度调整投入的计算量。</p>
 <h2>方法</h2><p>提出 scratchpad：不修改模型或训练流程，只修改任务设计——将算法的中间步骤编码为文本，训练模型在输出最终答案前先把中间计算状态逐步写入 scratchpad 缓冲区（decoder-only Transformer，标准监督训练或 few-shot 提示）。对 Python 执行任务，监督目标为逐行执行 trace：交替预测被执行的源代码行与该行执行后的局部变量状态（JSON 字典）。针对真实程序数据稀缺，提出数据增强：用 137B 模型 few-shot 采样候选程序，经 Python 解释器执行自动生成 trace 数据（MBPP-aug，17k 新程序），并进一步引入约 900 万条单行代码变换样本与 CodeNet 的 670,904 条 trace。</p>

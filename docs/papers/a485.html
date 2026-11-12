@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Machine Generated Text: A Comprehensive Survey of Threat Models and Detection Methods</h1>
 <p class="lead">机器生成文本：威胁模型与检测方法的全面综述</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">可靠性与安全</span><span class="chip">评测基准</span><span class="chip">人机协作</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a485.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a485.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该综述系统回答两个问题：NLG 模型会被如何滥用（威胁建模），以及如何检测机器生成文本。论文以威胁建模方法（识别攻击者、能力与目标）梳理出恶意软件与社工、在线影响行动、AI 作者身份滥用、垃圾与骚扰四大类威胁，并全面综述检测方法：基于统计特征（词频、流畅度、语言学特征）与基于神经模型（zero-shot 用生成模型自检、fine-tuning RoBERTa 等双向模型，后者为 SOTA）两条主线，另覆盖技术文本/社交媒体/假评论等应用检测、GLTR 等人机协同工具、评测数据集方法学与 prompt injection。核心结论：现有检测研究多假设类别均衡、已知生成器，与真实场景脱节；检测系统自身需保证公平性（非母语者误判风险）与对抗鲁棒性；人机协同与多信号融合是重要方向。对团队而言，其威胁建模框架与评测方法论可借鉴到 Agent 应用安全与产出评测中。</p>
 <h2>问题</h2><p>随着开源大模型（GPT-J、GPT-NeoX、BLOOM 等）与 ChatGPT、Jasper 等易用工具普及，机器生成文本与人类文本难以区分，NLG 滥用（钓鱼、虚假信息、假评论、学术不端、垃圾骚扰）风险持续上升；此前缺乏以风险为中心的系统梳理，检测研究也与真实威胁场景脱节。论文要建立系统的威胁模型，并对机器生成文本检测方法做最全面的综述，为防御研究与可信 AI（公平、鲁棒、可问责）提供指引。</p>
 <h2>方法</h2><p>综述+威胁建模。第一，借鉴 Shostack 四问框架做以攻击为中心的威胁建模，产出四大类威胁模型（恶意软件与社工、在线影响行动、AI 作者身份滥用、垃圾与骚扰），逐一给出攻击者画像、缓解措施与信任影响分析。第二，系统梳理检测方法：特征方法（频率、流畅度、辅助模型语言学特征、短语与基础文本特征）；神经方法（zero-shot 用生成模型自身判别、fine-tuning 双向 Transformer 尤其是 RoBERTa 的 SOTA 路线）；特定领域应用检测（技术文本、社交媒体、聊天机器人、在线评论、人机混合文本边界检测）；人机协同方法（GLTR、人工评审培训、RoFT、TuringBench）；评测方法学与数据集趋势（采样参数、序列长度、跨域不匹配）；以及 prompt injection 作为检测辅助手段。</p>

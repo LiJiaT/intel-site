@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>PAL: Program-aided Language Models</h1>
 <p class="lead">PAL：程序辅助语言模型（Program-aided Language Models）</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">工具调用</span><span class="chip">代码生成Agent</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a483.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a483.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在 chain-of-thought (CoT) 推理中即使正确分解了问题，仍常在求解环节犯逻辑与算术错误，尤其在大数字与复杂计算上。PAL 提出：让 LLM 只负责把自然语言问题分解为自然语言注释与 Python 语句交错的中间推理步骤，把求解与计算完全卸载给 Python 解释器执行。在来自 BIG-Bench Hard 及其他基准的 13 个数学、符号与算法推理任务上，PAL（基于 Codex）全面超过更大的 PaLM-540B + CoT，在 GSM8K 上领先绝对 15%，在构造的大数字变体 GSM-HARD 上远比 CoT 稳健（61.5% vs 20.1%）。消融证明收益主要来自与解释器的协同而非提示本身，且有意义变量名是关键设计要素。对团队而言，这是&#x27;LLM 负责理解与规划、运行时负责精确执行&#x27;这一 Agent 工具调用范式的奠基性实证，可直接指导需要精确计算与状态跟踪的自动化任务设计。</p>
 <h2>问题</h2><p>LLM 在 few-shot CoT 提示下擅长把自然语言问题分解为步骤，但在求解环节经常出现逻辑与算术错误，面对复杂算术或大数字时性能急剧下降；即使推理链分解正确，最终答案仍可能错误。</p>
 <h2>方法</h2><p>提出 Program-Aided Language models (PAL)：prompt 中每个 in-context 示例为〈问题, 推理步骤〉二元组，推理步骤是自然语言（以注释语法书写、被解释器忽略）与 Python 语句的交错序列，不包含最终答案；测试时 LLM 生成同样的程序化推理链，交给标准 Python 解释器执行得到最终答案。提示设计上强调有意义的变量名以锚定问题实体，可由现有 CoT 示例快速改造（每基准 3-6 个示例），也可与 Least-to-Most 提示结合（分解用 NL、求解用 PL）。</p>

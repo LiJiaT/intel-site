@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</h1>
 <p class="lead">Chain-of-Thought 提示激发大语言模型的推理能力</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a506.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a506.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>大模型在算术、常识与符号推理等复杂任务上，仅靠扩大模型规模和标准 few-shot prompting 仍表现不佳。论文提出 chain-of-thought prompting：将 few-shot 示例从〈input, output〉扩展为〈input, chain of thought, output〉三元组，为每个示例附上人工撰写的中间自然语言推理步骤，不做任何 finetuning 即可激发模型逐步推理。实验显示 PaLM 540B 仅用 8 个 CoT 示例就在 GSM8K 上刷新 SOTA、超过 finetuned GPT-3 with verifier，且问题越复杂增益越大；CoT 是模型规模的涌现能力，约 100B 参数以下无正收益甚至有害。对团队而言，这是提示工程与 Agent 推理设计的奠基性技术，其消融设计（equation only、variable compute only、CoT after answer）、鲁棒性验证与错误分类分析方法，可直接借鉴到团队内部提示词资产管理与评测体系建设中。</p>
 <h2>问题</h2><p>仅扩大模型规模不足以在算术、常识、符号推理等需要多步推理的任务上取得高性能；标准 few-shot prompting 在此类任务上表现差且不随规模显著提升，而已有的 rationale 增强方法依赖昂贵的标注数据集与 finetuning。论文希望用纯提示方式、在不更新任何参数的前提下激发大模型的多步推理能力。</p>
 <h2>方法</h2><p>提出 chain-of-thought prompting：在 few-shot 示例中为每个样例附上一系列通向最终答案的中间自然语言推理步骤（算术任务用同一套 8 个手工撰写示例，AQuA 用 4 个），引导模型在测试时先生成推理链再输出答案。配套方法包括：与 equation only、variable compute only、CoT after answer 三种变体的消融对照；对生成的算术式外接 Python 计算器（Python eval）做后处理；多标注者、多示例集合、多示例顺序的鲁棒性实验；在 GPT-3、LaMDA、PaLM、UL2 20B、Codex 五个模型家族、多规模上系统评测，并对正确/错误推理链做人工错误分类分析。</p>

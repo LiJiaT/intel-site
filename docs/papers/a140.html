@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>REPLUG: Retrieval-Augmented Black-Box Language Models</h1>
 <p class="lead">REPLUG：面向黑盒语言模型的检索增强框架</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">上下文窗口</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a140.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a140.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文解决的问题是：以往检索增强语言模型（如 RETRO、Atlas、kNN-LM）需要微调 LM 参数或访问其内部表示（白盒设定），无法用于只能通过 API 调用、不暴露内部表示的超大黑盒模型（如 GPT-3、Codex）。REPLUG 将 LM 视为黑盒，用可调的 dense retriever（Contriever + FAISS 索引）检索 top-k 文档，不把所有文档塞进一个上下文，而是每篇文档分别与输入拼接、并行送入冻结 LM，再按相似度加权 ensemble 输出概率，绕开上下文窗口对文档数量的限制。进一步提出 REPLUG LSR，把冻结 LM 当作打分函数，用其困惑度改善构造监督信号，通过最小化 KL 散度只训练检索器，使检索器适配目标 LM。关键结论：REPLUG LSR 使 GPT-3 175B 语言建模提升 6.3%、Codex 五-shot MMLU 提升 5.1%、NQ 提升 12.0%，在 few-shot 设定下超过 Atlas。对团队而言，这是&quot;不训练模型、只优化检索与上下文组织&quot;的代表性 RAG 方案，与知识库问答等场景直接相关。</p>
 <h2>问题</h2><p>以往检索增强语言模型需要微调 LM 或访问 LM 内部表示（白盒设定），无法应用于只能通过 API 访问、不暴露内部表示的超大黑盒 LM；同时 LM 的上下文窗口大小限制了能拼接进输入的检索文档数量。论文要在纯黑盒设定下让检索增强依然有效，并让检索器适配目标 LM。</p>
 <h2>方法</h2><p>REPLUG 框架：用双编码器 dense retriever（Contriever）以余弦相似度检索 top-k 相关文档，预先计算文档 embedding 并构建 FAISS 索引；不将全部文档拼入单个输入，而是每篇文档分别与输入上下文拼接、并行通过冻结 LM，按文档-输入相似度加权 ensemble 各次输出的 token 概率（可用算力换精度，且论文称相比全拼接无额外计算开销）。REPLUG LSR：将冻结 LM 作为打分函数，用&quot;加入该文档后 LM 对 ground truth 输出的概率/困惑度改善&quot;构造 LM likelihood，最小化其与检索 likelihood 之间的 KL 散度，只更新检索器参数，并每 T 步（实验中为 3k 步）异步重建 datastore 索引。</p>

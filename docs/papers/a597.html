@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Large Language Models Can be Lazy Learners: Analyze Shortcuts in In-Context Learning</h1>
 <p class="lead">大语言模型可能是&#x27;懒惰的学习者&#x27;：分析 In-Context Learning 中的捷径利用行为</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a597.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a597.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究 in-context learning 的鲁棒性：LLM 在不更新参数、仅靠 prompt 中 few-shot 示例的条件下，是否会走&#x27;捷径&#x27;，利用示例中的表面相关性（shortcut-label 映射）而非语义理解做推理。方法上，作者向 prompt 示例注入与标签强相关的触发器（常见词、罕见词、符号、中性句子、Shakespeare/Bible 风格等），并构造 anti-shortcut 测试集，以性能下降幅度量化模型对捷径的依赖。关键结论：LLM 是&#x27;懒惰的学习者&#x27;，会系统性利用 prompt 中的捷径，且存在 reverse scaling 现象——模型越大性能下降越严重（GPT2-large 平均降 33.71% vs GPT2-base 1.04%）；触发器放在 prompt 末尾最易被捕获，仅出现一次即可被模型利用，而提高示例质量与更换模板均无法缓解。对团队而言，这提示 few-shot 示例中的格式伪影可能被模型当作判据，提示设计与评测都需主动防范。</p>
 <h2>问题</h2><p>理解 in-context learning 的鲁棒性与泛化：LLM 在不更新参数、仅依赖 prompt 中 few-shot 示例的条件下，是否会利用 prompt 中的捷径/伪相关（shortcut-label 映射）而非语义理解来完成下游任务，以及哪些触发器与 prompt 因素会影响这种依赖。</p>
 <h2>方法</h2><p>提出向 prompt 中的 few-shot 示例注入与目标标签强相关的触发器（字符级符号、常见/罕见词、中性句子、文本风格如 Shakespeare/Bible 风格），构造 anti-shortcut 测试集（对标签不同于触发器目标标签的测试样本注入触发器），用性能下降幅度量化模型对 shortcut 的依赖；通过消融实验系统分析触发器位置/格式/注入率/长度、shot 数量、示例质量与模板的影响；并采用 LIME 的 token 掩码重要性分析检测 prompt 中的 shortcut。</p>

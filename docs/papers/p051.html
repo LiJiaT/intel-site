@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Who watches the watchman? FuSa Verification of DCLS Configuration through Formal and Static Checks</h1>
 <p class="lead">谁来监督监督者？基于 Formal 与静态检查的 DCLS 配置 FuSa 验证</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">DVCon 2024</span><span class="chip">功能安全标准</span><span class="chip">安全机制</span><span class="chip">安全验证</span><span class="chip">诊断覆盖率</span><span class="chip">2.5 功能安全与安全机制</span><span class="chip">2.7 CyberSec/自动化</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p051.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p051.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对汽车功能安全中常用的 Dual Core Lock Step（DCLS）安全机制：每种实现变体都必须验证其能在现场检测并上报缺陷，但传统激励生成加仿真难以覆盖全部端口，lockstep 实例层次深导致控制困难，而随机错误注入又需要庞大框架且反馈偏晚。作者提出一套自动化的 DCLS 验证包，用 FPV 形式检查（针对 XOR 比较块与 FuSa F/F）配合静态连接性检查，在 RTL 阶段对 DCLS 配置做全面验证，尽早向设计者反馈以避免后期 ECO。该包已部署于包括 watchdog 实现和旗舰 automotive processor 中安全关键任务设计在内的多个 in-house 设计，并成功抓出部分老设计中的已知 bug，降低了验证工作量并提升质量。论文未给出量化指标，未来工作是将该验证包进一步集成进验证环境以支持 release qualification。</p>
 <h2>问题</h2><p>DCLS 是汽车功能安全（ISO 26262/ASIL）常用的安全机制配置，但每种实现变体都需要验证其能在现场检测并报告缺陷；传统基于输入激励生成与仿真的方式难以达到全部端口 100% 覆盖，lockstep 实例在设计层次中较深导致端口可控性差，而随机错误注入需要庞大框架且难以提供早期反馈，容易拖到后期 ECO。论文要解决如何在 RTL 阶段对 DCLS 配置做全面、自动化的验证。</p>
 <h2>方法</h2><p>提出自动化 DCLS 验证包：对 DCLS 结构中的 XOR 输出比较块与 FuSa F/F 施加 FPV（formal property verification）检查，并辅以静态连接性检查（connectivity checks），在每个 DCLS 配置上自动执行一组检查以确保其正确工作；无需激励生成与仿真即可覆盖端口，在 RTL 阶段 flush out bug，为设计者提供早期反馈。</p>

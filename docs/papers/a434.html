@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Revisiting Automated Prompting: Are We Actually Doing Better?</h1>
 <p class="lead">重新审视自动化提示：我们真的做得更好吗？</p>
 <div style="margin-top:10px"><span class="lvl lvl-medium">medium</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">自动提示优化</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a434.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a434.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文质疑“自动化提示必然优于人工提示”这一常见假设。作者在 RoBERTa-large 上统一复现三种方法——人工设计的 LM-BFF 提示、基于梯度搜索的 AutoPrompt、可微提示 DART——在六个情感分析/文本蕴含数据集和多种 K-shot 设置下与纯微调基线系统对比。结果显示人工提示在 24 个设置中的 13 个最优、8 个次优，自动提示仅在个别设置有明确优势，某些情况下甚至灾难性失效、差于微调基线；随 K 增大各方法性能趋同。论文分析认为 few-shot 下自动生成的 verbaliser 噪声大、泛化不足是失效主因，结论是自动化提示并不稳定优于简单人工提示，该方向研究应把人工提示作为基线。</p>
 <h2>问题</h2><p>检验自动化提示方法是否真的能稳定优于人工设计的提示。已有自动提示研究（AutoPrompt、DART 等）只与微调基线比较，从未与人工提示做系统对比；论文质疑自动提示的第二个动机——“能带来更好性能”——是否成立。</p>
 <h2>方法</h2><p>在 RoBERTa-large 上统一复现三种提示方法并以无提示的纯微调为基线：(1) 人工设计的 LM-BFF 提示（模板+verbaliser，选自 Prompt Pool 等公开来源，每个数据集先在 K=16 下从 4-6 组候选对中选最优）；(2) 离散自动提示 AutoPrompt（在输入与 &lt;mask&gt; 间插入 10 个 trigger token，verbaliser 由 K-shot 数据自动生成）；(3) 可微提示 DART（模板与 verbaliser 均作为可微参数联合优化）。在六个数据集（三个情感分析、三个文本蕴含）上以多个 K 值做 K-shot 实验，AdamW beam search 搜索超参，100 epochs 加 early stopping，每组 5 次独立运行报告均值与标准差，并对生成的 auto-prompt 与 verbaliser 做可视化分析定位失效原因。</p>

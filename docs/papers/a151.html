@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval</h1>
 <p class="lead">RAPTOR：面向树状组织的递归抽象处理检索</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">上下文窗口</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a151.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a151.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>现有 RAG 方法只检索少量短连续文本块，难以回答需要整合全文信息的主题性、多跳问题。RAPTOR 递归地对文本块做嵌入、GMM+UMAP 软聚类与 LLM 摘要，自底向上构建多层树索引，使检索能按问题粒度从不同抽象层取材；查询提供 tree traversal 与 collapsed tree 两种策略，实验表明后者更优。在 QuALITY、QASPER、NarrativeQA 三个长文档 QA 基准上，RAPTOR 配合 GPT-4 将 QuALITY 最佳准确率绝对提升 20% 至 82.6%，QASPER F-1 达 55.7% 创当时新纪录。摘要幻觉率约 4% 且不向上传播，树构建的 token 开销与时间随文档长度线性增长。对团队的知识库问答与长文档上下文组织有直接落地价值。</p>
 <h2>问题</h2><p>现有检索增强方法只从语料中检索少量短连续文本块，无法表达和利用大规模篇章结构，导致需要整合文档多个部分的主题性、多跳问题（如理解整本书）难以回答；而直接依赖长上下文又存在模型对远距离信息利用率下降、成本高、速度慢的问题。</p>
 <h2>方法</h2><p>RAPTOR 将语料切成约 100 token 的文本块并用 SBERT 嵌入作为叶节点；用 UMAP 降维配合 GMM 软聚类（BIC 选择簇数、先全局后局部两步聚类，允许一个块属于多个簇、跨远距离语义分组），再用 gpt-3.5-turbo 对每簇生成摘要作为父节点，递归执行直到无法继续聚类，形成多层树。查询支持两种策略：tree traversal（逐层取 top-k）与 collapsed tree（将全树展平为单层，按余弦相似度检索直至 token 预算，论文采用 2000 token），实验显示 collapsed tree 因能按问题自适应选择粒度而表现更好。</p>

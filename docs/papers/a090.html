@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Self-Refine: Iterative Refinement with Self-Feedback</h1>
 <p class="lead">Self-Refine：基于自我反馈的迭代精炼</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">Agent框架</span><span class="chip">代码生成Agent</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a090.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a090.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 单次生成往往达不到最优质量，而传统迭代精炼方法需要训练专门的 refiner 或依赖昂贵的人工反馈。SELF-REFINE 提出让同一个 LLM 完成“生成→反馈→精炼”的迭代循环：先产出初稿，再用 few-shot 提示让同一模型给出具体、可执行（actionable &amp; specific）的反馈，随后依据反馈改写，循环至停止条件，全程无需额外训练或强化学习。在对话回复、代码优化、代码可读性、数学推理等 7 个任务上，相对同模型单步生成平均带来约 20% 绝对提升，例如 GPT-4 在 Code Optimization 上从 27.3% 提升到 36.0%。消融表明反馈质量是关键，generic 或无反馈会显著掉分；失败案例中 61% 源于反馈给出不当修复建议。对团队而言，这是不训练模型即可提升产出质量的低成本迭代范式，可直接嵌入代码审查、文档改写与 Agent 反思环节。</p>
 <h2>问题</h2><p>LLM 单次生成的输出常无法满足多方面目标（如对话回复质量）或难以定义的目标（如代码可读性）；现有迭代精炼方法通常需要领域数据训练精炼模型、依赖外部监督、奖励模型或昂贵的人工标注，缺乏一种无需大量监督即可跨任务通用的精炼方案。</p>
 <h2>方法</h2><p>SELF-REFINE 让同一个 LLM 扮演生成器、反馈提供者与精炼器三重角色，用三个 few-shot 提示驱动：p_gen 生成初始输出 y0；p_fb 让模型对自身输出给出反馈，要求 actionable（含具体改进动作）且 specific（指出输出中需修改的具体短语），可包含多维度数值评分与 CoT 式推理；p_refine 依据反馈改写输出。FEEDBACK 与 REFINE 交替迭代（论文中最多 4 次），停止条件为固定步数或从反馈中提取的停止指标；历史反馈与输出会追加进提示以帮助模型避免重复犯错；多维度任务按各迭代中的最高总分选择最终输出。</p>

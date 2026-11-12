@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>GNN-RAG: Graph Neural Retrieval for Large Language Model Reasoning</h1>
 <p class="lead">GNN-RAG：面向 LLM 推理的图神经网络检索</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a148.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a148.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文解决 KGQA 中 RAG 检索质量不足的问题：基于 LLM 的检索器难以处理 KG 的复杂多跳图结构，检索不全或含噪都会拖累 LLM 推理。方法上提出 GNN-RAG：先由 GNN 在稠密 KG 子图上做答案节点分类得到候选答案，再抽取问题实体到候选答案的最短路径作为推理路径，文本化后作为 LLM RAG 的上下文输入；并设计检索增强（RA），将 GNN 检索与 LLM 检索（或双 GNN 集成）的路径取并集提升召回。关键结论：在 WebQSP 与 CWQ 上达到 SOTA，7B 微调 LLM 即超过或持平 GPT-4，多跳/多实体问题 F1 领先 8.9-15.5 个百分点，且不增加额外 LLM 调用，可部署于单张 24GB GPU。其&#x27;检索质量决定 RAG 上限、检索器与推理器分工、多检索器融合&#x27;的思路对团队 RAG 与知识库问答建设有直接借鉴价值。</p>
 <h2>问题</h2><p>KGQA 的 RAG 流程中，检索性能高度依赖所检索到的 KG 事实；现有基于 LLM 的检索方法无法有效处理 KG 中复杂的图结构信息，在多跳问题上表现不佳，且检索到不相关信息会干扰 LLM 推理。</p>
 <h2>方法</h2><p>GNN-RAG 框架：(1) GNN 作为稠密子图推理器，在问题相关子图上做节点分类（答案 vs 非答案），输出高概率候选答案；(2) 用最短路径算法抽取问题实体与候选答案之间的 KG 路径作为推理路径，按 &#x27;{entity} → {relation} → {entity}&#x27; 格式文本化；(3) 文本化路径与问题一起填入 prompt 模板，供微调后的 LLM（LLaMA2-Chat-7B）做 RAG 推理。另提出 RA 检索增强：推理时将 GNN 检索路径与 LLM 检索器（RoG）路径取并集（GNN-RAG+RA），或将两个配备不同预训练 LM（SBERT/LMSR）的 GNN 路径集成（GNN-RAG+Ensemble），兼顾多跳与单跳问题的召回。</p>

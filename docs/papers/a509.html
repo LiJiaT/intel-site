@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Generated Knowledge Prompting for Commonsense Reasoning</h1>
 <p class="lead">面向常识推理的生成知识提示（Generated Knowledge Prompting）</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">RAG与检索</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a509.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a509.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究在已有大规模预训练模型（T5-11b、GPT-3）的前提下，外部知识能否继续提升常识推理表现，且不依赖结构化知识库与任务定制监督。方法为 Generated Knowledge Prompting：先用「指令+5 个人工编写的问题-知识演示对」的 few-shot 提示驱动 GPT-3，为每个问题采样约 20 条知识语句，再把每条知识与问题拼接后交给推理模型打分，选择被最强知识支持的答案。结果显示方法在 NumerSense、CSQA2、QASC 三个基准刷新 SOTA，零样本场景提升 7%-10%，优于模板式 self-talk，与检索式知识大体相当。对团队而言，这是「生成式上下文增强」的代表工作：当检索语料缺失或质量差时可用模型自产知识扩充上下文，且证明小模型配合生成知识可逼近大模型效果，对提示设计与推理成本优化均有直接参考价值。</p>
 <h2>问题</h2><p>检验外部知识在最大规模预训练模型之上是否仍能提升常识推理；已有引入外部知识的方法依赖高质量、高覆盖的域内结构化知识库，且常需任务定制的知识融合监督与联合微调，在缺乏合适知识库的任务（如 NumerSense、CSQA2）上难以适用，论文寻求一种无需知识库、无需额外微调、可灵活迁移的知识引入方式。</p>
 <h2>方法</h2><p>两阶段方法：(1) 知识生成——用「指令+5 个人工编写的演示（问题-知识对）+新问题占位符」的 few-shot 提示驱动 GPT-3，对每个问题以 nucleus sampling（p=0.5）采样 M=20 条自然语言知识语句（CSQA2 用 M=5）；演示设计准则是知识语句应把常识问题转化为显式推理步骤（如演绎），而非直接给出答案。(2) 知识集成——将每条知识与问题文本拼接构成增强问题，用推理模型（零样本 T5/GPT-3 或微调的 UnifiedQA/Unicorn）对每个选项计算支持分，选择被某条知识最强支持的答案（自适应选择最佳知识）；推理模型可为任意现成或微调模型，无需为知识融合做任何进一步微调。</p>

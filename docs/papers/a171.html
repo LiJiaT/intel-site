@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Multi-task retriever fine-tuning for domain-specific and efficient RAG</h1>
 <p class="lead">面向领域专用与高效 RAG 的多任务检索器微调</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">成本与效率</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a171.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a171.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>企业在生产系统中部署多个依赖 RAG 的 GenAI 应用时，现成 embedding 模型难以适配来自数据库的结构化领域数据，且为每个任务单独部署 retriever 无法扩展。论文提出对 305M 参数的 mGTE-base 做多任务 instruction fine-tuning：从内部数据库与 Flow Generation 训练集自动抽取 text-step/table/field 等配对数据，用 15 个指令模板与正负样本挖掘构建训练集，并对高频组件做指数降采样，让一个模型服务 Flow Generation、Playbook Generation、Code Generation 等多个应用。在 HR、财务等域外数据上，微调模型达到 Step@15 0.90、Table@5 0.90、Field@5 0.60，显著超过 BM25 与 mE5、GTE-Qwen2 等开源 embedding 模型；值得注意的是 BM25 反而稳定优于这些开源模型。模型还保留多语言能力并泛化到相似的 workflow 检索任务，但非英语场景性能明显下降。</p>
 <h2>问题</h2><p>真实生产系统中的 RAG 应用面临两个实际问题：一是检索内容高度领域化，现成 embedding 服务在开源基准上表现好但难以泛化到来自数据库的结构化真实数据；二是随着应用增多，无法为每个任务单独部署一个 retriever。核心问题是：如何把检索步骤适配到特定领域并同时适配多种检索任务，且保持低成本、可扩展与低延迟。</p>
 <h2>方法</h2><p>从内部数据库与 Flow Generation 训练集自动抽取 text-对象配对（step、table、table field、catalog item 等）构建多任务检索数据集，全程不做人工标注；用 15 个 instruction 模板把需求、scope、workflow 上下文等信息编入检索指令；按句子嵌入训练惯例构造正负样本对（负样本用两种采样策略挖掘）；对高频组件按频率指数降采样以缓解数据不均衡；最终以对比损失对 mGTE-base（305M 参数、8,192 tokens 上下文、多语言）做 instruction fine-tuning，部署单一 retriever 服务整个 GenAI 应用生态。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>A Benchmark on Extremely Weakly Supervised Text Classification: Reconcile Seed Matching and Prompting Approaches</h1>
 <p class="lead">极弱监督文本分类基准：调和种子匹配（SEED）与提示（PROMPT）两类方法</p>
 <div style="margin-top:10px"><span class="lvl lvl-medium">medium</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a664.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a664.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>极弱监督文本分类（XWS-TC）指仅凭少量种子词或分类指令完成文本分类，此前 SEED（种子词匹配生成伪标签再微调）与 PROMPT（用指令提示语言模型解码标签词）两条路线因缺乏标准化而从未被严格对比。论文构建首个 XWS-TC 基准，在 11 个数据集上统一数据、监督量与超参数，系统比较两类方法并做鲁棒性分析。核心结论是两条路线各有胜负：SEED 绝对性能整体更高、对种子词/指令变化更稳，但对底座模型更挑剔；PROMPT 无需未标注语料、随模型规模扩展更好，但对指令与标签词选择方差大，且必须配合校准（DC-PMI、ProtoCal）才能正常工作。论文还揭示两条路线正在趋同，基于未标注语料的聚类后处理对两类方法都是近乎零成本的一致性能提升。对团队而言，其提示鲁棒性发现与&#x27;无开发集&#x27;的基准方法论有借鉴价值，但主实验限于约 1-3 亿参数的中等规模模型、未系统评测 LLM。</p>
 <h2>问题</h2><p>XWS-TC（极弱监督文本分类）存在 SEED 与 PROMPT 两条主流路线，但因数据集、监督形式与超参数选择缺乏标准化，二者从未被严格公平比较。论文要建立首个统一基准，回答不同场景下应选哪种方法，并分析两类方法对人工指导（种子词/指令/标签词）与预训练模型变化的鲁棒性。</p>
 <h2>方法</h2><p>构建首个 XWS-TC 基准：11 个数据集覆盖 4 个领域；对 SEED 与 PROMPT 方法统一监督量（每类仅一个种子词/标签词）、统一超参数（仅在一个数据集上微调后全程固定，不设开发集）、以参数量对齐预训练模型能力；从种子/标签词替换、指令改写、底座模型更换三个维度做鲁棒性分析；并从文本表示、似然获取、聚类后处理三方面剖析 X-Class、Verbalizers、ProtoCal 等方法的结构性联系，验证聚类后处理作为通用性能增强步骤。</p>

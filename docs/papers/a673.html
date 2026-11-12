@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Cue-CoT: Chain-of-thought Prompting for Responding to In-depth Dialogue Questions with LLMs</h1>
 <p class="lead">Cue-CoT：基于语言线索的思维链提示，用于让 LLM 回应深度对话问题</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a673.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a673.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>现有 LLM 对话系统大多直接根据对话上下文一步生成回复，忽略了上下文中反映用户性格、情绪与心理状态的语言线索，导致对深度对话问题的回答刻板、缺乏个性化。论文提出 Cue-CoT 提示方法，把用户状态推断作为中间推理步骤，包含一步式 O-Cue CoT 与分步式 M-Cue CoT 两种变体，并将中间推理结果用作 one-shot 示例选择的准则。作者构建了覆盖中英文、6 个数据集、三类用户线索（personality、emotion、psychology）的评测基准，以 ChatGPT 作为裁判进行成对评测。实验表明 M-Cue CoT 在 helpfulness 与 acceptability 上普遍优于标准提示，one-shot 在 6 个数据集中的 5 个上胜过 zero-shot 且胜率均超 80%，分步提示对指令遵循能力较弱的模型更稳健。论文还揭示了提示敏感性、中间推理正确性难以评测、以及基线选择导致的评测幻觉等问题。</p>
 <h2>问题</h2><p>现有基于 LLM 的对话系统大多将对话上下文直接输入模型、单步生成回复，忽略了上下文中体现用户性格、情绪、心理等状态的语言学线索，导致对深度对话问题的回答刻板乏味，单步推理难以满足用户的隐藏需求。</p>
 <h2>方法</h2><p>提出 Cue-CoT：将对话上下文中隐含的用户状态作为中间推理结果，先推断用户状态再生成回复。包含两个变体：O-Cue CoT 一步同时输出用户状态与最终回复；M-Cue CoT 分步推理（先输出用户状态，再基于上下文与状态生成回复），中间结果可被处理、存储或用于个性化。在 one-shot 场景下提出以中间推理结果为准则的示例选择策略（用 BERT 句向量做 top-1 语义相似检索），并构建中英文 6 数据集、三类线索的基准，采用 ChatGPT 作为裁判的成对评测（helpfulness 与 acceptability 两个维度）。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Re-Reading Improves Reasoning in Large Language Models</h1>
 <p class="lead">Re-Reading（重读）提升 LLM 的推理能力</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a397.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a397.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文针对一个被忽视的问题：主流 decoder-only LLM 采用单向注意力，编码问题时每个 token 看不到后文，而已有方法（CoT、PAL 等）几乎都只优化输出阶段的思维引导，忽略输入理解阶段。作者提出 RE2 提示法：在输入中把问题重复两遍（&#x27;Read the question again:&#x27;），让第一遍为第二遍提供全局信息，在单向注意力模型中实现&#x27;双向&#x27;理解。RE2 即插即用，可与 CoT、PAL、Plan-and-Solve、few-shot、self-consistency 正交组合。在 14 个数据集、112 组实验中，RE2 在 davinci-003、ChatGPT、LLaMA-2、GPT-4o-mini 上普遍有效（如 davinci-003 CoT+RE2 在符号推理平均 +5.25），重读 2 次最优，推理时间与显存仅边际增加。对团队而言，这是一个零训练成本、可直接嵌入现有提示模板的推理增强技巧。</p>
 <h2>问题</h2><p>现有提升 LLM 推理能力的研究几乎都聚焦输出阶段的思维引导（CoT、PAL、ToT 等），忽视输入理解阶段；同时主流 decoder-only LLM 采用单向注意力，编码问题时每个 token 只能看到前文，无法结合问题后文（如真正提问的 &#x27;How many ...&#x27; 句）来理解前文，损害了对问题的双向理解，进而限制推理表现。</p>
 <h2>方法</h2><p>提出 RE2（Re-Reading）提示法：在提示中将输入问题重复两遍，格式为 &#x27;Q: {问题} Read the question again: {问题}&#x27;，再接思维引导提示（如 &#x27;Let&#x27;s think step by step&#x27;）。第一遍阅读为第二遍提供全局信息，使第二遍的每个 token 能&#x27;看到&#x27;其后续 token，实现近似双向编码；同时重复问题相当于为输入编码分配更多计算资源。RE2 作为 plug &amp; play 模块，与 CoT、PAL、Plan-and-Solve、few-shot 示例、self-consistency 等正交兼容；作者以 LLaMA-2 的注意力热图与困惑度分析验证其机制，并实测其对推理时间与显存的影响。</p>

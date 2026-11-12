@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Retrieval-Augmented Generation with Graphs (GraphRAG)</h1>
 <p class="lead">基于图的检索增强生成综述</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">上下文窗口</span><span class="chip">思维链与推理</span><span class="chip">Agent框架</span><span class="chip">工具调用</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a016.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a016.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该综述系统梳理了将图结构数据引入 RAG 的 GraphRAG 技术版图。针对图数据蕴含的关系信息无法被传统基于语义相似度检索的 RAG 有效利用、且相关研究碎片化的问题，论文提出包含 query processor、retriever、organizer、generator 与 data source 五组件的整体框架，并按知识图谱、文档图、科学图、社交图、规划/推理图、表格图等领域分别综述图构建、检索、组织与生成的专属设计。核心结论是：GraphRAG 需针对领域关系模式定制设计，简单将子图文本化会丢失关键结构信息；当前研究集中于知识与文档图，系统评测与知识冲突处理仍是开放问题。对团队而言，它是 RAG 与上下文工程方向的一份系统性技术地图与选型参考。</p>
 <h2>问题</h2><p>GraphRAG 研究现状碎片化，不同工作在概念、技术与数据集上差异显著；现有综述多聚焦 i.i.d. 数据上的通用 RAG，缺乏对图结构数据的系统梳理；且当前研究集中于知识与文档图，忽视基础设施图等其他领域，存在 &#x27;bubble effect&#x27;。同时图数据的多样格式与领域特定关系知识给 retriever、generator 等组件设计带来独特挑战。</p>
 <h2>方法</h2><p>提出 GraphRAG 整体框架并分组件综述代表性技术：query processor（NER、关系抽取、查询结构化/分解/扩展）、retriever（启发式方法如实体链接、关系匹配、BFS/DFS 图遍历、graph kernel；学习式方法如 shallow embedding 与 GNN；以及 integrated/iterative/adaptive 等高级检索策略）、organizer（图剪枝、重排、图增强、verbalization）、generator（判别式、LLM-based、图生成式）与图数据源构建；随后按知识图谱、文档图、科学图、社交图、规划/推理图、表格图等领域分门别类综述任务应用、图构建方法与各组件的领域专属设计，并汇总基准数据集与工具资源。</p>

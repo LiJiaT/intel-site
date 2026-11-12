@@ -14,7 +14,7 @@ import urllib.parse
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO = "LiJiaT/ai-knowledge-hub"
+REPO = "LiJiaT/intel-site"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Aligning Instruction Tasks Unlocks Large Language Models as Zero-Shot Relation Extractors</h1>
 <p class="lead">对齐指令任务解锁 LLM 作为零样本关系抽取器</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a685.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a685.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究为什么经过指令微调的 LLM 在关系抽取（RE）这一基础信息抽取任务上反而不如微调后的小模型，假设根因是 RE 类任务在指令微调数据集中占比不足 1%，而 QA 类任务占比高达 12-15%。为此提出 QA4RE 框架，将 RE 重构为多项选择问答：把原句作为题干、用关系模板填充头尾实体后作为候选项，并施加实体类型约束，让模型只需输出选项索引。在 4 个 RE 数据集、GPT-3.5 与 FLAN-T5 两个系列指令微调模型上的零样本实验显示，text-davinci-003 与 FLAN-T5-XXL 平均分别获得 8.2% 与 8.6% 的绝对 F1 提升，首次让 LLM 大幅超越基于小模型的零样本 SoTA。消融证明收益主要来自 QA 重构本身而非模板解释，且方法对模板设计更鲁棒、可迁移到 80M-175B 的模型。对团队的启示是：当某任务提示优化收效甚微时，可尝试将其改写为模型指令微调中的高频任务形式（如选择题 QA）。</p>
 <h2>问题</h2><p>尽管指令微调显著提升了 LLM 的零样本能力，但即使最先进的指令微调 LLM（FLAN-T5 XXL、text-davinci-003）在关系抽取（RE）上仍无法超越基于小 LM 的零样本 SoTA 方法。作者假设根因是 RE 任务在指令微调数据集中占比过低（&lt;1%，最大数据集中 &lt;0.5%），导致模型 RE 能力未被激发。</p>
 <h2>方法</h2><p>提出 QA4RE 框架，将 RE 对齐为多项选择题问答（multiple-choice QA）：以原句为题干上下文，将预定义关系模板填入头/尾实体构成候选项，并施加实体类型约束剔除不兼容选项；模型只需生成选项索引而非口头化关系标签（Text Completion API 下配合 logit bias 约束）。复用先前工作（Sainz et al. 2021; Lu et al. 2022）的关系模板，通过 pilot 实验确定统一的任务指令与提示格式；few-shot 设定下使用随机选取的 in-context 示例。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Let&#x27;s Sample Step by Step: Adaptive-Consistency for Efficient Reasoning and Coding with LLMs</h1>
 <p class="lead">Let&#x27;s Sample Step by Step：基于 Adaptive-Consistency 的 LLM 高效推理与代码生成</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a416.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a416.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>Self-Consistency 通过对同一问题多次采样并做多数投票来提升 LLM 输出正确性，但对每个问题都固定采样 k 次，在多数答案早已明确时仍继续采样，造成大量浪费。论文提出 Adaptive-Consistency：逐个采样，每步用基于 Dirichlet 分布（实用上简化为 Beta 分布）的轻量停止准则估计当前多数答案保持多数的概率，超过阈值 0.95 即停止并输出多数答案，从而按题目难度非均匀分配采样预算；对代码生成任务则按测试用例分别计算置信度，以几何平均超过阈值作为停止条件。在 17 个推理与代码生成数据集、3 个 LLM 上，采样量平均减少约 2-4 倍（最高 7.9 倍），准确率平均下降不足 0.1%；在同等平均采样成本下甚至比 Self-Consistency 更准（GSM-8K 上约高 3%）。</p>
 <h2>问题</h2><p>现有 Self-Consistency 等多数投票方法对每个问题固定生成相同数量（如 40 个）样本，随着 LLM 规模增大，采样时间与计算成本越来越高（如竞赛级代码生成可能需要多达百万个程序样本）。论文要解决的问题是：能否根据已生成样本之间的一致性，动态决定每个问题的采样数量，在保持准确率的同时大幅降低采样开销。</p>
 <h2>方法</h2><p>提出 Adaptive-Consistency，一种推理时、模型无关的动态多数投票方法：逐个从 LLM 采样，每采一个样本后用轻量停止准则决定是继续采样还是停止并报告当前多数答案。停止准则将已观测的唯一答案计数 v 建模为 Dirichlet 分布，计算当前多数元素在重复采样后仍保持多数的概率；由于高维积分代价高，实用版本用只比较前两名计数的 Beta 分布（非信息先验 Beta(1,1)）近似，阈值 C_thresh=0.95。代码生成任务中，将各测试用例视为独立实体分别计算置信度 P，以所有测试用例几何平均超过阈值（如 0.95）作为停止条件。停止准则可灵活替换，论文还比较了 RANDOM、MAJORITY、ENTROPY、DIRICHLET、CRP 等变体。</p>

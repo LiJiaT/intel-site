@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Evaluating the Robustness of Discrete Prompts</h1>
 <p class="lead">离散提示的鲁棒性评估</p>
 <div style="margin-top:10px"><span class="lvl lvl-medium">medium</span><span class="chip">arXiv</span><span class="chip">自动提示优化</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a470.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a470.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对自动学习方法（如 AutoPrompt）从少量训练实例中学到的离散提示普遍包含噪声化、反直觉词元，但其鲁棒性此前未被系统研究的问题，以 AutoPrompt（AP）为代表，在 CB 与 MNLI 两个 NLI 数据集上用 RoBERTa-large 系统比较 AP、人工提示（MP）与 Head-based Fine-Tuning（HFT），设计了词元重排、单/多词元删除、跨数据集迁移与对抗输入扰动四类实验，并以 RoD（rate of degradation）量化性能退化。关键结论：MP 在两个数据集上始终优于 AP（200 样本时 CB 上 92.7% 对 54.2%）；AP 对词元重排高度敏感（CB 上掉约 14%，MP 仅约 2%），且跨数据集泛化差；对不改变标签的输入扰动相对鲁棒，但改变标签的强扰动使两者精度均显著下降。对团队而言，其扰动评测方法论与 RoD 指标可借鉴用于提示词资产的鲁棒性回归测试。</p>
 <h2>问题</h2><p>自动离散提示学习方法（AdvTrigger、AutoPrompt、WARP、RLPrompt 等）学到的提示包含标点、拼写错误等反直觉词汇构造，与人工提示差异巨大；由于这些方法仅在少量训练实例上学习，其学到的提示究竟编码了可泛化的任务模式还是训练样本的随机伪迹，面对随机或对抗扰动是否鲁棒、能否跨数据集泛化，此前缺乏系统研究。</p>
 <h2>方法</h2><p>以 AutoPrompt（AP）为代表性方法，在 NLI 任务（CommitmentBank 与 MNLI）上用 RoBERTa-large 做 few-shot 实验，对比 AP、Manually-written Prompts（MP）与 Head-based Fine-Tuning（HFT）；设计四类扰动实验： 提示词元随机重排； 单词元与多词元删除（Random/Front/Back 三种策略）； 跨数据集迁移（CB 与 MNLI 互迁）； 对测试输入假设句进行人工对抗编辑（分不改变标签与改变标签两类）；用 RoD = 1 - avg-acc(x*)/avg-acc(x) 度量扰动前后的准确率退化，并以词元级编辑距离分析扰动强度与性能的关系。</p>

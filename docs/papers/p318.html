@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>RTLFixer: Automatically Fixing RTL Syntax Errors with Large Language Model</h1>
 <p class="lead">RTLFixer：基于大语言模型的 RTL 语法错误自动修复</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">DAC 2024</span><span class="chip">RTL质量</span><span class="chip">验证自动化</span><span class="chip">EDA工具</span><span class="chip">2.2 RTL设计与实现</span><span class="chip">2.7 EDA/验证自动化与 AI 辅助</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p318.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p318.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文针对 LLM 生成 Verilog 代码中约 55% 的错误为语法错误、直接导致编译失败的问题，提出 RTLFixer 自动调试框架。方法上以 LLM 为自主 agent，通过 ReAct 提示在 Thought-Action-Observation 循环中结合编译器反馈迭代修订代码，并用 RAG 检索人工整理的&#x27;编译器日志-专家修复指引&#x27;数据库（iverilog 7 类 30 条、Quartus 11 类 45 条）弥补模型知识盲区与报错歧义。在基于 VerilogEval 构建的 212 个错误样本上修复约 98.5% 的编译错误，使 VerilogEval-Machine/Human 的 pass@1 分别提升 32.3% 与 10.1%，RTLLM 上语法成功率从 73% 升至 93%。论文同时明确指出该方法对仿真/功能错误的修复能力有限，复杂推理类问题提升较小。</p>
 <h2>问题</h2><p>LLM 生成 Verilog 代码一次通过率低，且分析显示约 55% 的错误为语法错误、导致编译失败；已有 LLM 自调试工作（SelfDebug、SelfEvolve 等）主要面向 Python 功能正确性提升，未显式解决 RTL 语法错误修复，人工修错负担重。</p>
 <h2>方法</h2><p>RTLFixer 由三部分组成：(1) LLM（实验用 GPT-3.5/GPT-4）作为代码生成与调试主体；(2) ReAct 提示使 LLM 以 Thought-Action-Observation 交错方式自主规划调试步骤，动作包括解释错误、检索专家指引、修订代码、提交编译，最多迭代 n 轮（实验设 10 轮）直至编译通过；(3) RAG 检索数据库存储编译器日志、错误代码片段与人工撰写的专家修复指引，按错误 tag 精确匹配注入上下文，缓解报错信息歧义与 LLM 幻觉。实验以 iverilog 与 Quartus 编译器反馈作为闭环信号，并另建规则式预修复器处理 timescale 等简单错误。</p>

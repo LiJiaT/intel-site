@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Structured Prompting: Scaling In-Context Learning to 1,000 Examples</h1>
 <p class="lead">Structured Prompting：将 In-Context Learning 扩展到 1,000 个示例</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">上下文窗口</span><span class="chip">提示技术</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a482.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a482.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>传统 in-context learning 受预训练模型上下文窗口限制（典型 2048 token，仅能容纳 5~100 个示例），难以像 fine-tuning 那样利用大量标注样本。论文提出 Structured Prompting：把示例分成 M 组独立编码（仅缓存 key/value），用右对齐位置嵌入保证各组与测试输入等距，再以 rescaled attention（注意力分数按组数 M 缩放）将各组表征联合注入测试输入，复杂度从 O(N²) 降至 O(N²/M)。在 1.3B/6.7B/13B GPT-like 模型与 BLOOM-176B 上，覆盖文本分类、多选与开放式生成任务：文本分类获得 3-5 个绝对点提升，SQuAD 在 13B 上仅用 50 个示例提升近 5 点，且随示例增多方差显著下降、结果更稳定。核心结论是 few-shot 设定低估了 in-context learning 的能力，更多示例可同时提升效果与稳定性。</p>
 <h2>问题</h2><p>传统 in-context learning 受预训练 Transformer 最大长度（典型 2048 token）限制，通常只能放 5~100 个示例，无法像 fine-tuning 那样利用大量训练样本做监督；且直接拼接所有示例会超出窗口长度，self-attention 的二次计算与显存复杂度也使扩展不可行，同时示例的选择与排列会造成高方差。</p>
 <h2>方法</h2><p>提出 Structured Prompting：(1) 将 N 个示例随机分成 M 组，各组独立编码，只缓存 self-attention 的 key/value 向量，复杂度从 O(N²) 降为 O(N²/M)；(2) 右对齐位置嵌入（Right-Aligned Position Embedding），使各组与测试输入保持相同相对距离；(3) rescaled attention：在每层将各组与测试输入的 key/value 拼接，注意力分数按组数 M 缩放（等价于把测试输入 token 重复 M 次），避免测试输入随示例增多而过度关注示例、忽略自身。全程不更新模型参数，仅修改推理时的注意力计算。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Reasoning Implicit Sentiment with Chain-of-Thought Prompting</h1>
 <p class="lead">基于 Chain-of-Thought 提示的隐式情感推理</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a678.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a678.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文研究隐式情感分析（ISA）：输入文本只有事实性描述、无显性观点词，需要常识与多跳推理才能推断潜在意图。作者提出 Three-hop Reasoning（THOR）CoT 提示框架，用三步递进提示依次诱导隐式 aspect、潜在 opinion 与最终情感极性，每步中间答案回填下一步提示上下文，并辅以 self-consistency 投票与有监督 reasoning revising 巩固每步推理正确性。关键结论：THOR+Flan-T5-11B 在监督微调下超过 SoTA 平均 6.65% F1；THOR+GPT3-175B 在 zero-shot 下平均提升 51.10% F1；且模型规模越大，CoT 增益越显著。对团队的价值在于其&#x27;难任务分解为易到难推理链+中间结果回填上下文&#x27;的提示设计模式，可迁移到问答、审查等需要多跳推断的工程场景。</p>
 <h2>问题</h2><p>隐式情感分析（ISA）中输入文本仅含事实性描述、没有显性观点表达（如 &#x27;Try the tandoori salmon!&#x27; 无任何情感线索词），几乎所有现有情感分类器都误判为中性；准确判断需要常识推理（理解目标本身是什么）与多跳推理（先推 aspect、再推 opinion）能力，而传统 SA 方法没有真正理解情感是如何被激发的，对 ISA 无效。</p>
 <h2>方法</h2><p>提出 THOR（Three-hop Reasoning）CoT 提示框架：基于现成 LLM 设计三个递进提示——第一步推断目标被提及的细粒度 aspect，第二步基于常识推断对该 aspect 的隐式 opinion 及原因，第三步基于 opinion 判断最终情感极性；每步的中间答案拼接进下一步提示上下文（C2=[C1,A]，C3=[C2,O]）。为巩固每步推理正确性引入 self-consistency 机制：每步让解码器生成多个候选答案，保留对 a/o/y 投票一致性高的答案，选置信度最高者作为下一步上下文。有训练数据时可微调，并提出 reasoning revising 方法：在每步把&#x27;初始上下文+该步推理答案+最终问题&#x27;拼成提示让 LLM 直接预测情感标签，用金标监督教会模型生成对最终预测更有帮助的正确中间推理。</p>

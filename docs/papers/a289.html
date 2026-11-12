@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>The Orchestration of Multi-Agent Systems: Architectures, Protocols, and Enterprise Adoption</h1>
 <p class="lead">多智能体系统的编排：架构、协议与企业级采用</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">Agent框架</span><span class="chip">工具调用</span><span class="chip">多智能体协作</span><span class="chip">Agent通信协议</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a289.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a289.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文面向企业级多智能体系统（MAS）的落地问题：单 Agent 难以应对复杂动态任务，而多 Agent 协作长期缺乏统一的编排架构与标准化通信机制。作者综合现有实践提出统一编排层框架，整合规划与策略管理、执行与控制、状态与知识管理、质量与运营四大组件，并系统刻画 MCP（规范 Agent 访问外部工具与上下文数据）与 A2A（规范 Agent 间协商、委托与协调）两个互补协议构成的通信底座，辅以治理与可观测机制保障可审计与合规。论文以金融核保、软件工程、客服等行业案例说明架构价值，并指出通信开销、成本与治理等规模化挑战。核心结论是：多 Agent 系统的可靠性不仅来自单个 Agent 的能力，更来自编排层对规划、执行与验证的整体治理。对以&#x27;用好模型&#x27;为定位的工程团队，这是一份把编排、协议与治理串成整体蓝图的体系化参考。</p>
 <h2>问题</h2><p>如何把各自独立、任务狭窄的单 Agent 演进为可编排的多智能体系统：现有部署缺乏统一的编排架构、标准化的 Agent-工具与 Agent-Agent 通信协议，以及配套的治理与可观测机制，导致企业难以构建可扩展、可审计、符合策略约束的多 Agent 系统。</p>
 <h2>方法</h2><p>提出以编排层（orchestration layer）作为多 Agent 系统的控制平面，包含四个组件：规划与策略管理（目标分解 + 治理约束嵌入）、执行与控制（并发与依赖管理、遥测收集、动态资源分配）、状态与知识管理（checkpoint/工作流状态与可检索上下文分离，知识单元连接外部数据源并暴露为可检索上下文）、质量与运营管理（schema 校验、异常检测、沙箱测试与受控部署）。通信上采用双协议：MCP 以 client-server 模式标准化工具/资源/提示的调用，支持会话管理与审计；A2A 采用对等通信模型，消息携带结构化元数据，配合加密签名与基于角色的路由。再以验证、事件日志、最小权限、持续监控等护栏实现安全、治理与可观测。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Grammar Prompting for Domain-Specific Language Generation with Large Language Models</h1>
 <p class="lead">Grammar Prompting：面向领域特定语言生成的大语言模型文法提示方法</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">工具调用</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a584.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a584.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文解决 LLM 仅凭少量 in-context 示例难以生成领域特定语言（DSL）字符串的问题：DSL 的领域抽象与语法在预训练中罕见，几个示例无法传达其组合式输出空间的约束。方法上提出 grammar prompting：为每个演示示例附加一个&#x27;最小充分&#x27;的专用 BNF 文法（可由完整 DSL 文法解析示例输出自动得到），推理时 LLM 先预测专用文法、再按文法规则生成程序，并配合基于 Earley 解析器的投机式约束解码保证语法有效性。实验覆盖语义解析（SMCalFlow、GeoQuery、Overnight）、PDDL 规划与 SMILES 分子生成，显示该方法在多数设置下显著优于标准 prompting，在组合泛化与未见函数零样本场景提升尤为明显。对团队而言，这是把形式化约束注入提示与解码的结构化提示技术，可用于工具调用生成与结构化输出可靠性保障，但需注意对 SQL、正则等常见语言无收益，且约束解码约增加 3 倍 API 调用。</p>
 <h2>问题</h2><p>LLM 通过少量 in-context 示例可完成许多自然语言任务，但在生成高度结构化语言的字符串（如语义解析到复杂 DSL）时难以泛化：DSL 包含领域特定抽象与语义，且在预训练语料中很少甚至从未出现，其组合式输出空间的语法结构无法仅凭几个示例充分传达，因此少样本 DSL 生成对 LLM 仍然困难。</p>
 <h2>方法</h2><p>提出 grammar prompting：假设拥有专家定义的完整 BNF 文法 G，为每个演示示例 (x, y) 附加&#x27;最小充分&#x27;专用文法 G[y]（G 的规则子集，可通过用 G 解析 y 自动抽取，无需人工标注），推理时 LLM 先预测专用 BNF 文法、再在该文法条件下生成程序。该方法可视为 chain-of-thought 的变体，但中间推理步骤是形式文法而非自然语言。另提出基于 Earley 解析器的投机式约束解码（Algorithm 1）：先让 LLM 投机解码完整程序，解析失败时取最长合法前缀并从合法终结符集合中按 LLM 概率修正，从而在 API-only LLM 上保证语法有效性并控制调用成本。</p>

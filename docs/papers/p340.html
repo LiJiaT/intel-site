@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>SHERLOCK: Scheduling Efficient and Reliable Bulk Bitwise Operations in NVMs</h1>
 <p class="lead">SHERLOCK：面向 NVM 的高效且可靠的批量按位运算调度</p>
 <div style="margin-top:10px"><span class="lvl lvl-low">low</span><span class="chip">DAC 2024</span><span class="chip">存储架构</span><span class="chip">其他</span><span class="chip">无明显对应</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p340.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p340.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对数据库、Web 搜索、加密、图像处理等应用中批量按位运算在传统 von Neumann 架构下因处理与存储间数据搬运而导致高延迟、高能耗的问题，提出面向 NVM 存内计算（CIM）的映射与调度框架 Sherlock。方法上，Sherlock 从 C 程序经 pycparser 生成 AST 并构建 DFG/DAG，按 b-level 优先级将操作数依赖感知地聚类映射到 CIM 阵列各列，最小化列间数据搬运并最大化数据复用，再通过节点替换与跨簇指令合并压缩指令数，同时将工艺偏差导致的 decision failure 概率纳入性能-能耗-可靠性协同优化。基于扩展 gem5、NVSim 与 SPICE 特性化的评估显示：相对 SOTA 性能约 10×、能耗约 4.6×、可靠性约 1.5× 提升，相对 CPU 的 EDP 增益最高达三个数量级。该工作属于 NVM CIM 编译/调度层研究，不涉及 RTL 实现与验证方法学，与本团队内存接口 IP 技术栈直接关联较弱。</p>
 <h2>问题</h2><p>批量按位运算广泛存在于数据库、Web 搜索、DNA 比对、加密、图处理等领域，在传统架构下需在内存总线上搬运大量数据，造成高延迟与高能耗。现有 CIM 方案难以处理不同应用区域需要不同粒度、不同逻辑运算的复杂应用，映射不当会引起大量 subarray 内/间数据搬运与数据复制；同时 NVM 工艺不成熟且 CIM 具有模拟特性，多行同时激活（MRA）虽提升性能却降低 sensing margin、加剧 decision failure，性能与可靠性构成直接权衡，缺乏面向该权衡的映射与调度方法。</p>
 <h2>方法</h2><p>Sherlock 为端到端自动化框架：以高层应用与器件模型为输入，用 pycparser 从 C 程序生成 AST 并构建 DAG，计算操作节点 b-level 优先级；核心是优化的映射算法——按所需列数 k 将 DAG 操作节点聚类（五种节点分配场景加基于 Eq.1 打分的复杂决策，簇尺寸受 C_MaxSize 约束），使跨簇依赖最小化，再将簇映射到 CIM 阵列各列；随后进行节点替换（同类型操作合并为多操作数节点，需考虑目标器件 MRA 对可靠性的影响）与跨簇指令合并（依赖检查后合并读写指令）以减少指令数；可靠性方面基于 LRS/HRS 电阻统计分布与参考电阻比较建模 decision failure 概率 P_DF，并分析 MRA 行数对性能-可靠性权衡的影响。</p>

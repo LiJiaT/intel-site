@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>EvoPrompt: Connecting LLMs with Evolutionary Algorithms Yields Powerful Prompt Optimizers</h1>
 <p class="lead">EvoPrompt：将 LLM 与进化算法结合得到强大的提示优化器</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">自动提示优化</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a095.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a095.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文针对人工设计提示词耗时费力、且现有自动提示方法要么依赖黑盒 API 无法获取的梯度或输出层 token 概率、要么在探索与利用之间失衡的问题，提出 EvoPrompt 框架：让 LLM 充当进化算子，在遗传算法（GA）与差分进化（DE）引导下基于开发集评分迭代生成并筛选候选提示，全程无需梯度与参数。在覆盖语言理解、语言生成及 BIG-Bench Hard 的 31 个数据集上，为 GPT-3.5 与 Alpaca-7b 优化出的提示显著优于人工提示与 APE 等已有方法，BBH 上 DE 版本最高提升 25%（平均 3.5%），且 API 请求数与 APE 相同、token 开销仅略增。论文还发现随机初始化种群即可接近精选初始化的效果，初始提示质量较差时 DE 更稳健。对团队而言，这是一篇可直接借鉴到提示词资产管理与自动优化流程的自动提示优化代表作。</p>
 <h2>问题</h2><p>LLM 的任务表现高度依赖提示词设计，而人工设计需要大量投入与专业经验，且指南主观有限；已有自动离散提示优化方法要么依赖黑盒 API 无法获取的梯度或输出层 token 概率，要么偏重枚举探索（导致资源浪费）或偏重编辑利用（陷入局部最优），部分方法还局限于有标准答案的任务。</p>
 <h2>方法</h2><p>提出 EvoPrompt 框架，将进化算法（EA）与 LLM 连接：LLM 负责生成保持连贯性与可读性的新候选提示（充当进化算子），EA 引导优化过程保留最优提示。无需任何梯度或参数，从 N 个初始提示种群出发，按开发集评分迭代进化 T 轮后返回最优提示。具体实例化两种算法：GA 版本用轮盘赌选择两个父代提示，由 LLM 执行交叉与变异，每代合并新旧种群后保留 Top-N；DE 版本让 LLM 先找出两个提示的差异部分并对其变异，再与当前最优提示（Prompt 3）结合生成新提示，逐个与基础提示择优保留。论文还系统消融了选择策略、变异范围、Prompt 3 的选取、种群初始化质量、种群规模与迭代数等设计。</p>

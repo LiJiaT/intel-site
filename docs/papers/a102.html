@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>In-context Examples Selection for Machine Translation</h1>
 <p class="lead">面向机器翻译的 In-context 示例选择</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">上下文窗口</span><span class="chip">RAG与检索</span><span class="chip">提示技术</span><span class="chip">自动提示优化</span><span class="chip">可靠性与安全</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a102.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a102.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文系统研究使用 LLM 做机器翻译时，in-context 示例的选择、数量、领域与排序如何影响输出质量。作者将示例分为 task-level（传递任务格式与知识）与 example-specific（提供与测试源句相关的信息）两类：前者在开发集上按 BLEU 自动优选单条提示，后者用 BM25 检索相似示例后，通过 n-gram 召回重排序策略在约 3096 token 的有限上下文窗口内最大化覆盖测试源句词项。关键结论：一条噪声无关示例可使 BLEU 跌至 1，而单条优选 task-level 提示即可媲美 16 条随机 few-shot 示例；重排序后的检索示例在 4 个跨领域数据集中的 2 个上超过 kNN-MT 基线，且无需构建稠密 token 级数据存储，更省内存与算力；两类提示拼接使用可获得互补增益。该工作对团队做示例选择、检索增强与上下文组织有直接参考价值。</p>
 <h2>问题</h2><p>in-context learning 做机器翻译时，示例通常从与测试集同分布的开发集中随机采样，但示例的选择、数量、领域与排序对翻译质量的影响尚不清楚，尤其在 out-of-domain 场景下&#x27;什么样的 in-context 示例才是好示例&#x27;缺乏系统研究。</p>
 <h2>方法</h2><p>将 in-context 示例分为两类并分别构造：1) task-level 提示——从训练集候选池中枚举示例，将其分别拼接到开发集各源句上生成译文，按 BLEU 排序选出单条最优提示；2) example-specific 提示——用 BM25 从平行语料库检索 top-100 候选，再用基于 n-gram 召回的重排序算法（对已覆盖的源句 n-gram 按因子 λ=0.1 降权、阈值 1.0，迭代选择）在约 3096 token（16-20 条示例）的上下文窗口内最大化测试源句 n-gram 覆盖。最后将 task-level 与 example-specific 提示简单拼接使用。实验基于 XGLM 7.5B，用 sacreBLEU（附录含 Comet）评测。</p>

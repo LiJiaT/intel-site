@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Principled Instructions Are All You Need for Questioning LLaMA-1/2, GPT-3.5/4</h1>
 <p class="lead">原则化指令足以问询 LLaMA-1/2、GPT-3.5/4</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">思维链与推理</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a391.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a391.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文针对普通开发者与用户在设计 LLM 提示词时缺乏系统指导、而提示质量直接决定输出质量的问题，提出了 26 条可操作的提示设计原则，并归纳为提示结构与清晰度、具体性与信息、用户交互与参与、内容与语言风格、复杂任务与编码提示五大类。作者在自建的 ATLAS 基准上，对每条原则选取 20 个人工挑选的问题，用人工评估对比 LLaMA-1/2（7B/13B/70B）、GPT-3.5/4 在加与不加原则时的回答质量（Boosting）与复杂推理正确率。结果显示 GPT-4 上质量平均提升 57.7%、正确率提升 36.4%，且模型越大收益越明显。对团队而言，这是一份可直接用于制定内部提示词规范、模板库与评审 checklist 的清单式参考，同时其对照评估方法可借鉴用于量化提示词改版收益。</p>
 <h2>问题</h2><p>普通用户与开发者在面对 LLM 时，如何设计最优指令/提示词并不清晰；由于对特定任务直接微调 LLM 对多数人不可行，提示词质量成为决定预训练模型输出质量的关键，但此前缺乏系统性的编写指导原则。</p>
 <h2>方法</h2><p>提出 26 条提示设计指导原则，按性质分为五类：(1) 提示结构与清晰度（如在提示中指明受众是领域专家）；(2) 具体性与信息（如加入&#x27;确保回答无偏、不依赖刻板印象&#x27;等短语）；(3) 用户交互与参与（如让模型通过反向提问澄清需求）；(4) 内容与语言风格（如无需礼貌用语、直入主题）；(5) 复杂任务与编码提示（如将复杂任务拆解为交互式对话中更简单的提示序列）。在自建 ATLAS 基准上，对每条原则及挑战性子集各选 20 个人工挑选的问题，对比加/不加原则的模型回答，采用人工评估，在 Boosting（质量提升）与 Correctness（复杂推理正确率）两种设置下评估 LLaMA-1/2-7B/13B、LLaMA-2-70B-chat、GPT-3.5/4。</p>

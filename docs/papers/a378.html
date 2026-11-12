@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Jailbreaking ChatGPT via Prompt Engineering: An Empirical Study</h1>
 <p class="lead">基于提示工程的 ChatGPT 越狱：一项实证研究</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">可靠性与安全</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a378.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a378.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对&quot;提示工程能否以及如何绕过 ChatGPT 内容限制&quot;做系统实证研究。作者收集 78 个真实越狱提示，用开放编码建立 3 类（pretending、attention shifting、privilege escalation）10 模式的分类法，并依据 OpenAI 使用政策构造 8 类禁止场景共 40 个问题，在 GPT-3.5-TURBO 与 GPT-4 上执行 31,200 次查询并人工判定越狱是否成功。关键结论：86.3% 的场景可被越狱，越狱提示总体成功率 74.6%（非越狱提示仅 29.0%），GPT-4 防护更强但平均越狱成功率仍高达 87.20%；角色扮演（pretending）是最主流手法，SIMU/SUPER 模式最有效，且提示随防护升级持续演化。对团队的价值在于：其提示模式分类可用于内部 LLM 应用的提示注入/越狱防护设计，其评测协议（重复轮次、人工判定、鲁棒性方差统计）可借鉴到团队的安全评测实践中。</p>
 <h2>问题</h2><p>LLM（如 ChatGPT）被施加了内容限制，但攻击者可通过提示工程构造越狱提示绕过限制，带来伦理与法律风险；此前缺乏对越狱提示类型的系统分类、各提示绕过能力的量化评估，以及 ChatGPT 防护强度的实证理解。论文回答三个研究问题：(1) 多少种提示类型可越狱 LLM；(2) 越狱提示绕过 LLM 限制的能力有多强；(3) ChatGPT 对越狱提示的防护韧性如何。</p>
 <h2>方法</h2><p>三步实证方法：(1) 从 jailbreakchat.com 收集 78 个经核实的越狱提示，由三位作者用开放编码（open coding）迭代标注，建立包含 pretending（伪装/角色扮演）、attention shifting（注意力转移）、privilege escalation（权限提升）3 类 10 模式的分类模型；(2) 依据 OpenAI 禁止使用政策构造 8 类禁止场景、每类 5 个问题共 40 个问题；(3) 每个问题×每个提示×5 轮×2 个 GPT 模型共 31,200 次查询，人工判定响应是否违反禁止场景，统计各模式在各场景的成功率与鲁棒性（成功次数均值与方差），并追踪 DAN 系列提示的真实世界演化；另设非越狱提示对照实验，并基于美国法律对禁止强度做合规性探索分析。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Prompting with Pseudo-Code Instructions</h1>
 <p class="lead">基于伪代码指令的提示方法（Prompting with Pseudo-Code Instructions）</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a683.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a683.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>该论文研究用伪代码替代自然语言作为 LLM 指令提示能否提升效果：针对自然语言指令固有的歧义与欠规范问题，作者基于 Super-NaturalInstructions 数据集为 132 个任务（28 类任务、72 个数据集）手工编写了 Python 风格的伪代码提示，在 BLOOM 与 CodeGen 两个模型家族（2B-7B）上进行 0-shot 对比实验。结果显示伪代码提示在分类任务上带来 7-16 点绝对 F1 提升，在全部任务上带来 12-38% 的相对 ROUGE-L 提升；消融实验表明函数原型、docstring、行内注释与结构线索均有贡献，且把注释/docstring 移植到自然语言提示中同样有效。此外，代码模型 CodeGen 即使使用自然语言提示也优于 BLOOM，伪代码+代码模型是最佳组合；但 QA 任务上 BLOOM 用自然语言反而更好，且 2-shot 伪代码提示性能反而低于 0-shot。对团队而言，这是一篇提示工程方向的实证研究，提供了&#x27;伪代码指令&#x27;这一零训练成本、可直接 A/B 验证的提示模式及其生效要素分析。</p>
 <h2>问题</h2><p>自然语言指令存在歧义且欠规范，可能被模型以多种方式解读，甚至详细指令也会增加模型推理复杂度。论文验证一个假设：用歧义更低、结构更清晰的伪代码风格指令提示预训练语言模型，能否比自然语言指令获得更好的任务表现。</p>
 <h2>方法</h2><p>作者为 Super-NaturalInstructions 中 132 个英文任务手工编写 Python 风格伪代码指令（遵循 PEP 8，包含四要素：函数原型、docstring、函数定义/子任务函数调用、行内注释，并为每个任务配可执行的 Python 输入预处理器，用自动测试校验参数类型与数量一致性）。在 BLOOM-3B/7B、CodeGen-mono 2B/6B（附录另含 Falcon-7B）上做 0-shot/2-shot 对比与消融：对比自然语言指令、仅函数原型、仅示例（2-shot）、无指令的函数调用等提示风格；分别移除 docstring/注释，或将伪代码的注释与 docstring 加入自然语言提示，量化结构与文档要素各自的贡献。所有实验使用 greedy decoding，输出截断至 100 token 并做后处理。</p>

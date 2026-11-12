@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Toolformer: Language Models Can Teach Themselves to Use Tools</h1>
 <p class="lead">Toolformer：语言模型可以自学使用工具</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">工具调用</span><span class="chip">RAG与检索</span><span class="chip">提示技术</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a210.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a210.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在少样本学习上表现出色，却在算术、事实查询、时效信息等基础能力上不如简单的小模型，而已有工具使用方案要么依赖大量人工标注、要么只能用于特定任务。Toolformer 提出自监督方案：为每个 API 仅写少量示例，用 LM 的 in-context learning 在大规模语料中采样潜在 API 调用，执行后以“是否降低后续 token 的加权交叉熵损失”为准则过滤，再用增广数据微调 GPT-J (6.7B)，让模型自主决定调用哪个工具、何时调用、传什么参数、如何把结果融入后续预测；论文接入问答（Atlas）、计算器、Wikipedia 搜索（BM25）、机器翻译（NLLB）、日历五类工具。结果显示其 zero-shot 性能大幅提升，在 LAMA、数学应用题等任务上可超过约 25 倍大的 GPT-3 (175B)，同时语言建模困惑度不退化；工具利用能力约在 775M 参数以上才出现。局限包括无法链式/交互式使用工具、对输入措辞敏感、样本效率低且不考虑调用成本。</p>
 <h2>问题</h2><p>LLM 存在无法获取最新信息、易幻觉事实、数学计算不精确、低资源语言理解差、缺乏时间感知等固有局限，仅靠扩大规模难以完全解决；而现有让 LM 使用外部工具的方法要么依赖大量人工标注，要么把工具使用限制在任务特定的 few-shot 设置中，阻碍了工具使用在 LM 中的普及。</p>
 <h2>方法</h2><p>三步自监督流水线：(1) 采样——为每个 API 编写含少量人工示例的 prompt，利用 LM 的 in-context learning 按 &lt;API&gt; token 概率选出候选位置并采样 API 调用；(2) 执行——实际运行这些 API（输入输出均为文本序列）；(3) 过滤——仅保留“提供调用输入与结果后能将后续 token 加权交叉熵损失降低至少 τf”的调用，将保留的调用以特殊 token 形式插入原文构造增广数据集 C*，再用标准语言建模目标微调 GPT-J (6.7B)。推理时当模型生成 &#x27;→&#x27; token 即中断解码、调用对应 API、插入结果后继续解码；解码时允许 &lt;API&gt; 进入 top-k（k=10）以增加调用倾向，并限制每条输入最多一次 API 调用以防循环。</p>

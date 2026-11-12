@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>LightRAG: Simple and Fast Retrieval-Augmented Generation</h1>
 <p class="lead">LightRAG：简单快速的检索增强生成（RAG）</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a104.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a104.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>现有 RAG 系统依赖扁平的文本块表示、缺乏跨实体的上下文关联，面对涉及多重依赖的复杂问题容易产出碎片化回答。LightRAG 将图结构引入文本索引与检索：先用 LLM 从文档块中抽取实体与关系构建知识图谱，再通过双层检索范式（low-level 针对具体实体与关系、high-level 针对更广泛的主题）结合向量表示实现高效检索，并支持通过节点/边集并集做增量更新而无需全量重建。在 UltraDomain 的 Agriculture、CS、Legal、Mix 四个数据集上，LightRAG 在 Comprehensiveness、Diversity、Empowerment、Overall 四个维度的胜率全面领先 NaiveRAG、HyDE、RQRAG、GraphRAG 等基线，Legal 数据集上基线胜率仅约 20%；检索阶段仅需不到 100 token 与 1 次 API 调用，远低于 GraphRAG 的 61 万 token 与数百次调用。对团队而言，这是知识库问答与上下文组织方向可直接参考落地的图增强 RAG 方案。</p>
 <h2>问题</h2><p>现有 RAG 系统存在两大局限：一是依赖扁平数据表示，无法基于实体间复杂关系进行理解与检索；二是缺乏上下文感知，难以跨实体保持连贯，导致多源信息无法综合成完整回答。此外，已有的图结构方法（如 GraphRAG）缺乏知识图谱的动态更新能力，且基于社区遍历的暴力检索在大规模查询下效率低下。论文围绕三个挑战展开：全面的信息检索、更高的检索效率、对新数据的快速适应。</p>
 <h2>方法</h2><p>LightRAG 由三部分组成：(1) 基于图的文本索引：将文档分块后用 LLM 抽取实体（名称、日期、地点、事件等）及关系，构建知识图谱并生成键值数据结构，附录给出了图生成、查询生成、关键词抽取的 prompt 模板；(2) 双层检索范式：low-level 检索聚焦具体实体及其关系，high-level 检索覆盖更广泛的主题与概念，通过图结构与向量表示结合、利用局部与全局关键词匹配，直接检索实体和关系而非 chunk；(3) 增量更新算法：新文档按相同索引流程处理后，将新图的节点集与边集同原图做并集合并，无需重建整个索引图。答案生成阶段将检索到的实体/关系描述与原文片段拼接后交给通用 LLM 生成回答。</p>

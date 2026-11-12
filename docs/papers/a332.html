@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>CCTU: A Benchmark for Tool Use under Complex Constraints</h1>
 <p class="lead">CCTU：一个面向复杂约束下工具使用的评测基准</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">评测基准</span><span class="chip">工具调用</span><span class="chip">Agent框架</span><span class="chip">可靠性与安全</span><span class="chip">思维链与推理</span><span class="chip">提示技术</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a332.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a332.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文针对现有评测将工具调用与指令遵循、自我修正割裂评估、无法反映真实生产中&#x27;带约束使用工具&#x27;场景的问题，构建了 CCTU 基准。方法上提出 resource、behavior、toolset、response 四个维度共 12 类约束的分类体系，基于 FTRL 数据集通过自动化流水线（参考轨迹生成、受控约束扩展、LLM 过滤、任务上下文集成）构建 200 个测试用例，平均每例含 7 类约束、提示长度超 4,700 token，并开发可执行约束校验模块，在多轮交互中逐步校验合规并以 tool/user 消息注入反馈。对 9 个主流 LLM 在 thinking 与 non-thinking 模式下的评测显示：严格满足全部约束时所有模型 PSR 低于 20%，超 50% 用例出现约束违反（资源与响应维度最严重），且模型收到详细违规反馈后自我修正能力有限（最高 65.36%）。结论指出指令遵循与自我修正是构建可靠工具使用 Agent 的关键瓶颈，thinking 模式还可能因 overthinking 反而降低表现。</p>
 <h2>问题</h2><p>现有基准将工具选择调用与指令遵循、自我修正分开评估，无法刻画真实部署中 LLM 必须在延迟限制、工具调用频次限制、响应格式规则等显式约束下使用工具的整合能力；一个能正确调用工具的模型仍可能违反约束，而指令遵循强的模型可能难以区分工具角色。论文要系统评测 LLM 在复杂约束下的工具使用表现，并分析约束违反模式与自我修正瓶颈。</p>
 <h2>方法</h2><p>提出四维度（resource、behavior、toolset、response）12 类约束分类体系；基于 FTRL 数据集设计四阶段自动化构建流水线，用 Qwen3-32B 生成参考轨迹、注入约束并过滤冲突，再经双人独立标注迭代校验数据与校验代码；核心是可执行约束校验模块，为每类约束预生成可执行校验代码，在多轮交互中逐步检查合规，违规时以 tool 或 user 消息形式注入详细反馈且不改变模型推理配置；评测采用 SR（解决全部子查询并满足全部约束）与更严格的 PSR（无任何约束违反）两个指标。</p>

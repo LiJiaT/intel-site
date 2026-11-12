@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Competition and Cooperation of LLM Agents in Games</h1>
 <p class="lead">博弈中 LLM Agent 的竞争与合作</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">多智能体协作</span><span class="chip">可靠性与安全</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a286.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a286.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>论文研究 LLM Agent 在两类经典博弈——网络资源分配（Kelly 机制）与 Cournot 竞争——中是否会收敛到 Nash 均衡、其策略行为能否被刻画。方法上，作者用 Gemini Pro 驱动部署在隔离会话中的多个 Agent，由中心协调器组织多轮同步博弈并反馈市场状态，系统对比短视、多轮与协作式三种系统提示，并从 Chain-of-Thought 逆向拟合出带协作权重 θ 与稳定性权重 γ 的合成收益函数及离散时间更新方程。关键结论之一：在多轮目标与非零和框架的提示下，Agent 倾向于合作而非走向 Nash 均衡，收益逐步逼近 Pareto 前沿与社会最优，CoT 分析显示公平感推理是核心驱动。关键结论之二：θ 随相互让步逐步建立、对手偏离时骤降、终局衰减为 0；当只可见聚合行动时协作失稳，估值不对称过大时出现合作—自私的突然相变。</p>
 <h2>问题</h2><p>LLM Agent 在竞争性多智能体环境中是否收敛到均衡、其策略行为如何刻画；特别是在既非完全合作也非零和的重复博弈中，提示与上下文如何决定 Agent 走向自私（Nash 均衡）还是隐式合作（社会最优/Pareto 前沿）。</p>
 <h2>方法</h2><p>在 Kelly 机制资源分配博弈与线性 Cournot 博弈两个环境中，用 Gemini Pro 驱动 N 个部署在隔离独立会话中的 LLM Agent（防止上下文泄漏），由中心环境协调器组织 T 轮同步行动并反馈聚合市场状态。通过三组系统提示操纵行为：短视提示（单轮最大化）、多轮提示（累计净收益）与协作式提示（多轮目标+非零和框架+嵌入&#x27;Key Insight&#x27;式数学洞察与 Theory of Mind scaffolding）。随后对 Agent 的 Chain-of-Thought 做逆向工程，构造含自身收益、他人收益估计（启发式镜像，假设 b_j ≈ b_i）与行动距离惩罚的合成收益函数，参数 θ（协作/社会福利权重）与 γ（稳定性/公平权重）随可观测性指标 I、剩余轮数 τ/T、对手偏离 E(t)、平价成本 Δπ 等信号按拟合的方程动态演化。</p>

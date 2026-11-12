@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>A-MEM: Agentic Memory for LLM Agents</h1>
 <p class="lead">A-MEM：面向 LLM Agent 的 Agentic 记忆系统</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">记忆管理</span><span class="chip">RAG与检索</span><span class="chip">Agent框架</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a037.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a037.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>现有 LLM Agent 记忆系统多依赖预定义存储结构与固定读写流程，难以在长期交互中灵活组织知识。A-MEM 借鉴 Zettelkasten 卡片盒笔记法，为每条新记忆生成含关键词、标签、上下文描述的结构化笔记与向量表示，先以 embedding 召回 top-k 候选、再由 LLM 判断建立记忆间链接，并在新记忆写入时触发对历史记忆上下文与标签的演化更新，形成自组织的知识网络。在 LoCoMo 与 DialSim 长对话 QA 基准上，A-MEM 在六个基础模型上整体优于 MemoryBank、MemGPT 等基线，Multi-Hop 推理提升最显著（GPT-4o-mini 上 ROUGE-L 44.27 对 LoCoMo 的 18.09）。同时每次记忆操作约 1,200 tokens，较基线降低 85-93%，单次成本低于 $0.0003，百万级记忆检索时间仅 3.70µs。论文开源了评测代码与生产级实现及全部提示模板，可直接作为团队 Agent 记忆模块的参考方案。</p>
 <h2>问题</h2><p>现有 LLM Agent 记忆系统仅提供基础的存储与检索功能，要求开发者预定义存储结构、指定工作流中的存储点与检索时机；即便引入图数据库（如 Mem0）也依赖预定义 schema 与关系，限制了适应性——当 Agent 学到新知识时只能在预设框架内归类链接，无法随知识演化建立新连接或形成新组织模式，导致跨新环境泛化差、长期交互效果受限。</p>
 <h2>方法</h2><p>提出受 Zettelkasten 方法启发的 agentic 记忆系统 A-MEM，包含四个环节：(1) Note Construction：用 LLM 按模板为每条交互生成关键词、标签、上下文描述等结构化属性，并用文本编码器（all-minilm-l6-v2）计算稠密向量；(2) Link Generation：先用 embedding 相似度召回 top-k 候选作为初筛，再由 LLM 基于共同属性分析决定是否建立链接；(3) Memory Evolution：新记忆写入时可触发对邻居记忆的 context、keywords、tags 更新，使记忆网络随交互持续演化；(4) 检索阶段用查询向量与余弦相似度取 top-k 记忆构造上下文提示。整个流程不依赖预定义的记忆操作与静态结构。</p>

@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>KLINQ: Knowledge Distillation-Assisted Lightweight Neural Network for Qubit Readout on FPGA</h1>
 <p class="lead">KLiNQ：知识蒸馏辅助的轻量级神经网络用于 FPGA 上的量子比特读出</p>
 <div style="margin-top:10px"><span class="lvl lvl-low">low</span><span class="chip">DAC 2025</span><span class="chip">AI/ML加速器</span><span class="chip">其他</span><span class="chip">基于arXiv版本</span><span class="chip">无明显对应</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/p184.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/p184.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>超导量子计算机中，量子比特读出是最慢且最易出错的环节，现有深度学习读出方案模型庞大、依赖软硬件间往返传输，且要求所有量子比特同步读出，难以支持量子纠错所需的中路测量（mid-circuit measurement）。KLiNQ 为每个量子比特配置独立的小型 FNN 判别器，用知识蒸馏把百万参数级教师网络压缩成仅数千参数的学生网络，并以分段平均的 I/Q 值加 Matched Filter 标量特征作为紧凑输入。设计以 Verilog 实现并部署在 Xilinx Zynq RFSoC（ZCU216）上，100 MHz 下判别延迟仅 32 ns；模型参数较教师网络减少 99.89%，较基线减少 98.93%，五量子比特几何平均保真度达 0.906、平均判别精度约 0.91。该工作体现了模型压缩与软硬件协同设计在资源受限实时场景的价值，但主题属量子计算领域，与本团队存储/互连 IP 的架构、RTL 与验证业务无直接关联。</p>
 <h2>问题</h2><p>超导量子比特读出慢且易错，是高保真量子计算的瓶颈。现有基于 FNN 的读出判别器参数量大、软件分类延迟超过量子相干时间；已有 FPGA 方案（HERQULES）要求所有量子比特同步读出、需额外数字解调步骤，且适配单量子比特独立读出时性能显著下降，无法支持 mid-circuit measurement 与实时反馈控制。</p>
 <h2>方法</h2><p>离线训练大型教师 FNN（三个隐层分别为 1000/500/250 神经元，输入为 1 µs I/Q 轨迹展平的 1000 维），以硬标签交叉熵加教师软标签 MSE 的复合损失执行知识蒸馏，训练按量子比特信噪比分级的两种紧凑学生 FNN（FNN-A 用于 Q1/Q4/Q5，FNN-B 用于 Q2/Q3）；输入端对选定区间的 I/Q 值取平均降维，并叠加 Matched Filter 标量特征提升 SNR。FPGA 侧采用 32 位定点（16 位整数+16 位小数）、4 级流水线 MAC 时分复用 DSP、加法树求和、以移位近似代替除法完成归一化，PS+PL 架构经 AXI 交换数据，网络规模可重配置。</p>

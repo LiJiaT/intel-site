@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Chain-of-Verification Reduces Hallucination in Large Language Models</h1>
 <p class="lead">Chain-of-Verification（CoVe）减少大语言模型的幻觉</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">思维链与推理</span><span class="chip">可靠性与安全</span><span class="chip">评测基准</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a165.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a165.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>LLM 在列表问答与长文本生成中常输出看似合理但事实错误的幻觉内容，且论文实证发现指令微调模型与标准 CoT 提示并不能缓解该问题。论文提出 Chain-of-Verification (CoVe)：模型先起草初始回答，再规划一组用于核查事实的验证问题，然后独立回答这些问题（避免被原回答污染），最后基于核查结果生成修订后的最终回答；全程仅用同一个 LLM 加 few-shot 提示完成，不依赖外部检索或工具。在 Wikidata 列表问答、MultiSpanQA 与传记长文本生成上，CoVe 将 precision 从 0.17 提到 0.36、FACTSCORE 从 55.9 提到 71.4，CoVe 加持的 Llama 65B 超过 ChatGPT 与 PerplexityAI。对团队最有价值的工程结论是：factored 变体（验证问题不看到原回答）显著优于 joint 变体，说明多步 LLM 流水线中的上下文隔离是阻断幻觉复制的核心手段。</p>
 <h2>问题</h2><p>LLM 会生成看似合理但事实错误的内容（hallucination），且在多句/多段的长文本生成中因 exposure bias 等问题加剧；简单扩大训练数据或模型规模并未解决。论文研究能否让模型对自身回答进行深思以纠正错误——即不重新训练、不依赖外部工具，仅靠模型自我核查来减少事实性幻觉。</p>
 <h2>方法</h2><p>提出 Chain-of-Verification (CoVe) 四步流水线，全部通过以不同方式提示同一个基座 LLM 完成：(1) 生成 baseline 回答；(2) 基于原问题与回答规划一组验证问题（few-shot 示例驱动、非模板化，用于核查回答中的事实性断言）；(3) 执行验证并回答这些问题，含四种变体：joint（规划与执行合并在单个 prompt）、2-Step（规划与执行分离，执行时上下文只含问题）、factored（每个问题独立 prompt 且不包含原回答，可并行批量执行）、factor+revise（额外用显式 cross-check prompt 逐条判断验证答案与原回答是否不一致）；(4) 汇总验证问答对生成最终修订回答。核心手段是控制各步骤 prompt 的上下文可见性，让验证回答不被原回答污染，从而避免复制已有幻觉。</p>

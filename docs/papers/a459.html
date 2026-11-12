@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>Active Prompting with Chain-of-Thought for Large Language Models</h1>
 <p class="lead">基于思维链的大语言模型主动提示方法</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">提示技术</span><span class="chip">自动提示优化</span><span class="chip">思维链与推理</span><span class="chip">人机协作</span><span class="chip">成本与效率</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a459.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a459.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>CoT 提示的效果高度依赖人工挑选并标注的 few-shot 示例，但固定示例集对不同任务未必最优，难以判断哪些问题值得投入标注。Active-Prompt 借鉴不确定性主动学习思想：先让 LLM 对候选问题池中每个问题回答 k 次，用 disagreement/entropy 等指标挑出最不确定的 n 个问题，交由人工标注 CoT 推理链，再以新示例做 few-shot CoT 加 self-consistency 推理。在 8 个算术/常识/符号推理数据集上，平均比 self-consistency 提升 7.0%（text-davinci-002）与 1.8%（code-davinci-002），显著优于 Random-CoT、Auto-CoT 与 Complex-CoT；选出的示例可跨模型迁移，k=10、候选池 1000 条即收敛。对团队而言，这是一套低成本构建任务专属提示示例资产、并用不确定性信号定位难例的实用方法。</p>
 <h2>问题</h2><p>CoT 提示依赖人工挑选并标注的固定 few-shot 示例，但推理任务在难度、范围、领域上差异很大，固定示例对不同任务未必有效；核心问题是：如何从任务相关问题池中判断哪些问题最值得投入人工标注。</p>
 <h2>方法</h2><p>四阶段流程：(1) 不确定性估计——用少量初始示例（或 zero-shot 的 &quot;Let&#x27;s think step by step.&quot;）让 LLM 对候选池每个问题回答 k 次，用 disagreement（去重后唯一答案数/k）、entropy、variance（数值题按题中数字归一化）或 self-confidence 度量不确定性；(2) 选择——取不确定性最高的 n 个问题；(3) 标注——人工为选中问题撰写推理链与答案，构成新示例集 E；(4) 推理——将 E 前置到每个测试问题做 few-shot CoT，并配合 self-consistency（温度 0.7、每题推理 40 次取最一致答案）。</p>

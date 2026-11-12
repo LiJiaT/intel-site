@@ -78,7 +78,7 @@ margin:.15rem 0 .45rem;display:-webkit-box;-webkit-line-clamp:3;
 <h1>In-depth Analysis of Graph-based RAG in a Unified Framework</h1>
 <p class="lead">统一框架下对 Graph-based RAG 的深入分析</p>
 <div style="margin-top:10px"><span class="lvl lvl-high">high</span><span class="chip">arXiv</span><span class="chip">RAG与检索</span><span class="chip">评测基准</span><span class="chip">成本与效率</span><span class="chip">上下文窗口</span><span class="chip">基于arXiv版本</span></div></div>
-<a class="pdfbtn" href="https://github.com/LiJiaT/ai-knowledge-hub/releases/download/papers-20261014-f1a4a6f42671/a150.pdf">下载原文 PDF</a>
+<a class="pdfbtn" href="https://github.com/LiJiaT/intel-site/releases/download/papers-20261014-f1a4a6f42671/a150.pdf">下载原文 PDF</a>
 <div class="detail"><h2>简介</h2><p>针对现有 graph-based RAG 方法缺乏统一抽象与公平对比的问题，论文提出覆盖 Graph building、Index construction、Operator configuration、Retrieval &amp; generation 四阶段的统一框架，将 12 种代表性方法分解为 19 个可组合的检索算子，并发布首个开源测试床，在 11 个 QA 数据集上对具体与抽象问答做组件级细粒度对比。关键结论：保留原始 chunk 对具体 QA 至关重要，高层摘要信息对多跳与抽象 QA 关键；GGraphRAG 在抽象 QA 上质量最佳但单查询约 9 分钟、300K token，难以实用。通过组件重组，作者提出 VGraphRAG（复杂 QA 上比 RAPTOR 准确率高 6.42%/11.6%）与 CheapRAG（token 成本降低 100× 且效果更好）两个新 SOTA。对团队而言，这是知识库问答选型、RAG 成本控制与评测方法设计的高价值参考。</p>
 <h2>问题</h2><p>graph-based RAG 方法众多，但此前没有工作提出统一框架来抽象这些方案并识别关键性能因素；已有工作只评估整体性能而不评估单个组件；各方法之间在准确率与效率上也缺乏在相同实验设置下的全面对比。</p>
 <h2>方法</h2><p>提出四阶段统一框架（Graph building、Index construction、Operator configuration、Retrieval &amp; generation），覆盖全部现有方法：归纳 5 种图类型（Passage Graph、Tree、KG、TKG、RKG）、3 类索引（Node/Relationship/Community index），并将检索阶段抽象为按粒度分为 5 类的 19 个模块化检索算子，用参数 P 配置算子组合与执行顺序；基于该框架实现首个开源测试床，统一复现 12 种方法、支持 100+ 变体、在 11 个数据集上评测；并通过组件重组设计出新方法 VGraphRAG（向量检索社区+chunk，结合实体/关系）与 CheapRAG（先用向量相似度过滤社区再对最相关社区做 Map-Reduce，并纳入原始 chunk）。</p>
