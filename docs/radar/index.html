@@ -30,25 +30,17 @@ a{color:var(--link)}
 .ex-tabs button.is-active{color:var(--accent);border-bottom-color:var(--accent);background:var(--pill-bg)}
 .ex-tabs .tab-count{font-size:.72rem;color:var(--muted);margin-left:.25rem}
 
-.ex-filters{background:#1a222d;border:1px solid #2d3a4d;border-radius:9px;padding:.5rem .8rem;display:flex;flex-direction:column;gap:.3rem;position:sticky;top:0;z-index:20;box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
-.ex-filterbar{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
-.ex-adv{display:flex;flex-direction:column;gap:.3rem;border-top:1px dashed #2d3a4d;margin-top:.35rem;padding-top:.45rem}
-.ex-adv[hidden]{display:none}
-.ex-row{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;min-height:1.7rem}
-.ex-row .ex-row-label{flex:0 0 3.6rem;color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
-.ex-chips{display:flex;gap:.3rem;flex-wrap:wrap}
+/* papers-library style dropdown filterbar */
+.ex-filters{background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:.55rem .8rem;margin-bottom:.9rem;display:flex;gap:.45rem .7rem;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:20;box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}
+.ex-filters label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.ex-filters select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:.22rem .4rem;font-size:.8rem;font-family:inherit;max-width:11rem}
 .chip{cursor:pointer;border:1px solid #2d3a4d;background:transparent;color:var(--muted);padding:.16rem .55rem;border-radius:999px;font-size:.82rem;font-family:inherit;transition:.12s;white-space:nowrap;line-height:1.4}
 .chip:hover{color:var(--text);border-color:var(--pill-border)}
 .chip.is-active{background:var(--pill-bg);border-color:var(--pill-border);color:var(--accent)}
-.chip.chip-sig-top.is-active{background:rgba(126,224,184,.14);border-color:rgba(126,224,184,.5);color:var(--accent2)}
-.chip.chip-sig-watch.is-active{background:rgba(255,198,109,.14);border-color:rgba(255,198,109,.5);color:var(--warn)}
 .ex-spacer{flex:1}
-.ex-kw{flex:1 1 16rem;min-width:12rem;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:.26rem .6rem;font-family:inherit;font-size:.86rem}
+.ex-kw{flex:1 1 15rem;min-width:11rem;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:.26rem .6rem;font-family:inherit;font-size:.86rem}
 .ex-kw:focus{outline:none;border-color:var(--pill-border)}
-.ex-kwmode{display:flex;gap:.6rem;color:var(--muted);font-size:.8rem}
-.ex-kwmode label{display:flex;align-items:center;gap:.25rem;cursor:pointer}
-.ex-pagesize{color:var(--muted);font-size:.8rem}
-.ex-pagesize select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:.12rem .3rem;font-family:inherit}
+.ex-count{color:var(--muted);font-size:.78rem;font-family:var(--mono);white-space:nowrap}
 .ex-reset{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:6px;padding:.16rem .6rem;font-size:.8rem;font-family:inherit}
 .ex-reset:hover{color:var(--warn);border-color:rgba(255,198,109,.5)}
 
@@ -132,7 +124,7 @@ a{color:var(--link)}
 .ex-pager button:hover:not(:disabled){color:var(--text);border-color:var(--pill-border)}
 .ex-pager button:disabled{opacity:.35;cursor:default}
 .ex-pager .pinfo{color:var(--muted);font-size:.82rem;margin:0 .4rem}
-@media(max-width:640px){.ex-row-label{flex-basis:100%}.card-sig{flex-basis:2.6rem}.subscore-name{flex-basis:6rem}.card-detail-ev{margin-left:6.4rem}}
+@media(max-width:640px){.card-sig{flex-basis:2.6rem}.subscore-name{flex-basis:6rem}.card-detail-ev{margin-left:6.4rem}}
 </style>
 </head>
 <body>
@@ -154,126 +146,114 @@ a{color:var(--link)}
   </div>
 
 <section class="ex-filters" id="filters">
-  <div class="ex-filterbar">
-    <input id="kw" class="ex-kw" type="search" aria-label="关键词筛选" placeholder="搜索：标题/描述/业务域/语言/标签/作者/角色">
-    <div class="ex-chips" id="sigChips">
-      <button class="chip is-active" data-sig="__all">全部信号</button>
-      <button class="chip chip-sig-top" data-sig="top">★ Top</button>
-      <button class="chip chip-sig-watch" data-sig="watch">◇ Watch</button>
-    </div>
-    <div class="ex-chips" id="sortChips">
-      <button class="chip is-active" data-sort="value">价值分高→低</button>
-      <button class="chip" data-sort="stars">星数多→少</button>
-      <button class="chip" data-sort="date">更新新→旧</button>
-      <button class="chip" data-sort="quality">质量分高→低</button>
-    </div>
-    <button class="chip" id="advToggle" aria-expanded="false">更多筛选</button>
-    <span class="ex-pagesize">每页
-      <select id="pageSize"><option value="20">20</option><option value="50">50</option><option value="100">100</option></select>
-    </span>
-    <button class="ex-reset" id="resetBtn">重置</button>
-  </div>
-
-  <div class="ex-adv" id="advFilters" hidden>
-  <div class="ex-row">
-    <span class="ex-row-label">业务域</span>
-    <div class="ex-chips" id="domChips">
-      <button class="chip is-active" data-dom="__all">全部</button>
-      <button class="chip" data-dom="ic_architecture_spec" title="IP/microarchitecture, interface &amp; protocol modeling, register/memory-map, IP-XACT, executable/performance spec, spec lint &amp; doc generation.">IP 架构 / Spec</button>
-      <button class="chip" data-dom="ic_rtl_design" title="Tools, libraries and workflows for synthesizable RTL — parser/AST, lint, formatter, refactoring, code navigation, clock/reset architecture, RTL quality/metrics.">RTL 设计</button>
-      <button class="chip" data-dom="ic_design_verification" title="UVM, Cocotb, SVA/assertions, functional coverage, testbench, VIP/checker, reference model, test generation, formal-assisted verification, PSS, regression/failure triage.">功能验证 (DV)</button>
-      <button class="chip" data-dom="ic_timing_constraints_cdc_rdc" title="SDC/Tcl parser, clock/relationship/exception, constraint lint/coverage, CDC/RDC, STA report parser, clock-domain graph, constraint review skill &amp; doc generation.">时序约束 / CDC-RDC</button>
-      <button class="chip" data-dom="ic_synthesis_netlist" title="RTL synthesis, logic optimization, elaboration, technology mapping, QoR, script/report parsing, RTL-to-netlist comparison, equivalence, netlist analysis, PPA/timing feedback, build orchestration.">综合 / Netlist</button>
-      <button class="chip" data-dom="ic_dft_testability" title="scan/ATPG, fault simulation/grading, test coverage, compression, OCC, LBIST, MBIST/memory repair, JTAG/boundary scan, IJTAG, DFT DRC, test-mode constraint, DFT verification, scan GLS.">DFT / 可测性</button>
-      <button class="chip" data-dom="ic_gatesim" title="gate-level/zero-delay simulation, SDF annotation/parser, timing check, X propagation/pessimism, netlist/library model, GLS log triage, RTL-vs-GLS comparison, signal mapping, waveform comparison.">门级仿真 (GLS)</button>
-      <button class="chip" data-dom="ic_cosimulation" title="HW/SW, RTL/SystemC, Python/RTL, DPI/VPI/VHPI, ISS/RTL, QEMU integration, Verilator, TLM, virtual platform, emulator/FPGA-assisted verification, reference model synchronization.">协同仿真 (CoSim)</button>
-      <button class="chip" data-dom="ic_firmware" title="bare-metal, driver/HAL, register access, boot/init, diagnostics, interrupt, firmware test/CI, trace/debug, firmware-hardware interface validation, RISC-V/ARM helpers.">Firmware</button>
-      <button class="chip" data-dom="ic_engineering_infrastructure" title="build/dependency orchestration, regression scheduling, LSF/Slurm wrapper, log/artifact/result database, dashboard, hardware CI/CD, container/devcontainer, license monitoring, code review, traceability, IP delivery/packaging.">工程基础设施</button>
-      <button class="chip" data-dom="ai_for_chip_engineering" title="EDA Agents, RTL/DV/constraint/DFT/GLS report parsers, debug assistants, workflow orchestration, code understanding, knowledge grounding, build/regression automation.">芯片工程 AI</button>
-      <button class="chip" data-dom="agent_skill_mcp" title="Reusable Skills, MCP servers, prompt packages, subagents, permission-controlled tool schemas, IDE extensions and auditable tool-call workflows.">Agent Skill / MCP</button>
-      <button class="chip" data-dom="ai_knowledge_management" title="Technical reporting, PPT/architecture diagrams, spec/meeting summaries, action tracking, Excel/PDF/Word/PowerPoint, Jira/Confluence/GitHub integration, doc consistency, translation, team knowledge base &amp; skill marketplace.">AI 知识管理 / 文档</button>
-      <button class="chip" data-dom="ai_frontier_platforms" title="Models, agent orchestration, inference/serving, evaluation/observability and other platform capabilities worth technical tracking.">AI 前沿平台</button>
-    </div>
-  </div>
-
-  <div class="ex-row">
-    <span class="ex-row-label">AI 角色</span>
-    <div class="ex-chips" id="roleChips">
-      <button class="chip is-active" data-arole="__all">全部</button>
-      <button class="chip" data-arole="ai_native">AI 原生</button>
-      <button class="chip" data-arole="ai_assisted">AI 辅助</button>
-      <button class="chip" data-arole="reference_material">参考资料</button>
-      <button class="chip" data-arole="none">非 AI</button>
-    </div>
-    <span class="ex-spacer"></span>
-    <div class="ex-chips" id="gateChips">
-      <button class="chip is-active" data-gate="__all">全部 Gate</button>
-      <button class="chip" data-gate="allpass">全通过</button>
-      <button class="chip" data-gate="anyfail">有 fail</button>
-      <button class="chip" data-gate="anyunknown">有 unknown</button>
-    </div>
-  </div>
-
-  <div class="ex-row">
-    <span class="ex-row-label">采纳建议</span>
-    <div class="ex-chips" id="recChips">
-      <button class="chip is-active" data-rec="__all">全部</button>
-      <button class="chip" data-rec="adopt_now">立即采用</button>
-      <button class="chip" data-rec="run_pilot">试点</button>
-      <button class="chip" data-rec="watchlist">观察</button>
-      <button class="chip" data-rec="reference_only">仅参考</button>
-      <button class="chip" data-rec="reject">拒绝</button>
-    </div>
-    <span class="ex-spacer"></span>
-    <div class="ex-chips" id="rangeChips">
-      <button class="chip is-active" data-range="all">全部时间</button>
-      <button class="chip" data-range="90">近 3 月</button>
-      <button class="chip" data-range="365">近 1 年</button>
-    </div>
-  </div>
-
-  <div class="ex-row">
-    <span class="ex-row-label">统一主题</span>
-    <div class="ex-chips" id="utopicChips">
-      <button class="chip is-active" data-utopic="__all">全部</button>
-      <button class="chip" data-utopic="arch_impl">架构与实现</button>
-      <button class="chip" data-utopic="design_verification">设计验证</button>
-      <button class="chip" data-utopic="dft_safety">DFT 与功能安全</button>
-      <button class="chip" data-utopic="sim_accel">仿真与加速</button>
-      <button class="chip" data-utopic="agent_context">Agent 与上下文工程</button>
-      <button class="chip" data-utopic="eval_reliability">评测与可靠使用</button>
-      <button class="chip" data-utopic="eng_productivity">工程提效与知识管理</button>
-      <button class="chip" data-utopic="frontier">前沿动态与平台</button>
-    </div>
-  </div>
-
-  <div class="ex-row">
-    <span class="ex-row-label">类型</span>
-    <div class="ex-chips" id="utypeChips">
-      <button class="chip is-active" data-utype="__all">全部</button>
-      <button class="chip" data-utype="tool">工具</button>
-      <button class="chip" data-utype="framework_library">框架/库</button>
-      <button class="chip" data-utype="dataset_benchmark">数据集/基准</button>
-      <button class="chip" data-utype="tutorial_list">教程/清单</button>
-      <button class="chip" data-utype="paper">论文</button>
-      <button class="chip" data-utype="paper_with_code">论文带码</button>
-      <button class="chip" data-utype="practice_report">复盘/评测报告</button>
-      <button class="chip" data-utype="opinion_news">观点/动态</button>
-    </div>
-    <span class="ex-spacer"></span>
-    <span class="ex-row-label" style="font-size:.78rem">统一体系评分未接入的项目会显示「未标注」</span>
-  </div>
-
-  <div class="ex-row">
-    <div class="ex-kwmode">
-      <label><input type="radio" name="kwmode" value="and" checked> 全部匹配</label>
-      <label><input type="radio" name="kwmode" value="or"> 任一匹配</label>
-    </div>
-    <span class="ex-kwmode" style="font-size:.78rem;margin-left:.5rem">archived
-      <label><input type="checkbox" id="hideArchived" checked> 隐藏</label>
-    </span>
-  </div>
-  </div>
+  <label for="kw">搜索</label>
+  <input id="kw" class="ex-kw" type="search" aria-label="关键词筛选" placeholder="标题/描述/业务域/语言/标签/作者/角色">
+  <label for="sig">信号</label>
+  <select id="sig">
+    <option value="">全部</option>
+    <option value="top">★ Top 推荐</option>
+    <option value="watch">◇ Watch 观察</option>
+    <option value="low">低信号</option>
+  </select>
+  <label for="domSel">业务域</label>
+  <select id="domSel">
+    <option value="">全部</option>
+    <option value="ic_architecture_spec">IP 架构 / Spec</option>
+    <option value="ic_rtl_design">RTL 设计</option>
+    <option value="ic_design_verification">功能验证 (DV)</option>
+    <option value="ic_timing_constraints_cdc_rdc">时序约束 / CDC-RDC</option>
+    <option value="ic_synthesis_netlist">综合 / Netlist</option>
+    <option value="ic_dft_testability">DFT / 可测性</option>
+    <option value="ic_gatesim">门级仿真 (GLS)</option>
+    <option value="ic_cosimulation">协同仿真 (CoSim)</option>
+    <option value="ic_firmware">Firmware</option>
+    <option value="ic_engineering_infrastructure">工程基础设施</option>
+    <option value="ai_for_chip_engineering">芯片工程 AI</option>
+    <option value="agent_skill_mcp">Agent Skill / MCP</option>
+    <option value="ai_knowledge_management">AI 知识管理 / 文档</option>
+    <option value="ai_frontier_platforms">AI 前沿平台</option>
+  </select>
+  <label for="aroleSel">AI 角色</label>
+  <select id="aroleSel">
+    <option value="">全部</option>
+    <option value="ai_native">AI 原生</option>
+    <option value="ai_assisted">AI 辅助</option>
+    <option value="reference_material">参考资料</option>
+    <option value="none">非 AI</option>
+  </select>
+  <label for="gateSel">Gate</label>
+  <select id="gateSel">
+    <option value="">全部</option>
+    <option value="allpass">全通过</option>
+    <option value="anyfail">有 fail</option>
+    <option value="anyunknown">有 unknown</option>
+  </select>
+  <label for="recSel">采纳建议</label>
+  <select id="recSel">
+    <option value="">全部</option>
+    <option value="adopt_now">立即采用</option>
+    <option value="run_pilot">试点</option>
+    <option value="watchlist">观察</option>
+    <option value="reference_only">仅参考</option>
+    <option value="reject">拒绝</option>
+  </select>
+  <label for="utopicSel">统一主题</label>
+  <select id="utopicSel">
+    <option value="">全部</option>
+    <option value="arch_impl">架构与实现</option>
+    <option value="design_verification">设计验证</option>
+    <option value="dft_safety">DFT 与功能安全</option>
+    <option value="sim_accel">仿真与加速</option>
+    <option value="agent_context">Agent 与上下文工程</option>
+    <option value="eval_reliability">评测与可靠使用</option>
+    <option value="eng_productivity">工程提效与知识管理</option>
+    <option value="frontier">前沿动态与平台</option>
+  </select>
+  <label for="utypeSel">类型</label>
+  <select id="utypeSel">
+    <option value="">全部</option>
+    <option value="tool">工具</option>
+    <option value="framework_library">框架/库</option>
+    <option value="dataset_benchmark">数据集/基准</option>
+    <option value="tutorial_list">教程/清单</option>
+    <option value="paper">论文</option>
+    <option value="paper_with_code">论文带码</option>
+    <option value="practice_report">复盘/评测报告</option>
+    <option value="opinion_news">观点/动态</option>
+  </select>
+  <label for="rangeSel">时间</label>
+  <select id="rangeSel">
+    <option value="">全部</option>
+    <option value="90">近 3 月</option>
+    <option value="365">近 1 年</option>
+  </select>
+  <label for="kwmodeSel">匹配</label>
+  <select id="kwmodeSel">
+    <option value="and">全部匹配</option>
+    <option value="or">任一匹配</option>
+  </select>
+  <label for="archSel">归档</label>
+  <select id="archSel">
+    <option value="hide">隐藏</option>
+    <option value="show">显示</option>
+  </select>
+  <label for="sortSel">排序</label>
+  <select id="sortSel">
+    <option value="value">价值分高→低</option>
+    <option value="stars">星数多→少</option>
+    <option value="date">更新新→旧</option>
+    <option value="quality">质量分高→低</option>
+  </select>
+  <label for="pageSize">每页</label>
+  <select id="pageSize">
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="100000">全部</option>
+  </select>
+  <span class="ex-spacer"></span>
+  <button class="ex-reset" id="resetBtn">重置</button>
+  <span class="ex-count" id="fcount"></span>
 </section>
 
 <div class="ex-summary" id="summary"></div>
@@ -291,9 +271,9 @@ const UTOPIC_LABELS = Object.fromEntries([{"id": "arch_impl", "name": "\u67b6\u6
 
 const state = {
   view: "browse",
-  doms: new Set(), sig: "__all", arole: "__all", gate: "__all", rec: "__all",
-  utopics: new Set(), utype: "__all",
-  range: "all", kw: "", kwMode: "and", sort: "value", hideArchived: true,
+  dom: "", sig: "", arole: "", gate: "", rec: "",
+  utopic: "", utype: "",
+  range: "", kw: "", kwMode: "and", sort: "value", hideArchived: true,
   page: 1, pageSize: 20,
 };
 const $ = (id) => document.getElementById(id);
@@ -319,20 +299,20 @@ function applyFilters(){
   const terms = parseTerms(state.kw);
   return DATA.filter(e=>{
     if(state.hideArchived && e.archived) return false;
-    if(state.doms.size){ const bd=e.business_domains||[e.domain]; if(!bd.some(d=>state.doms.has(d))) return false; }
-    if(state.sig !== "__all" && e.radar_signal !== state.sig) return false;
-    if(state.arole !== "__all" && e.ai_role !== state.arole) return false;
-    if(state.rec !== "__all" && e.adoption_recommendation !== state.rec) return false;
-    if(state.gate !== "__all"){
+    if(state.dom){ const bd=e.business_domains||[e.domain]; if(!bd.includes(state.dom)) return false; }
+    if(state.sig && e.radar_signal !== state.sig) return false;
+    if(state.arole && e.ai_role !== state.arole) return false;
+    if(state.rec && e.adoption_recommendation !== state.rec) return false;
+    if(state.gate){
       const st=gateStatus(e);
       if(state.gate==="allpass" && !st.every(s=>s==="pass")) return false;
       if(state.gate==="anyfail" && !st.includes("fail")) return false;
       if(state.gate==="anyunknown" && !st.includes("unknown")) return false;
     }
     // 统一标签体系（intel-spec）：8 个顶层主题 + 8 个类型
-    if(state.utopics.size){ const ut=(e.unified&&e.unified.topics)||[]; if(!ut.some(t=>state.utopics.has(t))) return false; }
-    if(state.utype !== "__all"){ if(!e.unified || e.unified.type !== state.utype) return false; }
-    if(state.range !== "all" && daysSince(e.pushed_at) > Number(state.range)) return false;
+    if(state.utopic){ const ut=(e.unified&&e.unified.topics)||[]; if(!ut.includes(state.utopic)) return false; }
+    if(state.utype){ if(!e.unified || e.unified.type !== state.utype) return false; }
+    if(state.range && daysSince(e.pushed_at) > Number(state.range)) return false;
     if(terms.length){
       const h = haystack(e);
       if(state.kwMode==="and"){ if(!terms.every(t=>h.includes(t))) return false; }
@@ -479,6 +459,7 @@ function buildPager(total){
 function renderList(){
   const filtered = applyFilters();
   const total = filtered.length;
+  $("fcount").textContent = `${total} / ${DATA.length}`;
   const pages = Math.max(1,Math.ceil(total/state.pageSize));
   if(state.page>pages) state.page=pages;
   const start=(state.page-1)*state.pageSize, slice=filtered.slice(start,start+state.pageSize);
@@ -618,25 +599,7 @@ function render(){
   else if(state.view==="adoption"){ viewAdoption(); }
   else if(state.view==="role"){ viewRole(); }
   else if(state.view==="delta"){ viewDelta(); }
-  syncAdvToggle();
 }
-
-/* ---- advanced filter drawer ---- */
-const advPanel=$("advFilters"), advToggleBtn=$("advToggle");
-function advActiveCount(){
-  let n=0;
-  if(state.doms.size)n++; if(state.arole!=="__all")n++; if(state.gate!=="__all")n++;
-  if(state.rec!=="__all")n++; if(state.utopics.size)n++; if(state.utype!=="__all")n++;
-  if(state.range!=="all")n++; if(state.kwMode!=="and")n++; if(!state.hideArchived)n++;
-  return n;
-}
-function syncAdvToggle(){
-  const n=advActiveCount();
-  advToggleBtn.textContent = advPanel.hidden ? (n?`更多筛选 · ${n}`:"更多筛选") : "收起筛选";
-  advToggleBtn.classList.toggle("is-active", !advPanel.hidden || n>0);
-  advToggleBtn.setAttribute("aria-expanded", String(!advPanel.hidden));
-}
-advToggleBtn.addEventListener("click",()=>{ advPanel.hidden=!advPanel.hidden; syncAdvToggle(); });
 
 /* ---- wire controls ---- */
 $("viewTabs").addEventListener("click",(ev)=>{ const b=ev.target.closest("button"); if(!b)return; state.view=b.dataset.view; state.page=1;
@@ -645,48 +608,21 @@ $("viewTabs").addEventListener("click",(ev)=>{ const b=ev.target.closest("button
   $("filters").style.display = state.view==="browse"?"flex":"none";
   render();
 });
-function chipGroup(containerId, datasetKey, stateKey){
-  $(containerId).addEventListener("click",(ev)=>{ const b=ev.target.closest("button"); if(!b)return; const v=b.dataset[datasetKey]; state[stateKey]=v; [...$(containerId).children].forEach(x=>x.classList.toggle("is-active",x===b)); state.page=1; render(); });
-}
-// domain: multi-select
-$("domChips").addEventListener("click",(ev)=>{ const b=ev.target.closest("button"); if(!b)return; const d=b.dataset.dom;
-  if(d==="__all"){ state.doms.clear(); [...$("domChips").querySelectorAll("[data-dom]")].forEach(x=>x.classList.toggle("is-active",x.dataset.dom==="__all")); }
-  else{ $("domChips").querySelector('[data-dom="__all"]').classList.remove("is-active");
-    if(state.doms.has(d)){ state.doms.delete(d); b.classList.remove("is-active"); } else { state.doms.add(d); b.classList.add("is-active"); }
-    if(state.doms.size===0) $("domChips").querySelector('[data-dom="__all"]').classList.add("is-active"); }
-  state.page=1; render();
+// papers-library style: one change handler per select
+[["sig","sig"],["domSel","dom"],["aroleSel","arole"],["gateSel","gate"],["recSel","rec"],
+ ["utopicSel","utopic"],["utypeSel","utype"],["rangeSel","range"],["sortSel","sort"],["kwmodeSel","kwMode"]]
+.forEach(([id,key])=>{
+  $(id).addEventListener("change",(ev)=>{ state[key]=ev.target.value; state.page=1; render(); });
 });
-// 统一主题：多选（与 domChips 同构）
-function multiChips(containerId, datasetKey, setKey){
-  $(containerId).addEventListener("click",(ev)=>{ const b=ev.target.closest("button"); if(!b)return; const v=b.dataset[datasetKey];
-    const all=$(containerId).querySelector('[data-'+datasetKey+'="__all"]');
-    if(v==="__all"){ state[setKey].clear(); [...$(containerId).querySelectorAll("button")].forEach(x=>x.classList.toggle("is-active",x===all)); }
-    else{ all.classList.remove("is-active");
-      if(state[setKey].has(v)){ state[setKey].delete(v); b.classList.remove("is-active"); }
-      else{ state[setKey].add(v); b.classList.add("is-active"); }
-      if(state[setKey].size===0) all.classList.add("is-active"); }
-    state.page=1; render();
-  });
-}
-multiChips("utopicChips","utopic","utopics");
-chipGroup("utypeChips","utype","utype");
-chipGroup("sigChips","sig","sig");
-chipGroup("roleChips","arole","arole");
-chipGroup("gateChips","gate","gate");
-chipGroup("recChips","rec","rec");
-chipGroup("rangeChips","range","range");
-chipGroup("sortChips","sort","sort");
-$("hideArchived").addEventListener("change",(ev)=>{ state.hideArchived=ev.target.checked; state.page=1; render(); });
+$("archSel").addEventListener("change",(ev)=>{ state.hideArchived = ev.target.value==="hide"; state.page=1; render(); });
 $("pageSize").addEventListener("change",(ev)=>{ state.pageSize=Number(ev.target.value); state.page=1; render(); });
 let kwTimer;
 $("kw").addEventListener("input",(ev)=>{ clearTimeout(kwTimer); kwTimer=setTimeout(()=>{ state.kw=ev.target.value; state.page=1; render(); },180); });
-document.querySelectorAll('input[name="kwmode"]').forEach(r=>r.addEventListener("change",()=>{ state.kwMode=document.querySelector('input[name="kwmode"]:checked').value; state.page=1; render(); }));
 $("resetBtn").addEventListener("click",()=>{
-  state.doms.clear();state.sig="__all";state.arole="__all";state.gate="__all";state.rec="__all";state.range="all";state.kw="";state.kwMode="and";state.sort="value";state.hideArchived=true;state.pageSize=20;state.page=1; /* P-10: reset must cover hideArchived/pageSize too */
-  state.utopics.clear();state.utype="__all";
-  $("kw").value="";document.querySelector('input[name="kwmode"][value="and"]').checked=true;$("hideArchived").checked=true;$("pageSize").value="20";
-  ["domChips","sigChips","roleChips","gateChips","recChips","rangeChips","sortChips","utopicChips","utypeChips"].forEach(id=>{ [...$(id).children].forEach((x,i)=>x.classList.toggle("is-active",i==0)); });
-  $("domChips").querySelector('[data-dom="__all"]').classList.add("is-active");
+  state.dom="";state.sig="";state.arole="";state.gate="";state.rec="";state.utopic="";state.utype="";
+  state.range="";state.kw="";state.kwMode="and";state.sort="value";state.hideArchived=true;state.pageSize=20;state.page=1;
+  $("kw").value="";$("sig").value="";$("domSel").value="";$("aroleSel").value="";$("gateSel").value="";$("recSel").value="";
+  $("utopicSel").value="";$("utypeSel").value="";$("rangeSel").value="";$("sortSel").value="value";$("kwmodeSel").value="and";$("archSel").value="hide";$("pageSize").value="20";
   render();
 });
 $("filters").style.display="flex";
